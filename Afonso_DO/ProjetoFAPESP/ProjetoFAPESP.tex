@@ -1,0 +1,360 @@
+\documentclass[12pt]{article}
+
+% ===========================
+% Pacotes
+% ===========================
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsfonts,amssymb,amsmath,amsthm,textcomp}
+\usepackage{geometry}
+\geometry{left=30mm, right=25mm, top=25mm, bottom=25mm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{csquotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\usepackage[backend=biber, style=numeric, maxbibnames=99]{biblatex}
+\addbibresource{refs.bib}
+
+% ===========================
+% Teoremas e Definições
+% ===========================
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}[section]
+\newtheorem{question}{Questão}[section]
+\newtheorem{conjecture}{Conjectura}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Teorema}
+
+% ===========================
+% Numeração de equações por seção
+% ===========================
+\numberwithin{equation}{section}
+
+% ===========================
+% Shorthand: seta Ramsey
+% ===========================
+\newcommand{\arrow}[1]{\xrightarrow{#1}}
+
+\begin{document}
+
+% ===========================
+% CABEÇALHO
+% ===========================
+\begin{center}
+  {\Large\textbf{PROJETO DE DOUTORADO}}
+
+  \vspace{0.4cm}
+
+  {\large\textbf{LIMIARES ANTI-RAMSEY E TEORIA CANÔNICA DE RAMSEY \\
+  EM GRAFOS ALEATÓRIOS}}
+
+  \vspace{0.6cm}
+
+  \textbf{Candidato:} Afonso Sant'Anna \\[0.2cm]
+  \textbf{Orientador:} Yoshiharu Kohayakawa \\[0.2cm]
+  \textbf{Coorientador:} Guilherme O. Mota \\[0.2cm]
+  \textbf{Instituição:} Departamento de Ciência da Computação,
+  IME, Universidade de São Paulo -- USP
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Resumo.} Projeto de doutorado de Afonso Sant'Anna,
+no Programa de Pós-Graduação em Ciência da Computação do IME-USP,
+sob orientação de Yoshiharu Kohayakawa e coorientação de Guilherme O.\
+Mota, iniciado em 11/07/2025 e com término previsto para julho de 2029.
+O foco do projeto são problemas de combinatória probabilística,
+com ênfase em teoria canônica de Ramsey e limiares anti-Ramsey
+em grafos aleatórios.
+
+\vspace{0.5cm}
+
+% ===========================
+% SUMÁRIO
+% ===========================
+\tableofcontents
+
+\newpage
+
+% ===========================
+% 1. INTRODUÇÃO
+% ===========================
+\section{Introdução}
+
+Este projeto de pesquisa, elaborado para o doutorado de Afonso Sant'Anna,
+no Departamento de Ciência da Computação, do Instituto de Matemática e
+Estatística da USP, enquadra-se na área de combinatória probabilística e
+teoria extremal de grafos.
+
+O projeto aborda temas da combinatória probabilística contemporânea,
+em particular problemas relacionados à teoria canônica de Ramsey e a
+limiares anti-Ramsey em grafos aleatórios. Essas áreas constituem um
+importante campo de pesquisa em combinatória extremal moderna, envolvendo
+técnicas probabilísticas e ferramentas estruturais da teoria de grafos.
+
+Entre as técnicas que provavelmente serão utilizadas na investigação dos
+problemas propostos, podemos destacar o método probabilístico, o método
+da regularidade, a técnica de \emph{containers} de hipergrafos, e
+argumentos de segundo momento. O candidato, durante o período inicial do
+doutorado, tem desenvolvido estudo aprofundado da literatura relevante e
+participado de reuniões regulares com seu orientador e coorientador,
+encontrando-se bem preparado para iniciar a investigação ativa das questões
+propostas.
+
+Este projeto conta com o apoio de auxílios de pesquisa listados na Seção~7.
+
+% ===========================
+% 2. OBJETIVOS E JUSTIFICATIVA
+% ===========================
+\section{Objetivos e justificativa}
+
+O objetivo central deste projeto é contribuir ao entendimento de duas linhas
+inter-relacionadas da combinatória probabilística:
+\begin{enumerate}
+  \item \textbf{Propriedade anti-Ramsey em grafos aleatórios:} determinar a
+    função limiar $p_{H}^{\text{rb}}$ para a existência de cópias arco-íris
+    de um grafo $H$ em colorações próprias de $\mathcal{G}(n,p)$, com foco
+    especial em grafos de cintura estritamente maior que~4.
+
+  \item \textbf{Propriedade Ramsey canônica assimétrica:} determinar a
+    função limiar para a propriedade
+    $\mathcal{G}(n,p) \xrightarrow{\triangle} (H_1, H_2, H_3)$, em
+    que os grafos alvo $H_1$, $H_2$ e $H_3$ não são necessariamente iguais.
+\end{enumerate}
+
+A relevância das questões propostas é atestada pela longa lista de
+resultados fundamentais devidos a Erdős, Rado, Rödl, Ruciński e outros
+grandes nomes da combinatória, bem como pelos recentes avanços de
+Kuperwasser \cite{kuperwasser2026anti} e Kamčev--Schacht
+\cite{kamvcev2023canonical}. Apesar dos muitos avanços recentes, os
+problemas aqui propostos permanecem em aberto e representam desafios
+centrais da área.
+
+% ===========================
+% 3. TÓPICOS ESPECÍFICOS DE PESQUISA
+% ===========================
+\section{Tópicos específicos de pesquisa}
+
+Listamos a seguir os tópicos específicos que o candidato estudará sob este
+projeto, divididos em duas grandes linhas.
+
+% ----
+\subsection{Limiar Anti-Ramsey em Grafos Aleatórios}
+
+Uma generalização natural da teoria de Ramsey clássica emerge quando
+utilizamos uma quantidade arbitrária de cores. Dizemos que um grafo $G$
+possui a \textbf{propriedade anti-Ramsey} com relação a um grafo $H$,
+denotada por $G \arrow{\text{rb}} H$, se para toda coloração própria das
+arestas de $G$ (sem limite de cores), ocorre pelo menos uma cópia
+\emph{arco-íris} de $H$, isto é, uma cópia de $H$ em que cada aresta
+recebe uma cor diferente.
+
+Antes de discutir a propriedade anti-Ramsey, recordamos o cenário clássico.
+Para grafos $G$ e $H$ e um inteiro $r \ge 2$, dizemos que $G$ tem a
+\textbf{propriedade $r$-Ramsey} com relação a $H$, denotada por
+$G \arrow{r} H$, se em toda coloração das arestas de $G$ com $r$ cores
+ocorre pelo menos uma cópia monocromática de $H$. Como essa propriedade é
+monótona e não trivial, para o grafo aleatório binomial $\mathcal{G}(n,p)$
+existe uma função limiar $\widehat{p} = \widehat{p}(n)$ tal que
+\[
+  \lim_{n\to\infty}\Pr\!\bigl(\mathcal{G}(n,p) \arrow{r} H\bigr)
+  =
+  \begin{cases}
+    0, & \text{se } p = o(\widehat{p}),\\[4pt]
+    1, & \text{se } p = \omega(\widehat{p}).
+  \end{cases}
+\]
+A determinação explícita de $\widehat{p}(n)$ para todo grafo $H$ e todo
+$r \ge 2$ foi obtida por Rödl e Ruciński \cite{rodlruc1995threshold},
+envolvendo a \emph{2-densidade máxima} de $H$:
+\[
+  m_2(H) := \max\!\left\{\frac{e(F)-1}{v(F)-2} : F\subseteq H,\;v(F)>2\right\}.
+\]
+
+Para a propriedade anti-Ramsey, Kohayakawa, Konstadinidis e Mota
+estabeleceram o limite superior geral (o \emph{1-statement}): se
+$p \ge C\,n^{-1/m_2(H)}$ para uma constante suficientemente grande $C$,
+então $\mathcal{G}(n,p) \arrow{\text{rb}} H$ com alta probabilidade
+\cite{kohayakawa2014anti}.
+
+Recentemente, Kuperwasser obteve um grande avanço ao provar o
+\emph{0-statement} correspondente para uma ampla classe de grafos,
+determinando assim o limiar exato para grafos com $m_2(H) \ge 19$
+\cite{kuperwasser2026anti}:
+
+\begin{theorem}[Kuperwasser \cite{kuperwasser2026anti}]
+Para qualquer grafo $H$ com $m_2(H) \ge 19$, existem constantes positivas
+$c_0 < c_1$ tais que
+\[
+  \lim_{n\to\infty}\Pr\!\bigl(\mathcal{G}(n,p) \arrow{\text{rb}} H\bigr)
+  =
+  \begin{cases}
+    0, & \text{se } p \le c_0\,n^{-1/m_2(H)},\\[4pt]
+    1, & \text{se } p \ge c_1\,n^{-1/m_2(H)}.
+  \end{cases}
+\]
+\end{theorem}
+
+Para grafos menos densos ($m_2(H) < 19$), a situação é mais intrincada.
+Nenadov, Person, Škorić e Steger \cite{nenadov2017algorithmic} provaram que
+o limiar coincide com a 2-densidade para ciclos a partir de 7 vértices e
+cliques a partir de 19 vértices. Para grafos completos, Kohayakawa, Mota,
+Parczyk e Schnitzer \cite{AntiComplete} determinaram que o limiar é ditado
+por $m_2(K_k)$ para todo $k \ge 5$; porém, para $K_4$ o limiar é
+$n^{-7/15}$, divergindo de $n^{-2/5}$. Analogamente, Barros, Cavalar, Mota
+e Parczyk \cite{AntiCycles} mostraram que o limiar anti-Ramsey coincide com
+a 2-densidade para ciclos $C_\ell$ com $\ell \ge 5$, mas que para $C_4$ o
+limiar é $n^{-3/4}$.
+
+Essas exceções motivam a seguinte questão, que constitui um dos objetivos
+principais desta pesquisa:
+
+\begin{question}
+\label{q:cintura}
+Se $H$ é um grafo com cintura estritamente maior que~4, o seu limiar
+anti-Ramsey é invariavelmente determinado de forma exata pela sua
+2-densidade máxima?
+\end{question}
+
+Planejamos explorar as propriedades estruturais que causam o desvio de
+limiar em grafos de cintura pequena, e desenvolver ferramentas probabilísticas
+que permitam estabelecer o \emph{0-statement} para grafos de cintura
+estritamente superior a~4, estendendo os limites da conjectura anti-Ramsey.
+
+% ----
+\subsection{Propriedade Ramsey Canônica Assimétrica}
+
+A teoria canônica de Ramsey investiga quais estruturas inevitavelmente
+emergem quando as arestas de um objeto combinatório suficientemente grande
+são coloridas de forma totalmente arbitrária. As colorações relevantes são
+as \emph{canônicas}:
+
+\begin{definition}
+Seja $c : E(G) \to \mathbb{N}$ uma coloração arbitrária das arestas de
+$G$, com vértices ordenados $v_1 < v_2 < \dots < v_n$. Um subgrafo
+$H \subseteq G$ possui uma \textbf{coloração canônica} se:
+\begin{enumerate}
+  \item \textbf{Monocromático:} todas as arestas de $H$ têm a mesma cor;
+  \item \textbf{Arco-íris:} todas as arestas de $H$ têm cores distintas;
+  \item \textbf{Lexicográfico:} a cor de $v_iv_j \in E(H)$ ($v_i < v_j$)
+    depende unicamente de $v_i$ (\emph{min-lex}) ou de $v_j$
+    (\emph{max-lex}).
+\end{enumerate}
+\end{definition}
+
+O resultado fundacional desta área é o Teorema de Erdős e Rado:
+
+\begin{theorem}[Erdős e Rado \cite{erdos1950combinatorial}]
+Para qualquer inteiro $\ell \ge 1$, existe $N$ tal que toda coloração
+arbitrária das arestas de $K_N$ contém uma cópia canônica de $K_\ell$.
+\end{theorem}
+
+A transição para o contexto aleatório foi recentemente tratada por Kamčev e
+Schacht \cite{kamvcev2023canonical}:
+
+\begin{theorem}[Kamčev e Schacht \cite{kamvcev2023canonical}]
+Para todo $\ell \ge 4$, o limiar para a propriedade de que toda coloração
+arbitrária de $\mathcal{G}(n,p)$ contenha uma cópia canônica de $K_\ell$
+é $\widehat{p}(n) = n^{-2/(\ell+1)}$.
+\end{theorem}
+
+Este projeto visa avançar sobre o cenário \emph{assimétrico}:
+
+\begin{definition}
+Dados grafos $H_1$, $H_2$ e $H_3$, dizemos que $G$ possui a
+\textbf{propriedade Ramsey canônica assimétrica}, denotada
+$G \xrightarrow{\triangle} (H_1, H_2, H_3)$, se para toda coloração
+arbitrária das arestas de $G$ existe pelo menos uma cópia monocromática de
+$H_1$, ou uma cópia arco-íris de $H_2$, ou uma cópia lexicográfica de
+$H_3$.
+\end{definition}
+
+\begin{question}
+\label{q:assimetrico}
+Qual é o comportamento da função limiar $\widehat{p}(n)$ para a propriedade
+$\mathcal{G}(n,p) \xrightarrow{\triangle} (H_1, H_2, H_3)$ quando $H_1$,
+$H_2$ e $H_3$ não são todos iguais?
+\end{question}
+
+% ===========================
+% 4. METODOLOGIA DE ESTUDO
+% ===========================
+\section{Metodologia de estudo}
+
+% TODO: Afonso preencher esta seção.
+
+% ===========================
+% 5. O CANDIDATO
+% ===========================
+\section{O candidato}
+
+% TODO: Afonso enviará informações adicionais sobre sua formação,
+%       produção científica e experiência para preencher esta seção.
+
+% ===========================
+% 6. CRONOGRAMA E PLANO DE TRABALHO
+% ===========================
+\section{Cronograma e plano de trabalho}
+
+O candidato espera realizar o doutorado em quatro anos (julho de 2025 a
+julho de 2029), com a possibilidade de um estágio no exterior na segunda
+metade do período.
+
+\subsection{Primeiro ano (2025--2026)}
+
+O período inicial será fortemente dedicado ao estudo detalhado de todos os
+artigos e resultados fundamentais discutidos nas seções anteriores,
+consolidando a base técnica necessária para lidar com a determinação de
+limiares em grafos aleatórios. Paralelamente, o candidato cursará
+disciplinas relevantes e participará dos seminários semanais organizados
+pelo orientador.
+
+A primeira frente ativa de pesquisa, já em andamento, ataca a generalização
+da propriedade Ramsey canônica assimétrica. O foco inicial é investigar o
+comportamento da propriedade $G \xrightarrow{\triangle}(H_1, H_2, H_3)$
+para grafos completos pequenos, especificamente $K_3$, $K_4$ e $K_5$, em
+colaboração com Hugo Vicente, Walner Mendonça e Taísa Martins.
+
+\subsection{Segundo e terceiro anos (2026--2028)}
+
+Nessa etapa, o foco principal será avançar nas questões propostas, em
+particular na Questão~\ref{q:assimetrico} sobre o cenário assimétrico
+canônico e na Questão~\ref{q:cintura} sobre limiares anti-Ramsey para grafos
+de cintura $\ge 5$. O candidato trabalhará conjuntamente com pesquisadores
+visitantes e com os demais membros do grupo de pesquisa. Os resultados serão
+compilados em artigos para submissão a periódicos e apresentados em
+conferências.
+
+\subsection{Quarto ano (2028--2029)}
+
+No último ano, o aluno dedicará boa parte do tempo à escrita de artigos com
+os resultados obtidos ao longo do doutorado e à redação da tese.
+Naturalmente, novas questões surgidas durante o percurso também serão
+investigadas nessa fase.
+
+\subsection{Estágio no exterior}
+
+Para a segunda metade do doutorado está planejado um estágio no exterior com
+duração de seis meses a um ano, a ser realizado junto a algum dos
+colaboradores internacionais do orientador ou do coorientador.
+A definição será feita oportunamente, levando em conta o andamento da
+pesquisa e a agenda de possíveis anfitriões.
+
+% ===========================
+% 7. AMBIENTE DE TRABALHO E OUTROS APOIOS
+% ===========================
+\section{Ambiente de trabalho e outros apoios}
+
+% TODO: Afonso preencher com informações sobre o grupo de pesquisa,
+%       financiamento e outros apoios institucionais.
+
+% ===========================
+% REFERÊNCIAS
+% ===========================
+\printbibliography
+
+\end{document}
