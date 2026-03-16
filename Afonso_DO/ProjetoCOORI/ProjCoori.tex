@@ -1,0 +1,247 @@
+\documentclass[reqno, 12pt]{amsart}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+\usepackage{amsfonts,amssymb,amsmath,textcomp,amsthm}
+\setlength{\parindent}{1cm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\date{}
+\usepackage{csquotes}
+\usepackage[]{hyperref}
+
+\newenvironment{packed_itemize}{
+\begin{itemize}
+  \setlength{\itemsep}{2pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+
+\usepackage{geometry}
+\geometry{left=23.5mm,right=23.5mm, top=13mm, bottom=25mm}
+% bibliografia
+\usepackage[backend=biber,style=numeric,maxbibnames=99]{biblatex}\addbibresource{refs.bib}
+
+\usepackage{setspace}
+\onehalfspacing
+\renewcommand{\baselinestretch}{1.2}
+\numberwithin{equation}{section}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}[section]
+\newtheorem{question}{Questão}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Teorema}
+\begin{document}
+
+\begin{center}
+
+{ \textbf{PROJETO DE DOUTORADO NO IME-USP}}
+
+\vspace{0.3cm}
+
+{ \textbf{CIÊNCIA DA COMPUTAÇÃO}}
+
+\vspace{0.8cm}
+
+AFONSO SANT'ANNA
+
+\vspace{0.2cm}
+
+YOSHIHARU KOHAYAKAWA E GUILHERME O. MOTA
+
+\end{center}
+
+\vspace{1cm}
+
+\noindent
+\textsc{Resumo.}
+Projeto de doutorado de Afonso Sant'Anna, no Programa de Pós-Graduação em
+Ciência da Computação do IME-USP, sob orientação de Yoshiharu Kohayakawa
+e coorientação de Guilherme O. Mota, iniciado em 11/07/2025 e com término previsto para julho de 2029.
+O foco do projeto são problemas de combinatória probabilística,
+com ênfase em teoria canônica de Ramsey e limiares anti-Ramsey
+em grafos aleatórios.
+
+\vspace{1cm}
+
+\section{Introdução}
+
+Este é o projeto de doutorado de Afonso Sant'Anna, aluno do programa de
+Ciência da Computação do IME-USP. O projeto aborda temas da combinatória
+probabilística contemporânea, em particular problemas relacionados à
+teoria canônica de Ramsey e a limiares anti-Ramsey em grafos aleatórios.
+Essas áreas constituem um importante campo de pesquisa em combinatória
+extremal moderna, envolvendo técnicas probabilísticas e ferramentas estruturais da teoria de grafos. Durante o período inicial do doutorado, o aluno tem desenvolvido estudo
+aprofundado da literatura relevante e participado de reuniões regulares
+com seu orientador e coorientador.
+
+Além disso, o aluno cursou diversas disciplinas relevantes para sua
+formação durante o mestrado e doutorado, incluindo:
+
+\textbf{Durante o Doutorado:}
+\begin{packed_itemize}
+  \item MAC5711 -- Análise de Algoritmos 
+  \item MAT6707 -- Métodos Algébricos em Combinatória
+\end{packed_itemize}
+
+\textbf{Durante o Mestrado:}
+\begin{packed_itemize}
+  \item MAC5770 -- Introdução à Teoria dos Grafos 
+  \item MAC4722 -- Linguagens, Autômatos e Computabilidade 
+    \item MAC5922 -- Combinatória I
+  \item MAC5923 -- Combinatória II
+  \item MAC6918 -- Tópicos na Teoria Algébrica dos Grafos
+  \item MAC6989 -- Seminários em Combinatória Extremal, Probabilística e Aditiva III
+  \item MAC6990 -- Seminários em Combinatória Extremal, Probabilística e Aditiva IV
+  \item MAC6953 -- Seminários em Combinatória Extremal, Probabilística e Aditiva I
+  \item MAC6954 -- Seminários em Combinatória Extremal, Probabilística e Aditiva II
+    \item MAC5786 -- Princípios de Interação Humano--Computador
+\end{packed_itemize}
+
+
+\textbf{Durante o Doutorado:}
+\begin{packed_itemize}
+  \item MAT6707 -- Métodos Algébricos em Combinatória
+  \item MAC5005 -- Fundamentos Matemáticos do Aprendizado Sequencial e Online (em andamento)
+  \item MAC6962 -- Tópicos Matemáticos para Computação Contemporânea (a ser cursada no 2º semestre de 2026)
+\end{packed_itemize}
+
+\section{Teoria Canônica de Ramsey e Limiar Anti-Ramsey}
+
+A teoria de Ramsey estuda a inevitabilidade de estruturas padronizadas em
+estruturas suficientemente grandes. Um dos temas centrais da
+pesquisa atual é entender como tais propriedades se manifestam em grafos
+aleatórios.
+
+
+Para grafos \(G\) e \(H\) e um inteiro \(r\ge 2\), dizemos que \(G\) tem a propriedade \emph{$r$-Ramsey} com relação a \(H\), denotada por
+\[
+G \xrightarrow{r} H,
+\]
+se em toda coloração das arestas de \(G\) com \(r\) cores ocorre pelo menos uma cópia monocromática de \(H\).
+
+Como a propriedade \(r\)-Ramsey é monótona e não trivial, para o grafo aleatório binomial \(\mathcal{G}(n,p)\) existe uma função limiar \(\widehat p=\widehat p(n)\) tal que
+\[
+\lim_{n\to\infty}\Pr\big(\mathcal{G}(n,p) \xrightarrow{r} H\big)
+=
+\begin{cases}
+0, & \text{se } p = o(\widehat p),\\[4pt]
+1, & \text{se } p = \omega(\widehat p).
+\end{cases}
+\]
+
+A determinação explícita de \(\widehat p(n)\) para todo grafo \(H\) e todo número fixo \(r\ge 2\) foi obtida por Rödl e Ruciński em \cite{rodlruc1995threshold}. Para enunciar o resultado precisamos da seguinte definição.
+
+\begin{definition}
+\label{def:m2}
+Dado um grafo \(H\) com pelo menos duas arestas, a \emph{2-densidade máxima} de \(H\) é
+\[
+m_2(H) \;:=\; \max\left\{ \frac{e(F)-1}{v(F)-2} \;:\; F\subseteq H,\; v(F)>2 \right\},
+\]
+onde \(v(F)\) e \(e(F)\) denotam, respectivamente, o número de vértices e o número de arestas de \(F\).
+\end{definition}
+
+\begin{theorem}[R\"odl e Ruci\'nski]
+\label{thm:rod-ruc}
+Seja \(2\le r\in\mathbb{N}\) e seja \(H\) um grafo não vazio que não seja uma floresta de estrelas. Então
+\[
+\widehat p(n) \;=\; n^{-1/m_2(H)}
+\]
+é o limiar para a propriedade \(\mathcal{G}(n,p)\xrightarrow{r} H\), i.e., para \(p\) abaixo/ acima desse valor a probabilidade de que \(\mathcal{G}(n,p)\) seja \(r\)-Ramsey com relação a \(H\) tende a \(0\) / \(1\) quando \(n\to\infty\).
+\end{theorem}
+
+
+Neste contexto, algumas ramificações da Teoria de Ramsey serão estudadas durante este doutorado, entre elas, a Teoria canônica de Ramsey e problemas anti-Ramsey.
+
+\subsection{A propriedade anti-Ramsey}
+Uma generalização natural da propriedade $r$-Ramsey é quando utilizamos uma quantidade arbitrária de cores, possivelmente ilimitada. Dizemos que um grafo $G$ possui a propriedade anti-Ramsey com relação a um grafo $H$, denotada por $G \xrightarrow{\text{rb}} H$, se para toda coloração própria das arestas de $G$ (sem limite de cores), ocorre pelo menos uma cópia arco-íris de $H$, isto é, uma cópia de $H$ onde cada aresta recebe uma cor diferente.
+
+A determinação da função limiar $p_{H}^{\text{rb}}$ para essa propriedade no grafo aleatório binomial $\mathcal{G}(n,p)$ é um problema central na área combinatória. Kohayakawa, Konstadinidis e Mota estabeleceram o limite superior geral (o \emph{1-statement}), provando que se $p \ge C n^{-1/m_2(H)}$ para uma constante suficientemente grande $C$, então $\mathcal{G}(n,p) \xrightarrow{\text{rb}} H$ ocorre com alta probabilidade \cite{kohayakawa2014anti}. 
+
+Recentemente, Kuperwasser obteve um grande avanço ao provar o \emph{0-statement} correspondente para uma ampla classe de grafos, o que determinou a função limiar exata \cite{kuperwasser2026anti}. No entanto, é fundamental observar que a demonstração e o fechamento desta conjectura se aplicam estritamente a grafos com 2-densidade máxima satisfazendo $m_2(H) \ge 19$. Para essa classe suficientemente densa, o limiar fica perfeitamente estabelecido:
+
+\begin{theorem}[Kuperwasser \cite{kuperwasser2026anti}]
+Para qualquer grafo $H$ com $m_2(H) \ge 19$, existem constantes positivas $c_0 < c_1$ tais que
+\[
+\lim_{n\to\infty}\Pr\big(\mathcal{G}(n,p) \xrightarrow{\text{rb}} H\big)
+=
+\begin{cases}
+0, & \text{se } p \le c_0 n^{-1/m_2(H)},\\[4pt]
+1, & \text{se } p \ge c_1 n^{-1/m_2(H)}.
+\end{cases}
+\]
+
+\end{theorem}
+
+Para grafos menos densos ($m_2(H) < 19$), a situação é notavelmente mais intrincada, e o limiar nem sempre acompanha a 2-densidade máxima. Nenadov, Person, Škorić e Steger \cite{nenadov2017algorithmic} provaram que o limiar coincide com a 2-densidade para ciclos a partir de 7 vértices e cliques a partir de 19 vértices. Mais tarde, Kohayakawa, Mota, Parczyk e Schnitzer demonstraram que, para grafos completos, o limiar é de fato ditado por $m_2(K_k)$ para todo $k \ge 5$ \cite{AntiComplete}. Contudo, para o clique $K_4$, o limiar anti-Ramsey é $n^{-7/15}$, um valor que diverge estritamente do sugerido por sua 2-densidade, $n^{-2/5}$ \cite{AntiComplete} (lembrando também que, para o triângulo $K_3$, o limiar é trivialmente $n^{-1}$]).
+
+Um comportamento análogo foi documentado no estudo de ciclos. Barros, Cavalar, Mota e Parczyk estabeleceram que o limiar anti-Ramsey coincide com a 2-densidade para ciclos $C_\ell$ com $\ell \ge 5$ \cite{AntiCycles}. Entretanto, para o ciclo de tamanho quatro ($C_4$), o limiar é $n^{-3/4}$, que novamente quebra o padrão e diverge do limite estrutural clássico $n^{-1/m_2(C_4)}$ \cite{AntiCycles}.
+
+Essas exceções no limiar para grafos pequenos (como $K_3, K_4$ e $C_4$) demonstram que $m_2(H)$ pode falhar em ditar o ponto de transição para algumas classes de grafos. Em particular, a mudança abrupta de comportamento observada exatamente a partir de ciclos de tamanho 5 levanta uma questão natural:
+
+\begin{question}
+Se $H$ é um grafo com cintura estritamente maior que 4, o seu limiar anti-Ramsey é invariavelmente determinado de forma exata pela sua 2-densidade máxima?
+\end{question}
+
+Um dos objetivos principais propostos para este doutorado é investigar diretamente esta questão. Planejamos explorar as propriedades estruturais e as tensões probabilísticas que causam o desvio de limiar em grafos de cintura pequena, e desenvolver ferramentas probabilísticas que nos permitam estabelecer o \emph{0-statement} para grafos de cintura estritamente superior a 4, visando estender os limites de compreensão da conjectura anti-Ramsey.
+
+\subsection{A propriedade Ramsey canônica}
+
+A teoria canônica de Ramsey investiga quais estruturas inevitavelmente emergem quando as arestas de um objeto combinatório grande o suficiente são coloridas de forma totalmente arbitrária, ou seja, sem qualquer restrição prévia no número total de cores disponíveis ou na frequência com que cada cor pode ser utilizada. Para formalizar os padrões que surgem neste cenário, introduzimos a seguinte definição:
+
+\begin{definition}
+Seja $c: E(G) \to \mathbb{N}$ uma coloração arbitrária das arestas de um grafo $G$, e assuma que os vértices de $G$ possuem uma ordenação total $v_1 < v_2 < \dots < v_n$. Um subgrafo $H \subseteq G$ possui uma coloração \emph{canônica} se satisfaz um dos seguintes padrões:
+\begin{enumerate}
+    \item \textbf{Monocromático:} Todas as arestas de $H$ possuem a mesma cor.
+    \item \textbf{Arco-íris:} Todas as arestas de $H$ possuem cores distintas.
+    \item \textbf{Lexicográfico:} A cor de cada aresta $v_i v_j \in E(H)$, com $v_i < v_j$, depende unicamente do vértice menor $v_i$ (min-lex) ou unicamente do vértice maior $v_j$ (max-lex).
+\end{enumerate}
+\end{definition}
+
+O resultado clássico e fundacional desta área, que garante a existência dessas estruturas, é o Teorema de Erdős e Rado \cite{erdos1950combinatorial}.
+
+\begin{theorem}[Erdős e Rado \cite{erdos1950combinatorial}]
+Para qualquer inteiro $\ell\geq 1$, existe um inteiro $N$ tal que toda coloração arbitrária das arestas do grafo completo $K_N$ contém uma cópia canônica de $K_\ell$.
+\end{theorem}
+
+A transição do cenário determinístico para o contexto de grafos aleatórios é um tópico muito recente e de intensa atividade na combinatória probabilística. Kamčev e Schacht \cite{kamvcev2023canonical} determinaram a função limiar para que o grafo aleatório binomial $\mathcal{G}(n,p)$ possua a propriedade Ramsey canônica com relação ao clique $K_\ell$.
+
+\begin{theorem}[Kamčev e Schacht \cite{kamvcev2023canonical}]
+Para todo $\ell \ge 4$, o limiar para a propriedade de que qualquer coloração arbitrária de $\mathcal{G}(n,p)$ contenha uma cópia canônica de $K_\ell$ é $\widehat{p}(n) = n^{-2/(\ell+1)}$.
+\end{theorem}
+
+Um aspecto notável desse resultado é que a ordem de grandeza do limiar coincide perfeitamente com a 2-densidade máxima do clique ($m_2(K_\ell) = (\ell+1)/2$). Ou seja, o limiar canônico para $K_\ell$ é o mesmo que o limiar clássico simétrico de Ramsey, mesmo quando permitimos um número ilimitado de cores.
+
+Tanto o Teorema de Erdős-Rado quanto o resultado de Kamčev e Schacht concentram-se no caso \emph{simétrico}, em que a mesma estrutura (o clique $K_\ell$) é buscada em todos os padrões canônicos. Este projeto de doutorado, no entanto, visa avançar sobre o cenário \emph{assimétrico}, que formalizamos a seguir:
+
+\begin{definition}
+Dados três grafos $H_1$, $H_2$ e $H_3$, dizemos que um grafo $G$ possui a propriedade Ramsey canônica assimétrica em relação a essa tripla, denotada por
+\[
+G \xrightarrow{\triangle} (H_1, H_2, H_3),
+\]
+se, para toda coloração arbitrária das arestas de $G$, existe pelo menos uma cópia monocromática de $H_1$, ou uma cópia arco-íris de $H_2$, ou uma cópia lexicográfica de $H_3$.
+\end{definition}
+
+A assimetria estrutural entre os grafos procurados introduz tensões combinatórias complexas. O comportamento arco-íris ($H_2$) aproxima-se da natureza esparsa dos problemas anti-Ramsey, enquanto o comportamento monocromático ($H_1$) demanda estruturas locais mais densas, típicas da Teoria de Ramsey clássica. Essa dualidade motiva o seguinte problema, que será um dos alvos principais da pesquisa:
+
+\begin{question}
+Qual é o comportamento da função limiar $\widehat{p}(n)$ para a propriedade $\mathcal{G}(n,p) \xrightarrow{\triangle} (H_1, H_2, H_3)$ quando $H_1$, $H_2$ e $H_3$ não são todos iguais?
+\end{question}
+
+
+\section{Plano de Pesquisa e Cronograma}
+
+Para atingir os objetivos propostos, o projeto será desenvolvido em etapas que combinam o aprofundamento teórico na literatura contemporânea de combinatória probabilística com a investigação ativa de problemas em aberto. O período inicial do doutorado será fortemente dedicado ao estudo detalhado e minucioso de todos os artigos e resultados fundamentais discutidos nas seções anteriores, consolidando a base técnica necessária para lidar com a determinação de limiares em grafos aleatórios.
+
+A primeira frente ativa de pesquisa, que já se encontra em andamento, ataca a generalização da propriedade Ramsey canônica assimétrica. O foco inicial é investigar o comportamento da propriedade $G \xrightarrow{\triangle} (H_1, H_2, H_3)$ para o caso de grafos completos pequenos, especificamente $K_3$, $K_4$ e $K_5$. Esta etapa está sendo desenvolvida em colaboração direta com os orientadores e com os pesquisadores Hugo Vicente, Walner Mendonça e Taísa Martins. A partir da consolidação desses primeiros limiares no cenário assimétrico, buscaremos mapear e explorar as possíveis ramificações desse problema.
+
+Em um segundo momento, a pesquisa se voltará para a resolução de questões em aberto sobre a propriedade anti-Ramsey. O esforço principal será direcionado a investigar o limiar anti-Ramsey para grafos com cintura estritamente maior que 5, buscando compreender as anomalias estruturais dessa classe. Naturalmente, essa fase também englobará a formulação e investigação de novas questões secundárias que invariavelmente surgirão durante o estudo detalhado desses resultados e o amadurecimento das técnicas probabilísticas.
+
+Em termos de cronograma, as atividades serão distribuídas de forma fluida ao longo dos quatro anos do doutorado. O início do projeto será marcado pela consolidação teórica, o cumprimento de créditos em disciplinas e o desenvolvimento intensivo dos resultados preliminares em Ramsey canônico assimétrico. Consequentemente, a segunda metade do período será dedicada ao aprofundamento nos problemas anti-Ramsey, à exploração teórica das ramificações surgidas ao longo do percurso, à compilação dos resultados em artigos científicos para submissão e, por fim, à redação e defesa da tese de doutorado.
+
+
+\printbibliography
+\end{document}

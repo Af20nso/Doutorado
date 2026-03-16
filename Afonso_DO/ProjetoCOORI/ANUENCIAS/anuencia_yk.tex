@@ -1,0 +1,43 @@
+\documentclass[letterpaper]{letter}
+\usepackage[brazil]{babel} % hifenação em português e
+                           % tradução de títulos como `References'
+\usepackage[latin1]{inputenc} % `traduz' os acentos do portug
+
+\input machead
+
+\signature{Yoshiharu Kohayakawa}
+
+\begin{document}
+\def\today{São Paulo, \number\day\space de\space\ifcase\month\or
+  janeiro\or fevereiro\or mar\c{c}o\or abril\or maio\or junho\or
+  julho\or agosto\or setembro\or outubro\or novembro\or dezembro\fi
+  \space de\space\number\year}
+
+\def\today{São Paulo, 12 de março de 2026}
+
+\begin{letter}{%
+    Professor Dr Denis Deratani Mauá\\
+    Presidente da CCPCC\\
+    MAC/IME/USP
+  }
+
+\opening{Prezado Denis,}
+
+Escrevo-lhe para declarar que estou de acordo com a solicitação de
+inclusão de Guilherme O.~Mota como coorientador de \textit{%
+  Afonso Lima dos Santos Sant'Anna%
+}, NUSP~14743930, aluno de nosso curso de doutorado, atualmente sob
+minha orientação.
+
+\closing{Atenciosamente,}
+
+\end{letter}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% eval: (iso-accents-mode t)
+%%% eval: (auto-fill-mode t)
+%%% eval: (LaTeX-math-mode)
+%%% TeX-master: t
+%%% End:
