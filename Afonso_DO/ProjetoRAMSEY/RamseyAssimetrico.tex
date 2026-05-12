@@ -639,43 +639,49 @@ Dado um grafo $G$, definimos
 \]
 \end{definition}
 
-A fun\c{c}\~{a}o $p$ \'{e} escolhida de forma que $p(K_5) = 0$:
+A fun\c{c}\~{a}o $p$ \'{e} normalizada de forma que o $K_5$ inicial tenha penalidade nula:
 \[
   p(K_5) = 10 - 3 \cdot 5 + 5 = 0.
 \]
-Al\'{e}m disso, a condi\c{c}\~{a}o $\maxdens(G) \le 3$ implica $e(G) \le 3\,v(G)$, logo
-$p(G) \le 5$; em particular, $p(G) < 0$ corresponde a grafos com densidade estritamente menor
-que $\mdens(K_5) = 3$ (condi\c{c}\~{a}o do lema).
+Al\'{e}m disso, a condi\c{c}\~{a}o de densidade $\maxdens(G) \le 3$ garante que $e(G) \le 3\,v(G)$, o que implica
+$p(G) \le 5$ para qualquer subgrafo de $B$. Essa limita\c{c}\~{a}o superior \'{e} crucial para controlar a 
+complexidade estrutural do bloco.
 
-A constru\c{c}\~{a}o indutiva do bloco $B$ a partir de $H_0$ se d\'{a} atrav\'{e}s de quatro tipos de expans\~{a}o
-(ver Figura~\ref{fig:expansions}), ana\'{a}logos \`{a}os de~\cite{nenadov2017algorithmic}:
+A constru\c{c}\~{a}o de um $K_5$-bloco $B$ pode ser vista como um processo indutivo. Come\c{c}amos com uma 
+c\'{o}pia base $H_0 \cong K_5$ e, a cada passo, anexamos novos v\'{e}rtices e arestas para formar novas 
+c\'{o}pias de $K_5$. Seguindo as estrat\'{e}gias desenvolvidas em~\cite{nenadov2017algorithmic} e \cite{AntiComplete},
+classificamos essas extens\~{o}es em quatro tipos estruturais (ver analogia aos casos de expans\~{a}o):
 
 \begin{itemize}
-  \item \textbf{E0 (expans\~{a}o regular):} uma nova c\'{o}pia de $K_5$ \'{e} colada sobre uma aresta existente,
-    adicionando $3$ novos v\'{e}rtices e $9$ novas arestas.
-    Neste caso, $\Delta p = 9 - 3 \cdot 3 = 0$ (a penalidade n\~{a}o se altera).
+  \item \textbf{E0 (Expans\~{a}o regular):} Adicionam-se $3$ novos v\'{e}rtices e $9$ novas arestas que, juntamente 
+    com uma aresta j\'{a} existente, formam um novo $K_5$. 
+    Neste caso, a varia\c{c}\~{a}o da penalidade \'{e} $\Delta p = 9 - 3(3) = 0$, ou seja, a penalidade do 
+    grafo se mant\'{e}m inalterada.
 
-  \item \textbf{E1 (expans\~{a}o sobre tri\^{a}ngulo):} adicionam-se $2$ novos v\'{e}rtices ligados a um tri\^{a}ngulo
-    existente, criando $7$ novas arestas. Come\c{c}ando de $K_5$:
-    $p = (10+7) - 3(5+2) + 5 = 17 - 21 + 5 = 1$.
+  \item \textbf{E1 (Expans\~{a}o sobre tri\^{a}ngulo):} Adicionam-se $2$ novos v\'{e}rtices e $7$ novas arestas que, 
+    apoiadas em um tri\^{a}ngulo preexistente, completam um novo $K_5$. 
+    Aqui, o incremento na penalidade \'{e} $\Delta p = 7 - 3(2) = 1$.
 
-  \item \textbf{E2 (expans\~{a}o sobre $K_4$):} adiciona-se $1$ novo v\'{e}rtice ligado a um $K_4$ existente,
-    criando $4$ novas arestas. $\Delta p = 4 - 3 \cdot 1 = 1$.
+  \item \textbf{E2 (Expans\~{a}o sobre $K_4$):} Adiciona-se apenas $1$ novo v\'{e}rtice ligado a um $K_4$ 
+    existente atrav\'{e}s de $4$ novas arestas, completando um $K_5$. 
+    O incremento \'{e} $\Delta p = 4 - 3(1) = 1$.
 
-  \item \textbf{U1 (uni\~{a}o sobre $K_5^-$):} adiciona-se $1$ nova aresta que completa um $K_5^-$
-    (clique completo menos uma aresta) existente em $B$.
-    $\Delta p = 1 - 3 \cdot 0 = 1$.
+  \item \textbf{U1 (Uni\~{a}o sobre $K_5^-$):} N\~{a}o se adicionam v\'{e}rtices; apenas $1$ nova aresta \'{e} 
+    inserida conectando dois v\'{e}rtices de um $K_5$ quase completo ($K_5 \setminus \{e\}$) j\'{a} 
+    presente na estrutura. 
+    A varia\c{c}\~{a}o \'{e} $\Delta p = 1 - 3(0) = 1$.
 \end{itemize}
 
-Observa-se que \textbf{apenas E0 preserva a penalidade}; os casos E1, E2 e U1 aumentam-na em $1$.
-Como $p(K_5) = 0$ e $\maxdens(B) \le 3$ imp\~{o}e $p(B) \le 5$, o n\'{u}mero de ocorr\^{e}ncias dos
-casos degenerados (E1, E2, U1) \'{e} uniformemente limitado.
+Uma observa\c{c}\~{a}o fundamental \'{e} que a expans\~{a}o \textbf{E0} (a \'{u}nica que \'{e} considerada "regular") 
+preserva o valor de $p(G)$. Por outro lado, as expans\~{o}es degeneradas (\textbf{E1}, \textbf{E2} e \textbf{U1}) 
+aumentam a penalidade estritamente em $1$. Como iniciamos com $p(H_0) = 0$ e sabemos que $p(B) \le 5$, conclu\'{i}mos 
+que o n\'{u}mero total de ocorr\^{e}ncias dos casos E1, E2 e U1 na constru\c{c}\~{a}o do bloco \'{e} uniformemente 
+limitado (ocorrem no m\'{a}ximo $5$ vezes em todo o processo).
 
 \medskip
 \noindent\textit{Extens\~{a}o da colora\c{c}\~{a}o auxiliar para cada tipo de expans\~{a}o.}
+\medskip
 
-\medskip
-\medskip
 \noindent\textbf{Caso E0 (expans\~{a}o regular).}
 Em E0, uma nova c\'{o}pia de $K_5$ \'{e} colada \`{a} estrutura existente por uma aresta $e$ j\'{a} colorida.
 Identificamos os dois $C_5$ na nova c\'{o}pia de modo que $e$ perten\c{c}a ao $C_5$ da sua cor.
