@@ -22,9 +22,24 @@
 % ===========================
 % Teoremas e Definições
 % ===========================
+\usepackage[breakable, hooks, skins]{tcolorbox}
+\usepackage{xcolor}
+
+\newtcolorbox{bbox}[1][]{
+    enhanced,
+    after skip=8mm,
+    title=#1,
+    breakable = true,
+    fonttitle=\sffamily\bfseries,
+    titlerule= 0pt,
+    colback = gray!10,
+    }
+
 \theoremstyle{definition}
+\newtheorem{question_inner}{Questão}[section]
+\newenvironment{question}{\begin{bbox}\begin{question_inner}}{\end{question_inner}\end{bbox}}
+
 \newtheorem{definition}{Definição}[section]
-\newtheorem{question}{Questão}[section]
 \newtheorem{conjecture}{Conjectura}[section]
 \theoremstyle{plain}
 \newtheorem{theorem}[definition]{Teorema}
@@ -140,7 +155,7 @@ centrais da área.
 \section{Tópicos específicos de pesquisa}
 
 Listamos a seguir os tópicos específicos que o candidato estudará sob este
-projeto, divididos em duas grandes linhas.
+projeto, divididos em três grandes linhas.
 
 % ----
 \subsection{Limiar Anti-Ramsey em Grafos Aleatórios}
@@ -278,6 +293,84 @@ $H_3$.
 Qual é o comportamento da função limiar $\widehat{p}(n)$ para a propriedade
 $\mathcal{G}(n,p) \xrightarrow{\triangle} (H_1, H_2, H_3)$ quando $H_1$,
 $H_2$ e $H_3$ não são todos iguais?
+\end{question}
+
+% ----
+\subsection{Número de Conjuntos de Sidon Generalizados}\label{sec:sidon}
+
+\begin{definition}
+Um conjunto $A \subseteq [n]$ é chamado de \textbf{conjunto de Sidon} se não existe uma \emph{quádrupla de Sidon}, isto é, quatro elementos $a,b,c,d \in A$ com $a+b = c+d$ e $\{a,b\} \cap \{c,d\} = \emptyset$. Equivalentemente, $A$ é um conjunto de Sidon se todos os pares de somas $a + b$ com $a,b \in A$, $a \le b$, são distintos.
+\end{definition}
+
+Denote por $\xi(n)$ o tamanho máximo de um conjunto de Sidon contido em $[n]$. Por um argumento elementar de contagem, todos os $\binom{|A|}{2}$ pares de diferenças são distintos em $[n]$, o que impõe $\xi(n) \lesssim \sqrt{n}$. Por outro lado, a construção do plano projetivo finito fornece conjuntos de Sidon de tamanho ótimo. Combinando os trabalhos clássicos de Erdős, Turán, Singer e Chowla, tem-se
+\[
+  \xi(n) = (1 + o(1))\sqrt{n}.
+\]
+
+Uma conexão bem conhecida com grafos extremais é que conjuntos de Sidon em $\mathbb{Z}_n$ geram grafos bipartidos sem $C_4$ com $\Theta(n^{3/2})$ arestas, atingindo o limite de Kővári-Sós-Turán para $\mathrm{ex}(n,n,C_4)$.
+
+\medskip
+
+Além do tamanho máximo, o problema de \emph{contagem} --- determinar o número total $S(n)$ de conjuntos de Sidon contidos em $[n]$ --- foi proposto por Cameron e Erdős em 1990. O limite trivial é
+\[
+  2^{(1+o(1))\sqrt{n}} \;\le\; S(n) \;\le\; 2^{O(\sqrt{n}\log n)},
+\]
+onde o limite inferior é obtido tomando todos os subconjuntos de um conjunto de Sidon máximo. Surpreendentemente, o limite inferior não é justo: Saxton e Thomason, usando o método de \emph{hypergraph containers}, mostraram que a contagem é estritamente superior.
+
+\begin{theorem}[Saxton--Thomason \cite{saxton2015hypergraph}]
+O número de conjuntos de Sidon em $[n]$ é pelo menos $2^{1.16\sqrt{n}}$.
+\end{theorem}
+
+A mesma técnica fornece um limite superior exponencial com base $2^{c\sqrt{n}}$, posteriormente aprimorado por Kohayakawa, Lee, Rödl e Samotij com o \emph{método de containers multifásico}.
+
+\begin{theorem}[Kohayakawa--Lee--Rödl--Samotij]
+O número de conjuntos de Sidon em $[n]$ é no máximo $2^{c\sqrt{n}}$, onde $c$ pode ser tomado arbitrariamente próximo de $\log_2(33e) \approx 6.442$ para $n$ suficientemente grande.
+\end{theorem}
+
+\medskip
+
+Uma generalização natural do conceito de conjunto de Sidon exige que as sumas não sejam apenas distintas, mas \emph{bem separadas}.
+
+\begin{definition}[Kohayakawa--Lee--Moreira--Rödl \cite{kohayakawa2021strong}]
+Fixe $0 \le \alpha < 1$. Um conjunto $S \subseteq [n]$ é chamado de \textbf{$(n,\alpha)$-strong Sidon} se
+\[
+  |(x+w)-(y+z)| \;\ge\; n^{\alpha}
+\]
+para todo $x < y \le z < w$ em $S$. Denotamos por $F(n,\alpha)$ a cardinalidade máxima de um $(n,\alpha)$-strong Sidon contido em $[n]$.
+\end{definition}
+
+Note que um $(n,0)$-strong Sidon é simplesmente um conjunto de Sidon. Para $\alpha > 0$, a condição é mais restritiva. No trabalho \cite{kohayakawa2021strong} do orientador com Lee, Moreira e Rödl, foram obtidos limitantes assintóticos precisos para $F(n,\alpha)$.
+
+\begin{theorem}[Kohayakawa--Lee--Moreira--Rödl \cite{kohayakawa2021strong}]
+Para $0 \le \alpha < 1$, temos
+\[
+  n^{(1-\alpha)/2} + O\!\left(n^{(1-3\alpha)/2} + n^{(1-\alpha)/4}\right) \;\le\; F(n,\alpha) \;\le\; n^{(1-\alpha)/2} + O\!\left(n^{(1-\alpha)/3}\right).
+\]
+\end{theorem}
+
+Assim, como esperado, a condição mais forte ($\alpha > 0$) impõe uma queda no tamanho máximo possível de $\Theta(\sqrt{n})$ para $\Theta(n^{(1-\alpha)/2})$. Apesar desses avanços no problema extremal, a questão da \emph{enumeração} --- análoga àquela respondida por Saxton-Thomason para o caso $\alpha=0$ --- permaneceu intocada para $\alpha > 0$.
+
+No trabalho em andamento com \textbf{Roberto Parente} (UFBA) e \textbf{Victor Souza} (Cornell University), adotamos uma definição ligeiramente diferente, em que o parâmetro de separação é um inteiro $k$ fixo (possivelmente dependente de $n$), em vez de uma potência de $n$.
+
+\begin{definition}
+Um subconjunto $A \subseteq \mathbb{Z}$ é dito um \textbf{conjunto de Sidon $k$-forte} se para quaisquer $x, z, w, y \in A$ com $x < z \le w < y$, vale que
+\[
+  |x + y - z - w| \;\ge\; k.
+\]
+Um conjunto de Sidon usual corresponde ao caso $k = 1$. Denotamos por $\mathcal{S}_k(A)$ a família de todos os subconjuntos de $A$ que são de Sidon $k$-forte.
+\end{definition}
+
+A diferença conceitual entre as duas generalizações é relevante. Na definição de Kohayakawa--Lee--Moreira--Rödl, a separação mínima $n^\alpha$ entre as somas cresce com $n$ de forma~\emph{polinomial}, o que a torna uma condição globalmente mais restritiva conforme $n \to \infty$. Na nossa formulação, o parâmetro $k$ é fixo ou cresce de forma mais lenta, permitindo explorar o regime onde a separação é \emph{absoluta} (constante inteira), o que captura uma estrutura aditiva de natureza distinta. Em particular, o caso $k = 1$ recupera os conjuntos de Sidon usuais, e a generalização $k > 1$ pode ser vista como um fortalecimento discreto da condição de Sidon.
+
+O objetivo central do nosso trabalho é determinar o comportamento assintótico do número de conjuntos de Sidon $k$-forte contidos em $[n]$, extendendo os resultados de Saxton-Thomason para essa família parametrizada.
+
+\begin{question}
+\label{q:sidon_count}
+Qual é o comportamento assintótico do número $|\mathcal{S}_k([n])|$ de conjuntos de Sidon $k$-forte contidos em $[n]$? Em particular, existem constantes $0 < c \le C$ tais que
+\[
+  2^{(1-o(1))\,c\,F(n,k)} \;\le\; |\mathcal{S}_k([n])| \;\le\; 2^{(1+o(1))\,C\,F(n,k)},
+\]
+onde $F(n,k)$ é o tamanho máximo de um conjunto de Sidon $k$-forte em $[n]$?
 \end{question}
 
 % ===========================
