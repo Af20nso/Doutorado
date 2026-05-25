@@ -129,114 +129,125 @@
 %% Theorem Types
 
 
-% Main style, for theorems
-\ifdefined\thmcolor
-\declaretheoremstyle[
-  shaded={bgcolor=\thmcolor,%{gray}{0.95},
-  %margin=4pt,
-  %textwidth={\linewidth-4pt}
-  }
-]{plain}
-\else
-\fi
+%% Fallback background colors for premium shaded environments
+\ifdefined\thmcolor\else\def\thmcolor{Sepia!5!white}\fi
+\ifdefined\lemcolor\else\def\lemcolor{NavyBlue!5!white}\fi
+\ifdefined\propcolor\else\def\propcolor{PineGreen!5!white}\fi
+\ifdefined\corcolor\else\def\corcolor{Orange!5!white}\fi
+\ifdefined\clmcolor\else\def\clmcolor{Cyan!5!white}\fi
+\ifdefined\quecolor\else\def\quecolor{ForestGreen!5!white}\fi
+\ifdefined\defcolor\else\def\defcolor{OliveGreen!5!white}\fi
+\ifdefined\obscolor\else\def\obscolor{Plum!5!white}\fi
+\ifdefined\remcolor\else\def\remcolor{black!5!white}\fi
 
-% Non-italic style, for definitions and remarks
-\ifdefined\defcolor
+\declaretheoremstyle[shaded={bgcolor=\thmcolor}]{plain}
+\declaretheoremstyle[shaded={bgcolor=\lemcolor}]{lemstyle}
+\declaretheoremstyle[shaded={bgcolor=\propcolor}]{propstyle}
+\declaretheoremstyle[shaded={bgcolor=\corcolor}]{corstyle}
+\declaretheoremstyle[shaded={bgcolor=\clmcolor}]{clmstyle}
+\declaretheoremstyle[shaded={bgcolor=\quecolor}]{questyle}
+
 \declaretheoremstyle[
   headfont=\normalfont\bfseries,
   bodyfont=\normalfont,
   shaded={bgcolor=\defcolor}
 ]{noital}
-\else
+
 \declaretheoremstyle[
   headfont=\normalfont\bfseries,
   bodyfont=\normalfont,
-]{noital}
-\fi
+  shaded={bgcolor=\obscolor}
+]{obsstyle}
+
+\declaretheoremstyle[
+  headfont=\normalfont\bfseries,
+  bodyfont=\normalfont,
+  shaded={bgcolor=\remcolor}
+]{remstyle}
 
 %%% Theorem-style
 
 % Numbered Versions
 \declaretheorem[style=plain,numberwithin=section,name=Theorem]{theorem}
 \declaretheorem[style=plain,sibling=theorem,name=Theorems]{theorems}
-\declaretheorem[style=plain,sibling=theorem,name=Proposition]{proposition}
-\declaretheorem[style=plain,sibling=theorem,name=Propositions]{propositions}
-\declaretheorem[style=plain,sibling=theorem,name=Lemma]{lemma}
-\declaretheorem[style=plain,sibling=theorem,name=Lemmas]{lemmas}
-\declaretheorem[style=plain,sibling=theorem,name=Corollary]{corollary}
-\declaretheorem[style=plain,sibling=theorem,name=Corollaries]{corollaries}
-\declaretheorem[style=plain,sibling=theorem,name=Conjecture]{conjecture}
-\declaretheorem[style=plain,sibling=theorem,name=Conjectures]{conjectures}
-\declaretheorem[style=plain,sibling=theorem,name=Question]{question}
-\declaretheorem[style=plain,sibling=theorem,name=Questions]{questions}
-\declaretheorem[style=plain,sibling=theorem,name=Claim]{claim}
-\declaretheorem[style=plain,sibling=theorem,name=Claims]{claims}
-\declaretheorem[style=plain,sibling=theorem,name=Fact]{fact}
-\declaretheorem[style=plain,sibling=theorem,name=Facts]{facts}
-\declaretheorem[style=plain,sibling=theorem,name=Problem]{problem}
-\declaretheorem[style=plain,sibling=theorem,name=Problems]{problems}
-\declaretheorem[style=plain,sibling=theorem,name=Open Problem]{openproblem}
-\declaretheorem[style=plain,sibling=theorem,name=Open Problems]{openproblems}
-\declaretheorem[style=plain,sibling=theorem,name=Challenge]{challenge}
-\declaretheorem[style=plain,sibling=theorem,name=Challenges]{challenges}
-\declaretheorem[style=plain,sibling=theorem,name=Exercise]{exercise}
-\declaretheorem[style=plain,sibling=theorem,name=Exercises]{exercises}
-\declaretheorem[style=plain,sibling=theorem,name=Property]{property}
-\declaretheorem[style=plain,sibling=theorem,name=Properties]{properties}
+\declaretheorem[style=propstyle,sibling=theorem,name=Proposition]{proposition}
+\declaretheorem[style=propstyle,sibling=theorem,name=Propositions]{propositions}
+\declaretheorem[style=lemstyle,sibling=theorem,name=Lemma]{lemma}
+\declaretheorem[style=lemstyle,sibling=theorem,name=Lemmas]{lemmas}
+\declaretheorem[style=corstyle,sibling=theorem,name=Corollary]{corollary}
+\declaretheorem[style=corstyle,sibling=theorem,name=Corollaries]{corollaries}
+\declaretheorem[style=corstyle,sibling=theorem,name=Conjecture]{conjecture}
+\declaretheorem[style=corstyle,sibling=theorem,name=Conjectures]{conjectures}
+\declaretheorem[style=questyle,sibling=theorem,name=Question]{question}
+\declaretheorem[style=questyle,sibling=theorem,name=Questions]{questions}
+\declaretheorem[style=clmstyle,sibling=theorem,name=Claim]{claim}
+\declaretheorem[style=clmstyle,sibling=theorem,name=Claims]{claims}
+\declaretheorem[style=clmstyle,sibling=theorem,name=Fact]{fact}
+\declaretheorem[style=clmstyle,sibling=theorem,name=Facts]{facts}
+\declaretheorem[style=questyle,sibling=theorem,name=Problem]{problem}
+\declaretheorem[style=questyle,sibling=theorem,name=Problems]{problems}
+\declaretheorem[style=questyle,sibling=theorem,name=Open Problem]{openproblem}
+\declaretheorem[style=questyle,sibling=theorem,name=Open Problems]{openproblems}
+\declaretheorem[style=questyle,sibling=theorem,name=Challenge]{challenge}
+\declaretheorem[style=questyle,sibling=theorem,name=Challenges]{challenges}
+\declaretheorem[style=questyle,sibling=theorem,name=Exercise]{exercise}
+\declaretheorem[style=questyle,sibling=theorem,name=Exercises]{exercises}
+\declaretheorem[style=questyle,sibling=theorem,name=Property]{property}
+\declaretheorem[style=questyle,sibling=theorem,name=Properties]{properties}
 % Non Numbered Versions
 \declaretheorem[style=plain,numbered=no,name=Theorem]{theorem-n}
 \declaretheorem[style=plain,numbered=no,name=Theorems]{theorems-n}
-\declaretheorem[style=plain,numbered=no,name=Proposition]{proposition-n}
-\declaretheorem[style=plain,numbered=no,name=Propositions]{propositions-n}
-\declaretheorem[style=plain,numbered=no,name=Lemma]{lemma-n}
-\declaretheorem[style=plain,numbered=no,name=Lemmas]{lemmas-n}
-\declaretheorem[style=plain,numbered=no,name=Corollary]{corollary-n}
-\declaretheorem[style=plain,numbered=no,name=Corollaries]{corollaries-n}
-\declaretheorem[style=plain,numbered=no,name=Conjecture]{conjecture-n}
-\declaretheorem[style=plain,numbered=no,name=Conjectures]{conjectures-n}
-\declaretheorem[style=plain,numbered=no,name=Question]{question-n}
-\declaretheorem[style=plain,numbered=no,name=Questions]{questions-n}
-\declaretheorem[style=plain,numbered=no,name=Claim]{claim-n}
-\declaretheorem[style=plain,numbered=no,name=Claims]{claims-n}
-\declaretheorem[style=plain,numbered=no,name=Fact]{fact-n}
-\declaretheorem[style=plain,numbered=no,name=Facts]{facts-n}
-\declaretheorem[style=plain,numbered=no,name=Problem]{problem-n}
-\declaretheorem[style=plain,numbered=no,name=Problems]{problems-n}
-\declaretheorem[style=plain,numbered=no,name=Open Problem]{openproblem-n}
-\declaretheorem[style=plain,numbered=no,name=Open Problems]{openproblems-n}
-\declaretheorem[style=plain,numbered=no,name=Challenge]{challenge-n}
-\declaretheorem[style=plain,numbered=no,name=Challenges]{challenges-n}
-\declaretheorem[style=plain,numbered=no,name=Exercise]{exercise-n}
-\declaretheorem[style=plain,numbered=no,name=Exercises]{exercises-n}
-\declaretheorem[style=plain,numbered=no,name=Property]{property-n}
-\declaretheorem[style=plain,numbered=no,name=Properties]{properties-n}
+\declaretheorem[style=propstyle,numbered=no,name=Proposition]{proposition-n}
+\declaretheorem[style=propstyle,numbered=no,name=Propositions]{propositions-n}
+\declaretheorem[style=lemstyle,numbered=no,name=Lemma]{lemma-n}
+\declaretheorem[style=lemstyle,numbered=no,name=Lemmas]{lemmas-n}
+\declaretheorem[style=corstyle,numbered=no,name=Corollary]{corollary-n}
+\declaretheorem[style=corstyle,numbered=no,name=Corollaries]{corollaries-n}
+\declaretheorem[style=corstyle,numbered=no,name=Conjecture]{conjecture-n}
+\declaretheorem[style=corstyle,numbered=no,name=Conjectures]{conjectures-n}
+\declaretheorem[style=questyle,numbered=no,name=Question]{question-n}
+\declaretheorem[style=questyle,numbered=no,name=Questions]{questions-n}
+\declaretheorem[style=clmstyle,numbered=no,name=Claim]{claim-n}
+\declaretheorem[style=clmstyle,numbered=no,name=Claims]{claims-n}
+\declaretheorem[style=clmstyle,numbered=no,name=Fact]{fact-n}
+\declaretheorem[style=clmstyle,numbered=no,name=Facts]{facts-n}
+\declaretheorem[style=questyle,numbered=no,name=Problem]{problem-n}
+\declaretheorem[style=questyle,numbered=no,name=Problems]{problems-n}
+\declaretheorem[style=questyle,numbered=no,name=Open Problem]{openproblem-n}
+\declaretheorem[style=questyle,numbered=no,name=Open Problems]{openproblems-n}
+\declaretheorem[style=questyle,numbered=no,name=Challenge]{challenge-n}
+\declaretheorem[style=questyle,numbered=no,name=Challenges]{challenges-n}
+\declaretheorem[style=questyle,numbered=no,name=Exercise]{exercise-n}
+\declaretheorem[style=questyle,numbered=no,name=Exercises]{exercises-n}
+\declaretheorem[style=questyle,numbered=no,name=Property]{property-n}
+\declaretheorem[style=questyle,numbered=no,name=Properties]{properties-n}
 
 %%% Definition-style
 
 % Numbered Versions
-\declaretheorem[style=noital,sibling=theorem,name=Remark]{remark}
-\declaretheorem[style=noital,sibling=theorem,name=Remarks]{remarks}
+\declaretheorem[style=remstyle,sibling=theorem,name=Remark]{remark}
+\declaretheorem[style=remstyle,sibling=theorem,name=Remarks]{remarks}
 \declaretheorem[style=noital,sibling=theorem,name=Definition]{definition}
 \declaretheorem[style=noital,sibling=theorem,name=Definitions]{definitions}
 \declaretheorem[style=noital,sibling=theorem,name=Construction]{construction}
 \declaretheorem[style=noital,sibling=theorem,name=Constructions]{constructions}
-\declaretheorem[style=noital,sibling=theorem,name=Observation]{observation}
-\declaretheorem[style=noital,sibling=theorem,name=Observations]{observations}
-\declaretheorem[style=noital,sibling=theorem,name=Example]{example}
-\declaretheorem[style=noital,sibling=theorem,name=Examples]{examples}
-\declaretheorem[style=noital,sibling=theorem,name=Strategy]{strategy}
-\declaretheorem[style=noital,sibling=theorem,name=Strategies]{strategies}
+\declaretheorem[style=obsstyle,sibling=theorem,name=Observation]{observation}
+\declaretheorem[style=obsstyle,sibling=theorem,name=Observations]{observations}
+\declaretheorem[style=obsstyle,sibling=theorem,name=Example]{example}
+\declaretheorem[style=obsstyle,sibling=theorem,name=Examples]{examples}
+\declaretheorem[style=remstyle,sibling=theorem,name=Strategy]{strategy}
+\declaretheorem[style=remstyle,sibling=theorem,name=Strategies]{strategies}
 % Non Numbered Versions
-\declaretheorem[style=noital,numbered=no,name=Remark]{remark-n}
-\declaretheorem[style=noital,numbered=no,name=Remarks]{remarks-n}
+\declaretheorem[style=remstyle,numbered=no,name=Remark]{remark-n}
+\declaretheorem[style=remstyle,numbered=no,name=Remarks]{remarks-n}
 \declaretheorem[style=noital,numbered=no,name=Definition]{definition-n}
 \declaretheorem[style=noital,numbered=no,name=Definitions]{definitions-n}
 \declaretheorem[style=noital,numbered=no,name=Construction]{construction-n}
 \declaretheorem[style=noital,numbered=no,name=Constructions]{constructions-n}
-\declaretheorem[style=noital,numbered=no,name=Observation]{observation-n}
-\declaretheorem[style=noital,numbered=no,name=Observations]{observations-n}
-\declaretheorem[style=noital,numbered=no,name=Example]{example-n}
-\declaretheorem[style=noital,numbered=no,name=Examples]{examples-n}
+\declaretheorem[style=obsstyle,numbered=no,name=Observation]{observation-n}
+\declaretheorem[style=obsstyle,numbered=no,name=Observations]{observations-n}
+\declaretheorem[style=obsstyle,numbered=no,name=Example]{example-n}
+\declaretheorem[style=obsstyle,numbered=no,name=Examples]{examples-n}
 
 %----------------------------------------------------------%
 
