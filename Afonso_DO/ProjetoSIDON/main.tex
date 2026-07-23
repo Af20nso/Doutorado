@@ -1,5 +1,7 @@
 %----------------------------------------------------------%
 % !TEX outputDirectory = build
+%----------------------------------------------------------%
+% !TEX outputDirectory = build
 
 \documentclass[reqno,a4paper,12pt]{amsart}
 \def\thmcolor{Sepia!5!white}
@@ -596,9 +598,9 @@ Dado um conjunto $U \subseteq [n]$ e um subconjunto $A \subseteq [n] \setminus U
 
 \begin{proof}
   Suponha que $a_1a_2$ tenha multiplicidade $\geq 2$. Então existem
-$u_1, u_2, u_3, u_4 \in U$ com $a_1 + u_1 = a_2 + u_2$, $a_1 + u_3 = a_2 + u_4$
-e $(u_1, u_2) \neq (u_3, u_4)$, o que implica $u_1 + u_4 = u_2 + u_3$,
-contradizendo a propriedade Sidon de $U$.
+  $u_1, u_2, u_3, u_4 \in U$ com $a_1 + u_1 = a_2 + u_2$, $a_1 + u_3 = a_2 + u_4$
+  e $(u_1, u_2) \neq (u_3, u_4)$, o que implica $u_1 + u_4 = u_2 + u_3$,
+  contradizendo a propriedade Sidon de $U$.
 \end{proof}
 
 \begin{proposition}
@@ -1081,7 +1083,7 @@ A prova do limite superior envolve o método de conteineres em grafos. Inicialme
         \prod_{j=1}^{\log\log n}
         \binom{6\sqrt{n}\log n / 2^{j-1}}{2^j\,\sqrt{n}/\log n}
         \;\leq\; 2^{(2\log(12e)+4)\sqrt{n}}.
-        \qquad 
+        \qquad
       \]
     \end{proof}
 
@@ -1104,19 +1106,19 @@ A prova do limite superior envolve o método de conteineres em grafos. Inicialme
       \renewcommand{\arraystretch}{1.7}
       \begin{tabular}{llll}
         \hline
-        \textbf{Componente}         & \textbf{Tamanho máx.} & \textbf{Universo}                                            & \textbf{Nº escolhas}      \\
+        \textbf{Componente}         & \textbf{Tamanho máx.} & \textbf{Universo}                                                                                                                              & \textbf{Nº escolhas}         \\
         \hline
-        $C$ (container final)       & $6\sqrt{n}$             & $[n]$                                                        & $2^{|C|} \leq 2^{6\sqrt{n}}$ \\
-        $U$                         & $\sqrt{n}/\log^2 n$     & $[n]$                                                        &
-        $2^{O(\sqrt{n}/\log n)}$                                                                                \\
-        $U_{\mathrm{II}}$           & $\sqrt{n}/\log n$       & \begin{tabular}{@{}l@{}}$A'_{\mathrm{I}}$ \\ ($|A'_{\mathrm{I}}|\leq 6\sqrt{n}\log^2 n$)\end{tabular} &
-        $2^{O(\log\log n)\,\sqrt{n}/\log n}$                                                                                                                \\
-        $U_1,\ldots,U_{\log\log n}$ & (varia)                 & (varia)                                                      &
-        $2^{O(\sqrt{n})}$ \;\text{(Afirmação~\ref{contas})}                                                                    \\
-        $T_{\mathrm{I}}$            & $\sqrt{n}/\log^2 n$     & $[n]$                                                        & $2^{o(\sqrt{n})}$            \\
-        $T'_{\mathrm{I}}$           & $6\log^8 n$             & $[n]$                                                        & $2^{o(\sqrt{n})}$            \\
-        $T_{\mathrm{II}}$           & $6\log^3 n$             & $[n]$                                                        & $2^{o(\sqrt{n})}$            \\
-        $T_j$ (cada $j$)            & $3\log^2 n$             & $[n]$                                                        & $2^{o(\sqrt{n})}$            \\
+        $C$ (container final)       & $6\sqrt{n}$           & $[n]$                                                                                                                                          & $2^{|C|} \leq 2^{6\sqrt{n}}$ \\
+        $U$                         & $\sqrt{n}/\log^2 n$   & $[n]$                                                                                                                                          &
+        $2^{O(\sqrt{n}/\log n)}$                                                                                                                                                                                                            \\
+        $U_{\mathrm{II}}$           & $\sqrt{n}/\log n$     & \begin{tabular}{@{}l@{}}$A'_{\mathrm{I}}$ \\ ($|A'_{\mathrm{I}}|\leq 6\sqrt{n}\log^2 n$)\end{tabular} &
+        $2^{O(\log\log n)\,\sqrt{n}/\log n}$                                                                                                                                                                                                \\
+        $U_1,\ldots,U_{\log\log n}$ & (varia)               & (varia)                                                                                                                                        &
+        $2^{O(\sqrt{n})}$ \;\text{(Afirmação~\ref{contas})}                                                                                                                                                                                 \\
+        $T_{\mathrm{I}}$            & $\sqrt{n}/\log^2 n$   & $[n]$                                                                                                                                          & $2^{o(\sqrt{n})}$            \\
+        $T'_{\mathrm{I}}$           & $6\log^8 n$           & $[n]$                                                                                                                                          & $2^{o(\sqrt{n})}$            \\
+        $T_{\mathrm{II}}$           & $6\log^3 n$           & $[n]$                                                                                                                                          & $2^{o(\sqrt{n})}$            \\
+        $T_j$ (cada $j$)            & $3\log^2 n$           & $[n]$                                                                                                                                          & $2^{o(\sqrt{n})}$            \\
         \hline
       \end{tabular}
     \end{center}
@@ -1152,383 +1154,566 @@ A prova do limite superior envolve o método de conteineres em grafos. Inicialme
   \end{proof}
 
 \end{proof}
-\section{Prova do limite superior para Sidon \texorpdfstring{$k$}{k}-forte}
+\section{Prova do limite superior para Sidon \texorpdfstring{$t$}{t}-forte}
 
-Nesta seção, provaremos o limite superior para o número de conjuntos Sidon $k$-fortes em $[n]$,
-para todo $k \geq 1$. Para isso, desenvolvemos ferramentas análogas às usadas por Balogh para
-conjuntos de Sidon clássicos.
+Nesta seção, provaremos o limite superior para o número de conjuntos Sidon
+$t$-fortes em $[n]$, para $t \geq 1$. Usaremos $t$ para denotar o parâmetro
+da condição Sidon forte e reservaremos a letra $k$ para o parâmetro dos grafos
+auxiliares $H_k^U(A)$.
 
-Recordamos que um conjunto $A \subseteq [n]$ é \emph{Sidon $k$-forte} se, para todos
-$a_1, a_2, a_3, a_4 \in A$ com $\{a_1, a_2\} \neq \{a_3, a_4\}$, temos
+Recordamos que um conjunto $A \subseteq [n]$ é \emph{Sidon $t$-forte} se, para
+quaisquer $a_1, a_2, a_3, a_4 \in A$, com
 \[
-  |a_1 + a_2 - a_3 - a_4| \;\geq\; k.
+  \{a_1, a_2\} \neq \{a_3, a_4\}
 \]
-Em particular, o caso $k = 1$ recupera a definição clássica de conjunto de Sidon.
+como multiconjuntos, vale
+\[
+  |(a_1 + a_2) - (a_3 + a_4)| \geq t.
+\]
+Em outras palavras, todas as somas de pares de elementos de $A$, contando pares
+com repetição, são duas a duas $t$-separadas. Em particular, o caso $t = 1$
+recupera a definição usual de conjunto de Sidon.
 
 \medskip
-Dado $U \subseteq [n]$ e $A \subseteq [n] \setminus U$, definimos o multigrafo $H_k^U(A)$ com
-conjunto de vértices $V(H_k^U(A)) = A$, onde um par $\{a_1, a_2\} \subset A$ forma uma aresta
-se, e somente se, existem $u_1, u_2 \in U$ tais que
+
+Dado $U \subseteq [n]$ e $A \subseteq [n] \setminus U$, definimos o multigrafo
+$H_k^U(A)$ da seguinte forma. O conjunto de vértices de $H_k^U(A)$ é $A$. Um
+par $\{a_1, a_2\} \subseteq A$ forma uma aresta se, e somente se,
 \[
-  |a_1 + u_1 - a_2 - u_2| \;\leq\; k.
+  |a_1 - a_2| > k
 \]
-A multiplicidade da aresta $\{a_1,a_2\}$ é o número de pares ordenados $(u_1,u_2) \in U\times U$
-satisfazendo essa condição. Dizemos que tal par $(u_1,u_2)$ \emph{testemunha} a aresta
-$\{a_1,a_2\}$. Note que $H_0^U(A)$ corresponde ao grafo definido por Balogh para conjuntos de
-Sidon clássicos, e o caso $k+1$-Sidon forte é tratado por $H_k^U(A)$.
+e existem $u_1, u_2 \in U$ tais que
+\[
+  |(a_1 + u_1) - (a_2 + u_2)| \leq k.
+\]
+A multiplicidade da aresta $\{a_1, a_2\}$ é o número de pares ordenados
+$(u_1, u_2) \in U \times U$ satisfazendo
+\[
+  |(a_1 + u_1) - (a_2 + u_2)| \leq k.
+\]
+Dizemos que tal par $(u_1, u_2)$ \emph{testemunha} a aresta $\{a_1, a_2\}$.
+
+A condição adicional $|a_1 - a_2| > k$ é importante: ela remove as colisões
+locais entre vértices muito próximos de $A$, que não são úteis para certificar
+violações da condição Sidon forte. Com essa definição, $H_0^U(A)$ coincide com
+o grafo auxiliar usado no caso clássico de conjuntos de Sidon, em que as arestas
+são testemunhadas por igualdades exatas
+\[
+  a_1 + u_1 = a_2 + u_2.
+\]
+
+A relação entre o parâmetro $t$ da propriedade Sidon forte e o parâmetro $k$
+do grafo auxiliar é a seguinte. Se $I \subseteq A$ é tal que $U \cup I$ é Sidon
+$t$-forte, então $I$ será independente em $H_k^U(A)$ para todo
+\[
+  0 \leq k \leq t-1.
+\]
+De fato, uma aresta em $H_k^U(A)$ forneceria dois pares distintos
+\[
+  \{a_1, u_1\} \qquad \text{e} \qquad \{a_2, u_2\}
+\]
+de elementos de $U \cup I$, com somas a distância no máximo $k \leq t-1$,
+o que contradiz a condição Sidon $t$-forte.
+
+Assim, o grafo $H_{t-1}^U(A)$ é o grafo auxiliar mais forte para certificar
+independência de extensões Sidon $t$-fortes de $U$. Por outro lado, para aplicar
+diretamente contêineres para grafos simples, será conveniente trabalhar com
+valores de $k$ para os quais a multiplicidade de $H_k^U(A)$ é controlada, em
+particular com
+\[
+  k^* := \left\lfloor \frac{t-1}{2} \right\rfloor,
+\]
+pois, como veremos, $H_{k^*}^U(A)$ é simples sempre que $U$ é Sidon $t$-forte.
+
+\afonso{A definição anterior não funcionava.}
+
 
 \begin{observation}
-  Se $A$ é Sidon $k$-forte, então para todos $x,y,z,w \in A$ com $\{x,y\} \neq \{z,w\}$, temos
-  $|x+y-(z+w)| \geq k$, o que implica que a diferença $x+y-(z+w)$ não pertence ao conjunto
-  $\{-k+1, \ldots, 0, \ldots, k-1\}$. Em outras palavras, a propriedade Sidon $k$-forte pode ser
-  lida como uma condição de \emph{evasão}: as diferenças $x+y-(z+w)$ devem evitar uma janela de
-  $2k-1$ inteiros consecutivos centrada na origem.
+  Se $A$ é Sidon $t$-forte, então, para quaisquer $x, y, z, w \in A$ com
+  \[
+    \{x, y\} \neq \{z, w\}
+  \]
+  como multiconjuntos, temos
+  \[
+    |(x+y)-(z+w)| \geq t.
+  \]
+  Equivalentemente,
+  \[
+    (x+y)-(z+w) \notin \{-(t-1), \ldots, -1, 0, 1, \ldots, t-1\}.
+  \]
+  Em outras palavras, a propriedade Sidon $t$-forte pode ser lida como uma
+  condição de \emph{evasão}: as diferenças entre somas de dois pares distintos
+  de elementos de $A$ devem evitar a janela de $2t-1$ inteiros consecutivos
+  centrada na origem.
 
-  Essa perspectiva motiva a definição de $H_k^U(A)$: uma aresta entre $a_1$ e $a_2$ é criada
-  precisamente quando existe um par $(u_1,u_2) \in U \times U$ tal que $|a_1+u_1-(a_2+u_2)| \leq k$.
-  Um conjunto independente em $H_k^U(A)$ é um conjunto $I \subseteq A$ tal que nenhum par de $I$
-  admite testemunha em $U$; veremos na Proposição~\ref{prop:independente} que isso é
-  garantido quando $U \cup I$ é Sidon $(k+1)$-forte.
+  Essa perspectiva motiva a definição do multigrafo $H_k^U(A)$. De fato, uma
+  aresta entre $a_1$ e $a_2$ é criada quando existem $u_1, u_2 \in U$ tais que
+  \[
+    |(a_1+u_1)-(a_2+u_2)| \leq k,
+  \]
+  desde que também tenhamos $|a_1-a_2| > k$. Assim, uma aresta em $H_k^U(A)$
+  registra uma quase colisão, dentro de uma janela de tamanho $2k+1$, entre a
+  soma $a_1+u_1$ e a soma $a_2+u_2$.
+
+  Portanto, se $U \cup I$ é Sidon $t$-forte e $I \subseteq A \subseteq [n]
+    \setminus U$, então $I$ não pode conter uma aresta de $H_k^U(A)$ para nenhum
+  $k \leq t-1$. De fato, tal aresta produziria dois pares distintos
+  \[
+    \{a_1, u_1\} \qquad \text{e} \qquad \{a_2, u_2\}
+  \]
+  de elementos de $U \cup I$, cujas somas estariam a distância no máximo
+  $k \leq t-1$, contradizendo a propriedade Sidon $t$-forte. Assim, veremos
+  na Proposição~\ref{prop:independente} que $I$ é independente em $H_k^U(A)$
+  para todo $0 \leq k \leq t-1$.
 \end{observation}
 
-\begin{lemma}\label{lem:supersaturacao}
-  Sejam $A, U \subseteq [n]$ e $k \geq 1$ um inteiro. Se
+\begin{lemma}[Supersaturação]\label{lem:supersaturacao}
+  Seja $k \geq 1$ fixo. Para $n$ suficientemente grande, sejam $A, U \subseteq [n]$ com
+  $A \cap U = \emptyset$ tais que
   \[
-    |A| \cdot |U| \;\geq\; 2(2n+k-1),
+    |A||U| \;\geq\; 16kn.
   \]
-  então
+  Então
   \[
-    e(H_{k-1}^U(A)) \;\geq\; \frac{k\,|A|^2|U|^2}{4(2n+k-1)}.
+    e(H_{k-1}^U(A)) \;\geq\; \frac{k|A|^2|U|^2}{48n}.
   \]
-  Em particular, para $n$ suficientemente grande em relação a $k$, a condição se reduz
-  a $|A| \cdot |U| \geq 4n$, e a cota a $e(H_{k-1}^U(A)) \geq \frac{k|A|^2|U|^2}{8n}$.
 \end{lemma}
 
 \begin{proof}
-  A prova generaliza a técnica de contagem de \emph{cherries} usada por Balogh para o caso
-  clássico $k = 1$ ($H_0^U(A)$), substituindo pontos por intervalos deslizantes de tamanho $k$.
+  Escreva $M := |A||U|$ e $N := 2n+k-1$.
 
-  Defina o grafo bipartido $F$ entre $A$ e $[2n]$ onde $a \in A$ é adjacente a $m \in [2n]$
-  se e somente se existe $u \in U$ tal que $a + u = m$. Como $a, u \in [n]$, temos
-  $a + u \in \{2, \ldots, 2n\}$, e o grau de cada $a$ em $F$ é $d_F(a) = |U|$.
-
-  Para cada inteiro $x \in \{1-k, \ldots, 2n-1\}$, defina o intervalo deslizante
+  Construímos um grafo bipartido $F$ com partes $A$ e $[2n]$, onde $a \in A$ é adjacente
+  a $m \in [2n]$ se existe $u \in U$ com $m = a+u$. Como os valores $a+u$ são distintos
+  para $u$ distintos, temos $d_F(a) = |U|$ para todo $a \in A$, e $e(F) = M$.
+  Para cada $x \in \{1-k, \ldots, 2n-1\}$, defina
   \[
     I_x \;:=\; \{x+1,\; x+2,\; \ldots,\; x+k\},
   \]
-  de tamanho $|I_x| = k$. O número total de tais intervalos é $N := 2n+k-1$.
-  Defina $N(a, I_x) := |\{u \in U : a + u \in I_x\}|$ e
-  $e_F(A, I_x) := \sum_{a \in A} N(a, I_x)$.
-
-  Cada par $(a, u) \in A \times U$ produz o ponto $m := a + u$, que pertence a exatamente
-  $k$ intervalos $I_x$ — aqueles indexados por $x \in \{m-k, \ldots, m-1\}$, todos
-  admissíveis pois $m \in \{2,\ldots,2n\}$. Portanto:
+  de tamanho $k$. Há $N = 2n+k-1$ tais intervalos. Denote por $e_F(A,I_x)$ o número de
+  arestas de $F$ com extremo em $I_x$, e por $N(a,I_x) = |\{u \in U : a+u \in I_x\}|$.
+  Como cada aresta de $F$ com extremo $m$ pertence a exatamente $k$ intervalos:
   \[
-    \sum_{x} e_F(A, I_x) \;=\; k\,|A|\,|U|. \tag{1}
+    \sum_x e_F(A, I_x) \;=\; kM. \tag{1}
   \]
 
-  Defina $\mathcal{P}$ como o conjunto de triplas contendo um índice de intervalo $x$ e um par não ordenado de arestas distintas $\{e_1, e_2\}$ de $F$ cujos pontos extremos em $[2n]$ pertencem ambos ao intervalo $I_x$.
-  Portanto, fixado $x$, o número de tais pares é exatamente $\binom{e_F(A,I_x)}{2}$, de modo que
+  Seja $\mathcal{P}$ o conjunto de pares $(x, \{e_1,e_2\})$ onde $e_1, e_2$ são arestas
+  distintas de $F$ com extremos em $[2n]$ ambos pertencendo a $I_x$. Então
   \[
-    |\mathcal{P}| \;=\; \sum_{x}\binom{e_F(A,I_x)}{2}. \tag{2}
+    |\mathcal{P}| \;=\; \sum_x \binom{e_F(A,I_x)}{2}.
   \]
-
-  A função $f(t) = t(t-1)/2$ é convexa, portanto pela desigualdade de Jensen aplicada
-  aos $N$ valores $e_F(A, I_x)$ com média $\mu = k|A||U|/N$ (por (1)):
-  \begin{align}
+  Pela hipótese $M \geq 16kn$ e $N \leq 3n$, temos $kM/N \geq kM/(3n) \geq 16k^2/3 \geq 2$
+  para $k \geq 1$. Logo podemos usar $\binom{x}{2} \geq x^2/4$ para $x \geq 2$. Pela
+  convexidade de $f(t) = \binom{t}{2}$ e por (1), a desigualdade de Jensen dá:
+  \[
     |\mathcal{P}|
-    &\;\geq\; N \frac{\mu(\mu-1)}{2}
-    \;=\; \frac{k|A||U|}{2} \cdot \left(\frac{k|A||U|}{N} - 1\right)
-    \;=\; \frac{k|A||U|\,\bigl(k|A||U| - N\bigr)}{2N}. \tag{3}
-  \end{align}
+    \;\geq\; N\binom{kM/N}{2}
+    \;\geq\; N \cdot \frac{(kM/N)^2}{4}
+    \;=\; \frac{k^2M^2}{4N}. \tag{2}
+  \]
+  Cada par em $\mathcal{P}$ corresponde a arestas $(a,a+u)$ e $(b,b+v)$ com $a,b \in A$,
+  $u,v \in U$, e $|(a+u)-(b+v)| \leq k-1$. Dizemos que o par é \emph{bom} se
+  $|a-b| \geq k$, e \emph{ruim} se $|a-b| \leq k-1$.
 
-  Para obter uma cota superior em $|\mathcal{P}|$, decompomos segundo se as duas arestas do par compartilham ou não o mesmo vértice em $A$.
-  
-  \smallskip
-  \noindent\textit{Caso 1: As duas arestas compartilham um vértice $a \in A$.}
-  Neste caso, as duas arestas são da forma $(a, u_a)$ e $(a, u_b)$ com $u_a \neq u_b$, tais que $a+u_a, a+u_b \in I_x$. 
-  
-  O número total de tais contribuições para cada $a$ e cada $x$ é $\binom{N(a,I_x)}{2}$. Logo:
-  \begin{align}
-    |\mathcal{P}|_{a=b}
-    &\;=\; \sum_x \sum_{a \in A} \binom{N(a,I_x)}{2}
-    \;\leq\; \sum_x \sum_{a \in A} \frac{N(a,I_x)(N(a,I_x)-1)}{2} \notag \\
-    &\;\leq\; \frac{k-1}{2}\sum_x e_F(A,I_x)
-    \;=\; \frac{k(k-1)|A||U|}{2}, \tag{4}
-  \end{align}
-  onde usamos $N(a,I_x)-1 \leq k-1$, que segue de $N(a,I_x) \leq k$ (pois $|I_x|=k$).
+  Todo par bom testemunha uma aresta de $H_{k-1}^U(A)$. Cada testemunha com distância $d \leq k-1$ é
+  contada em $k-d \leq k$ intervalos, logo:
+  \[
+    |\mathcal{P}_{\text{bom}}| \;\leq\; k \cdot e(H_{k-1}^U(A)). \tag{3}
+  \]
+  Como $N(a,I_x) \leq k$, temos $\binom{N(a,I_x)}{2} \leq \frac{k-1}{2}N(a,I_x)$.
+  Somando sobre $a$ e $x$ e usando (1):
+  \[
+    |\mathcal{P}_{a=b}|
+    \;\leq\; \frac{k-1}{2}\sum_{a,x}N(a,I_x)
+    \;=\; \frac{k(k-1)}{2}M. \tag{4}
+  \]
+  Há no máximo $(k-1)|A|$ pares não-ordenados $\{a,b\}$ com essa propriedade. Para cada
+  um, usando $N(a,I_x) \leq k$ e $\sum_x N(b,I_x) = k|U|$:
+  \[
+    \sum_x N(a,I_x)N(b,I_x) \;\leq\; k \cdot k|U| \;=\; k^2|U|.
+  \]
+  Logo:
+  \[
+    |\mathcal{P}_{0<|a-b|\leq k-1}| \;\leq\; (k-1)|A| \cdot k^2|U| \;=\; k^2(k-1)M. \tag{5}
+  \]
 
-  \smallskip
-  \noindent\textit{Caso 2: As duas arestas não compartilham vértices em $A$.}
-  Sejam as duas arestas $(a, u_a)$ e $(b, u_b)$ com $a \neq b$. Se $a+u_a, b+u_b \in I_x$, então $|(a+u_a)-(b+u_b)| \leq k-1$, ou seja, $(u_a,u_b)$
-  testemunha a aresta $\{a,b\}$ em $H_{k-1}^U(A)$. Reciprocamente, dado um par não-ordenado
-  de arestas $\{(a,u_a),(b,u_b)\}$ com $a \neq b$ e distância $d := |(a+u_a)-(b+u_b)| \leq k-1$,
-  o número de intervalos $I_x$ contendo simultaneamente $a+u_a$ e $b+u_b$ é exatamente $k-d \leq k$.
-  Portanto, cada testemunha contribui com no máximo $k$ elementos em $\mathcal{P}$. Somando sobre todas as testemunhas e arestas em $H_{k-1}^U(A)$, temos:
+  De (4) e (5), usando $\frac{k-1}{2} + k(k-1) = \frac{(k-1)(2k+1)}{2} \leq k^2$:
   \[
-    |\mathcal{P}|_{a \neq b}
-    \;\leq\; k\cdot e(H_{k-1}^U(A)). \tag{5}
+    |\mathcal{P}_{\text{ruim}}| \;\leq\; k^2 M. \tag{6}
   \]
-  Combinando (4) e (5):
+  Portanto, de (3) e (6):
   \[
-    |\mathcal{P}| \;\leq\; \frac{k(k-1)|A||U|}{2} + k\cdot e(H_{k-1}^U(A)). \tag{6}
+    |\mathcal{P}| \;\leq\; k \cdot e(H_{k-1}^U(A)) + k^2 M. \tag{7}
   \]
-  De (3) e (6):
+
+  Combinando (2) e (7):
   \[
-    \frac{k(k-1)|A||U|}{2} + k\cdot e(H_{k-1}^U(A))
-    \;\geq\; \frac{k|A||U|(k|A||U|-N)}{2N}.
+    k \cdot e(H_{k-1}^U(A))
+    \;\geq\; |\mathcal{P}| - k^2M
+    \;\geq\; \frac{k^2M^2}{4N} - k^2M.
   \]
-  Dividindo toda a desigualdade por $k$:
-  \[
-    \frac{(k-1)|A||U|}{2} + e(H_{k-1}^U(A))
-    \;\geq\; \frac{|A||U|(k|A||U|-N)}{2N}.
-  \]
-  Isolando $e(H_{k-1}^U(A))$:
+  Dividindo por $k$:
   \[
     e(H_{k-1}^U(A))
-    \;\geq\; \frac{|A||U|(k|A||U|-N)}{2N} - \frac{(k-1)|A||U|}{2}
-    \;=\; \frac{k|A||U|}{2N}\Bigl[|A||U| - N\Bigr]. \tag{7}
+    \;\geq\; \frac{kM^2}{4N} - kM.
   \]
-  Sob a hipótese $|A||U| \geq 2N$, temos $|A||U| - N \geq \frac{|A||U|}{2}$, o que nos dá diretamente:
+  Como $N \leq 3n$:
+  \[
+    \frac{kM^2}{4N} \;\geq\; \frac{kM^2}{12n}.
+  \]
+  Da hipótese $M \geq 16kn$, temos $kM \leq \frac{M^2}{16n}$, logo:
+  \[
+    kM \;\leq\; \frac{kM^2}{16n} \;\leq\; \frac{kM^2}{16n}.
+  \]
+  Portanto:
   \[
     e(H_{k-1}^U(A))
-    \;\geq\; \frac{k|A|^2|U|^2}{4N}
-    \;=\; \frac{k|A|^2|U|^2}{4(2n+k-1)}.
+    \;\geq\; \frac{kM^2}{12n} - \frac{kM^2}{16n}
+    \;=\; kM^2\left(\frac{1}{12} - \frac{1}{16}\right)
+    \;=\; kM^2 \cdot \frac{1}{48}
+    \;=\; \frac{k|A|^2|U|^2}{48n}.
   \]
-  Para $k$ fixo e $n$ grande, $N \sim 2n$, e a cota se reduz a
-  \[
-    e(H_{k-1}^U(A)) \;\geq\; \frac{k|A|^2|U|^2}{8n},
-  \]
-  com hipótese $|A||U| \geq 4n$. \end{proof}
+\end{proof}
 
-\begin{remark}\label{rem:cotas-grosseiras}
-  \textbf{Discussão sobre cotas grosseiras e enunciado alternativo:}
-  Para fins de ilustração e para deixar claro como a precisão das cotas afeta a hipótese de densidade do lema, apresentamos aqui uma análise alternativa utilizando estimativas significativamente mais grosseiras (sacrificando a otimalidade das constantes em troca de menor esforço combinatório nas somas). Este comentário serve como um complemento e não faz parte da prova oficial.
 
-  Suponha que, ao invés de refinarmos as cotas para os casos $a = b$ e $a \neq b$, tivéssemos adotado as seguintes estimativas simplificadas e mais grosseiras:
-  \begin{itemize}
-    \item No caso $a = b$, estimamos grosseiramente $N(a, I_x) \leq k$, obtendo:
-    \[
-      |\mathcal{P}|_{a=b} \;\leq\; \frac{k^2 |A||U|}{2}.
-    \]
-    \item No caso $a \neq b$, majoramos o número de intervalos $I_x$ contendo simultaneamente os extremos de qualquer testemunha por $k$ de forma direta, resultando em:
-    \[
-      |\mathcal{P}|_{a \neq b} \;\leq\; k \cdot e(H_{k-1}^U(A)).
-    \]
-  \end{itemize}
-  Combinando-as, teríamos a cota superior grosseira $|\mathcal{P}| \leq \frac{k^2 |A||U|}{2} + k \cdot e(H_{k-1}^U(A))$. Confrontando este limite com a cota inferior obtida por Jensen em (3), temos:
-  \[
-    \frac{k^2 |A||U|}{2} + k \cdot e(H_{k-1}^U(A)) \;\geq\; \frac{k|A||U|(k|A||U|-N)}{2N}.
-  \]
-  Dividindo por $k$ e isolando $e(H_{k-1}^U(A))$, a desigualdade simplifica para:
-  \[
-    e(H_{k-1}^U(A)) \;\geq\; \frac{|A||U|}{2N}\Bigl[ k|A||U| - (k+1)N \Bigr].
-  \]
-  Para podermos deduzir uma cota quadrática da forma $\frac{k|A|^2|U|^2}{4N}$ a partir desse colchete, precisaríamos que $k|A||U| - (k+1)N \geq \frac{k|A||U|}{2}$, o que equivale matematicamente a exigir a seguinte hipótese de densidade muito mais forte (e grosseira):
-  \[
-    |A||U| \;\geq\; \frac{2(k+1)N}{k}.
-  \]
-  Dessa forma, sob essas cotas grosseiras, o enunciado do Lema~\ref{lem:supersaturacao} seria reformulado da seguinte maneira:
+
+\subsection{Estrutura dos multigrafos $H_k^U(A)$ \afonso{fiz uma nova definição aqui}}
+
+Dado $U \subseteq [n]$ e $A \subseteq [n] \setminus U$, definimos o multigrafo $H_k^U(A)$
+com conjunto de vértices $V(H_k^U(A)) = A$, onde um par $\{a_1, a_2\} \subset A$ com
+$|a_1-a_2| > k$ forma uma aresta se e somente se existem $u_1, u_2 \in U$ tais que
+\[
+  |(a_1 + u_1) - (a_2 + u_2)| \;\leq\; k.
+\]
+A multiplicidade da aresta $\{a_1,a_2\}$ é o número de pares ordenados $(u_1,u_2) \in U
+  \times U$ satisfazendo essa condição, e dizemos que tal par \emph{testemunha} a aresta.
+
+\begin{remark}\label{rem:restricao}
+  A restrição $|a_1-a_2| > k$ na definição é necessária para evitar testemunhas ruins e
+  talvez não cause perda de informação relevante. Tentarei explicar aqui.
 
   \medskip
-  \noindent\textbf{Lema (Enunciado Alternativo Grosseiro):}
-  \textit{Sejam $A, U \subseteq [n]$ e $k \geq 1$ um inteiro. Se $|A| \cdot |U| \geq \dfrac{2(k+1)(2n+k-1)}{k}$, então}
+  \textbf{Por que a restrição seria necessária?}
+  Se $|a_1-a_2| \leq k$, então para qualquer $u \in U$ o par $(u,u)$ testemunha a aresta
+  $\{a_1,a_2\}$, pois $|(a_1+u)-(a_2+u)| = |a_1-a_2| \leq k$. Isso cria uma multiplicidade
+  artificial de pelo menos $|U|$ que não carrega nenhuma informação sobre a estrutura Sidon
+  de $U$, tornando a análise de multiplicidade da Proposição~\ref{prop:multiplicidade}
+  completamente inválida para esses pares.
+
+  \medskip
+  \textbf{Por que TALVEZ a gente não perca conjuntos Sidon relevantes?}
+  Na aplicação, trabalhamos com $a_1, a_2 \in I$ onde $U \cup I$ é $t$-Sidon forte.
+  Aplicando a condição $t$-Sidon à quádrupla $(a_1, u, a_2, u)$ com $u \in U$, obtemos
   \[
-    e(H_{k-1}^U(A)) \;\geq\; \frac{k\,|A|^2|U|^2}{4(2n+k-1)}.
+    |a_1 + u - a_2 - u| \;=\; |a_1 - a_2| \;\geq\; t.
   \]
-  Isso demonstra que, ao se utilizar cotas grosseiras nas estimativas dos *cherries*, a estrutura do resultado final permanece a mesma, porém somos penalizados com uma exigência de densidade para $|A||U|$ que cresce com $k$ (em oposição à nossa hipótese limpa de $|A||U| \geq 2N$ na prova principal), ressaltando a relevância do tratamento preciso dado no corpo da seção.
+  Como $k \leq k^* = \lfloor(t-1)/2\rfloor < t$, temos $|a_1-a_2| \geq t > k$, de modo que
+  a restrição é automaticamente satisfeita para todo par válido em $I$. Nenhum par relevante
+  é excluído do grafo.
+
+  \medskip
+  \textbf{Isso não é um problema em $H_0^U(A)$.}
+  Em $H_0^U(A)$, uma testemunha $(u,u)$ requer $|(a_1+u)-(a_2+u)| = |a_1-a_2| \leq 0$,
+  ou seja, $a_1 = a_2$, o que é impossível para um par de vértices distintos. Portanto
+  testemunhas ruins da forma $(u,u)$ simplesmente não existem em $H_0^U(A)$, e a restrição
+  é redundante nesse caso.
 \end{remark}
 
+\subsection{Controle da multiplicidade}
 
+Nesta seção, controlamos a multiplicidade das arestas do multigrafo $H_k^U(A)$.
+Usaremos aqui a definição global de Sidon $t$-forte: as somas de pares de elementos
+do conjunto são duas a duas $t$-separadas.
 
-\subsection{Estrutura dos multigrafos $H_k^U(A)$}
-
-Fixemos $a_1, a_2 \in A$ e consideremos o conjunto de todas as testemunhas de $\{a_1,a_2\}$
-em $H_k^U(A)$. Para cada testemunha $(u_1,u_2) \in U \times U$, a quantidade
-$\delta := (a_1 + u_1) - (a_2 + u_2)$ satisfaz $|\delta| \leq k$. Reescrevendo
-$\delta = (a_1 - a_2) - (u_2 - u_1)$, vemos que a testemunha fica determinada, módulo a
-diferença $a_1 - a_2$, pela diferença $u_1 - u_2$. Mais precisamente, escrevendo
-$\Delta := a_1 - a_2$, a condição $|\delta| \leq k$ é equivalente a
+Fixemos $a_1, a_2 \in A$ com $|a_1 - a_2| > k$. Consideremos o conjunto de todas
+as testemunhas de $\{a_1, a_2\}$ em $H_k^U(A)$, isto é, todos os pares
+$(u_1, u_2) \in U \times U$ tais que
 \[
-  u_1 - u_2 \;\in\; [\Delta - k,\, \Delta + k].
+  |(a_1 + u_1) - (a_2 + u_2)| \leq k.
 \]
-Assim, cada testemunha $(u_1,u_2)$ induz um valor $x := u_1 - u_2$ no intervalo inteiro
-$[\Delta - k, \Delta + k]$, de comprimento $2k$. A aplicação
+Para uma testemunha $(u_1, u_2)$, defina
 \[
-  \varphi \colon (u_1, u_2) \;\longmapsto\; u_1 - u_2
+  \delta := (a_1 + u_1) - (a_2 + u_2).
 \]
-envia o conjunto de testemunhas de $\{a_1,a_2\}$ a um subconjunto de $[\Delta - k, \Delta + k]$.
-
-A condição $t$-Sidon forte de $U$ impõe uma restrição forte sobre a imagem de $\varphi$: para
-quaisquer duas testemunhas distintas $(u_{1,i}, u_{2,i})$ e $(u_{1,j}, u_{2,j})$, os valores
-$x_i := u_{1,i} - u_{2,i}$ e $x_j := u_{1,j} - u_{2,j}$ satisfazem $|x_i - x_j| \geq t$.
-Com efeito,
+Então $|\delta| \leq k$. Escrevendo $\Delta := a_1 - a_2$, temos
 \[
-  x_i - x_j \;=\; (u_{1,i} + u_{2,j}) - (u_{2,i} + u_{1,j}),
+  \delta
+  = (a_1 - a_2) + (u_1 - u_2)
+  = \Delta - (u_2 - u_1).
 \]
-e se os pares não ordenados $\{u_{1,i}, u_{2,j}\}$ e $\{u_{2,i}, u_{1,j}\}$ forem distintos,
-a condição $t$-Sidon forte garante $|x_i - x_j| \geq t$. Se coincidirem, as únicas
-alternativas são: (a) $u_{1,i} = u_{1,j}$ e $u_{2,i} = u_{2,j}$, impossível pois as
-testemunhas são distintas; ou (b) $u_{1,i} = u_{2,j}$ e $u_{2,i} = u_{1,j}$, em que
-$x_i + x_j = 0$ e a mesma condição $t$-Sidon aplicada à expressão $2x_i$ exige
-$|2x_i| \geq t$, logo $|x_i - x_j| = 2|x_i| \geq t$.
-
-Em particular, a aplicação $\varphi$ é injetiva entre testemunhas distintas cujos valores
-diferem por menos de $t$ — e como acabamos de ver, isso nunca ocorre — portanto $\varphi$
-restrita ao conjunto de testemunhas de $\{a_1,a_2\}$ é injetiva, e sua imagem é um conjunto
-$t$-separado contido em $[\Delta - k, \Delta + k]$.
-
-Os grafos $H_k^U(A)$ formam, além disso, uma cadeia crescente
+Logo, a condição $|\delta| \leq k$ é equivalente a
 \[
-  H_0^U(A) \;\subseteq\; H_1^U(A) \;\subseteq\; \cdots \;\subseteq\; H_k^U(A) \;\subseteq\; \cdots,
+  -k \leq \Delta - (u_2 - u_1) \leq k,
 \]
-pois toda testemunha de $\{a_1,a_2\}$ em $H_k^U(A)$ também o é em $H_{k+1}^U(A)$. Em
-particular, todo conjunto independente em $H_j^U(A)$ permanece independente em $H_k^U(A)$
-para todo $k \leq j$; assim, para verificar independência, basta trabalhar com o menor grafo
-da cadeia relevante para o problema.
-
-O limiar de simplicidade decorre diretamente da análise acima: $H_k^U(A)$ é simples quando
-a imagem de $\varphi$ tem tamanho no máximo $1$, o que equivale a $t > 2k$, pois um intervalo
-de comprimento $2k$ não comporta dois pontos com separação $\geq t$. O maior $k$ para o qual
-$H_k^U(A)$ é necessariamente simples é portanto
+ou seja,
 \[
-  k^* \;=\; \left\lfloor \frac{t-1}{2} \right\rfloor.
+  u_2 - u_1 \in [\Delta - k,\, \Delta + k].
 \]
+Assim, cada testemunha $(u_1, u_2)$ induz um inteiro
+\[
+  x := u_2 - u_1
+\]
+pertencente ao intervalo $[\Delta - k, \Delta + k]$, que tem comprimento $2k$
+e contém exatamente $2k + 1$ inteiros.
+
+Definimos a aplicação
+\[
+  \varphi \colon \{\text{testemunhas de } \{a_1, a_2\}\} \longrightarrow \mathbb{Z}
+\]
+por $\varphi(u_1, u_2) := u_2 - u_1$. Pelo que vimos,
+$\operatorname{Im}(\varphi) \subseteq [\Delta - k, \Delta + k] \cap \mathbb{Z}$.
+O próximo passo é mostrar que a imagem de $\varphi$ é $t$-separada.
 
 \begin{proposition}\label{prop:multiplicidade}
-  Seja $U \subseteq [n]$ um conjunto $t$-Sidon forte e $A \subseteq [n] \setminus U$. Então a
-  multiplicidade de qualquer aresta de $H_k^U(A)$ é no máximo $\lfloor 2k/t \rfloor + 1$.
-  Em particular, $H_k^U(A)$ é um grafo simples se e somente se $t > 2k$, e o maior $k$ para
-  o qual isso vale é $k^* = \lfloor (t-1)/2 \rfloor$.
+  Seja $U \subseteq [n]$ um conjunto Sidon $t$-forte no sentido global, e seja
+  $A \subseteq [n]$. Então a multiplicidade de qualquer aresta de $H_k^U(A)$ é
+  no máximo
+  \[
+    \left\lfloor \frac{2k}{t} \right\rfloor + 1.
+  \]
+  Em particular, se $t > 2k$, então $H_k^U(A)$ é simples. Consequentemente,
+  a maior escolha de $k$ para a qual esta proposição garante que $H_k^U(A)$ é
+  simples é
+  \[
+    k^* = \left\lfloor \frac{t-1}{2} \right\rfloor.
+  \]
 \end{proposition}
 
 \begin{proof}
-  Seja $\{a_1,a_2\} \subset A$ uma aresta de $H_k^U(A)$, e suponha que ela possui $m$
-  testemunhas distintas $(u_{1,1},u_{2,1}), \ldots, (u_{1,m},u_{2,m}) \in U \times U$.
-  Defina $\Delta := a_1 - a_2$ e, para cada $j \in \{1,\ldots,m\}$, o inteiro
+  Seja $\{a_1, a_2\}$ uma aresta de $H_k^U(A)$. Pela definição de $H_k^U(A)$,
+  temos $|a_1 - a_2| > k$. Suponha que essa aresta tenha multiplicidade $m$.
+  Então existem testemunhas distintas
   \[
-    x_j \;:=\; u_{1,j} - u_{2,j}.
+    (u_{1,1}, u_{2,1}), \ldots, (u_{1,m}, u_{2,m}) \in U \times U
   \]
-  Como $(u_{1,j}, u_{2,j})$ testemunha a aresta, vale $|(a_1 + u_{1,j}) - (a_2 + u_{2,j})| \leq k$,
-  isto é, $|\Delta - x_j| \leq k$, o que equivale a
+  tais que, para todo $j = 1, \ldots, m$,
   \[
-    x_j \;\in\; [\Delta - k,\, \Delta + k].
-  \]
-  Em particular, todos os $m$ valores $x_1, \ldots, x_m$ estão contidos no intervalo inteiro
-  $[\Delta - k, \Delta + k]$, que tem comprimento $2k$.
-
-  Mostraremos agora que esses valores são par a par separados por pelo menos $t$, isto é,
-  $|x_i - x_j| \geq t$ para todo $i \neq j$. Fixe $i \neq j$ e observe que
-  \[
-    x_i - x_j \;=\; (u_{1,i} + u_{2,j}) - (u_{2,i} + u_{1,j}).
-  \]
-  Se os pares não ordenados $\{u_{1,i}, u_{2,j}\}$ e $\{u_{2,i}, u_{1,j}\}$ forem distintos,
-  então como $U$ é $t$-Sidon forte temos $|x_i - x_j| \geq t$. Se forem iguais, há duas
-  possibilidades: ou $u_{1,i} = u_{1,j}$ e $u_{2,i} = u_{2,j}$, o que tornaria as testemunhas
-  $i$ e $j$ idênticas, contrariando a hipótese de que são distintas; ou $u_{1,i} = u_{2,j}$ e
-  $u_{2,i} = u_{1,j}$, em que $x_i = -x_j$. Neste último caso, ambos $x_i$ e $x_j = -x_i$
-  pertencem a $[\Delta-k, \Delta+k]$, o que implica $|x_i| \leq k$ e $|x_j| \leq k$.
-  A expressão $x_i - x_j = 2x_i$ não é nula pois $x_i \in [\Delta-k,\Delta+k]$
-  e $-x_i \in [\Delta-k,\Delta+k]$ juntos implicam $|x_i| \leq k$, mas isso não implica
-  $x_i = 0$ em geral; o que importa é que $(u_{1,i} + u_{2,j}) - (u_{2,i} + u_{1,j}) = 2x_i$,
-  e como $\{u_{1,i}, u_{2,j}\} = \{u_{2,i}, u_{1,j}\}$ esses pares são iguais enquanto
-  conjuntos, de modo que a condição $t$-Sidon forte exige que essa diferença seja nula ou de
-  módulo pelo menos $t$. Como $2x_i = 0$ implicaria $x_i = 0$, portanto $x_j = 0$ e assim
-  ambas as testemunhas dariam a mesma diferença $\Delta$, o que forçaria $u_{1,i} = u_{1,j}$
-  e $u_{2,i} = u_{2,j}$ — contradição. Logo $x_i \neq 0$, e a condição $t$-Sidon aplicada
-  à expressão $2x_i$ exige $|2x_i| \geq t$, dando $|x_i - x_j| = 2|x_i| \geq t$.
-  Portanto, em todos os casos, $|x_i - x_j| \geq t$.
-
-  Temos então $m$ inteiros distintos $x_1, \ldots, x_m$ no intervalo $[\Delta-k, \Delta+k]$,
-  com separação mínima $t$ entre quaisquer dois deles. Ordenando-os como
-  $x_{(1)} < x_{(2)} < \cdots < x_{(m)}$, cada par consecutivo satisfaz
-  $x_{(j+1)} - x_{(j)} \geq t$, e por uma soma telescópica,
-  \[
-    x_{(m)} - x_{(1)}
-    \;=\; \sum_{j=1}^{m-1}\bigl(x_{(j+1)} - x_{(j)}\bigr)
-    \;\geq\; (m-1)\,t.
-  \]
-  Como $x_{(1)}, x_{(m)} \in [\Delta-k, \Delta+k]$, temos $x_{(m)} - x_{(1)} \leq 2k$,
-  e portanto $(m-1)t \leq 2k$, ou seja, $m - 1 \leq 2k/t$. Como $m$ é inteiro, isso dá
-  \[
-    m \;\leq\; \left\lfloor \frac{2k}{t} \right\rfloor + 1.
+    |(a_1 + u_{1,j}) - (a_2 + u_{2,j})| \leq k.
   \]
 
-  Esse limite é atingível, e pode ser visto de forma ainda mais direta pelo Princípio da
-  Casa dos Pombos. Particione $[\Delta-k, \Delta+k]$ nos $\lfloor 2k/t \rfloor + 1$
-  subintervalos
+  Defina $\Delta := a_1 - a_2$ e, para cada $j$,
   \[
-    B_\ell \;:=\; \bigl[\Delta - k + \ell\,t,\; \Delta - k + (\ell+1)t\bigr),
-    \qquad \ell = 0, 1, \ldots, \lfloor 2k/t \rfloor - 1,
+    x_j := u_{2,j} - u_{1,j}.
   \]
-  mais o subintervalo final $B_{\lfloor 2k/t \rfloor} := [\Delta - k + \lfloor 2k/t \rfloor\,t,\,
-    \Delta + k]$. Cada $B_\ell$ tem comprimento estritamente menor que $t$ — os primeiros
-  $\lfloor 2k/t\rfloor$ têm comprimento exatamente $t$ mas são semi-abertos à direita, e o
-  último tem comprimento $2k - \lfloor 2k/t\rfloor\,t < t$. Portanto, quaisquer dois pontos
-  inteiros distintos num mesmo $B_\ell$ têm distância no máximo $t-1 < t$. Se houvesse
-  $m \geq \lfloor 2k/t \rfloor + 2$ valores $t$-separados em $[\Delta-k,\Delta+k]$, o
-  Princípio da Casa dos Pombos garantiria que dois deles, digamos $x_i$ e $x_j$, cairiam no
-  mesmo $B_\ell$, forçando $|x_i - x_j| < t$ — contradição com a $t$-separação estabelecida
-  acima. Portanto $m \leq \lfloor 2k/t \rfloor + 1$.
+  Pela discussão anterior, todos os $x_j$ pertencem ao intervalo inteiro
+  $[\Delta - k, \Delta + k]$.
 
-  Por fim, $\lfloor 2k/t \rfloor = 0$ se e somente se $2k < t$, isto é, $t > 2k$, o que é
-  equivalente a $k < t/2$, ou seja, $k \leq \lfloor (t-1)/2 \rfloor = k^*$. Nesse caso a
-  multiplicidade é no máximo $1$, i.e., $H_k^U(A)$ é simples.
+  \medskip
+  \noindent\textbf{Afirmação:} os inteiros $x_1, \ldots, x_m$ são dois a dois
+  $t$-separados.
+
+  \medskip
+  \noindent\textit{Prova da afirmação.}
+  Tome $i \neq j$. Temos
+  \[
+    x_i - x_j
+    = (u_{2,i} - u_{1,i}) - (u_{2,j} - u_{1,j})
+    = (u_{2,i} + u_{1,j}) - (u_{1,i} + u_{2,j}).
+  \]
+  Suponha, por contradição, que $|x_i - x_j| < t$. Então
+  \[
+    |(u_{2,i} + u_{1,j}) - (u_{1,i} + u_{2,j})| < t.
+  \]
+  Como $U$ é Sidon $t$-forte no sentido global, duas somas de pares distintas
+  de elementos de $U$ não podem diferir em menos de $t$. Portanto,
+  necessariamente,
+  \[
+    \{u_{2,i}, u_{1,j}\} = \{u_{1,i}, u_{2,j}\}
+  \]
+  como multiconjuntos. Há exatamente duas possibilidades.
+
+  \textit{Possibilidade 1:} $u_{2,i} = u_{2,j}$ e $u_{1,j} = u_{1,i}$.
+  Nesse caso $(u_{1,i}, u_{2,i}) = (u_{1,j}, u_{2,j})$, contradizendo o fato
+  de que as testemunhas $i$ e $j$ são distintas.
+
+  \textit{Possibilidade 2:} $u_{2,i} = u_{1,i}$ e $u_{1,j} = u_{2,j}$.
+  Se $u_{2,i} = u_{1,i}$, então
+  \[
+    |(a_1 + u_{1,i}) - (a_2 + u_{2,i})|
+    = |a_1 - a_2|
+    = |\Delta|
+    > k,
+  \]
+  contradizendo o fato de que $(u_{1,i}, u_{2,i})$ é uma testemunha de
+  $\{a_1, a_2\}$. O mesmo argumento se aplica à testemunha $j$ caso
+  $u_{1,j} = u_{2,j}$.
+
+  Em ambos os casos chegamos a uma contradição. Logo $|x_i - x_j| \geq t$,
+  o que prova a afirmação. $\square$
+
+  \medskip
+  Ordene os inteiros $x_1, \ldots, x_m$ como $y_1 < y_2 < \cdots < y_m$.
+  Como são $t$-separados,
+  \[
+    y_{\ell+1} - y_\ell \geq t \qquad \text{para todo } \ell = 1, \ldots, m-1.
+  \]
+  Somando essas desigualdades:
+  \[
+    y_m - y_1
+    = \sum_{\ell=1}^{m-1}(y_{\ell+1} - y_\ell)
+    \geq (m-1)t.
+  \]
+  Por outro lado, todos os $y_\ell$ pertencem a $[\Delta - k, \Delta + k]$,
+  portanto
+  \[
+    y_m - y_1 \leq 2k.
+  \]
+  Combinando as duas desigualdades:
+  \[
+    (m-1)t \leq 2k,
+  \]
+  de onde
+  \[
+    m \leq \left\lfloor \frac{2k}{t} \right\rfloor + 1.
+  \]
+
+  Em particular, se $t > 2k$, então $\lfloor 2k/t \rfloor = 0$, logo toda aresta
+  tem multiplicidade no máximo $1$, e $H_k^U(A)$ é simples.
+
+  Finalmente, a condição $t > 2k$ equivale a $k < t/2$, e como $k$ é inteiro,
+  isso equivale a $k \leq \lfloor (t-1)/2 \rfloor$. Portanto, a maior escolha
+  de $k$ para a qual a proposição garante simplicidade é
+  \[
+    k^* = \left\lfloor \frac{t-1}{2} \right\rfloor. \qquad\blacksquare
+  \]
 \end{proof}
 
-
+\begin{remark}
+  Com a definição adotada para $H_k^U(A)$, os grafos $H_k^U(A)$ não formam,
+  em geral, uma cadeia crescente em $k$. De fato, ao aumentar $k$, a condição
+  $|(a+u)-(b+v)| \leq k$ fica mais fraca, mas a condição $|a-b| > k$ fica mais
+  forte. Portanto, uma aresta pode aparecer em $H_k^U(A)$ e desaparecer em
+  $H_{k+1}^U(A)$. Assim, conclusões de independência para diferentes valores
+  de $k$ devem ser provadas diretamente, e não por monotonicidade dos grafos.
+\end{remark}
 \begin{proposition}\label{prop:independente}
-  Sejam $U \subseteq [n]$ um conjunto $t$-Sidon forte e $I \subseteq A \subseteq [n] \setminus U$
-  tais que $U \cup I$ também é $t$-Sidon forte. Então $I$ é um conjunto independente em
-  $H_{t-1}^U(A)$, e portanto também em $H_k^U(A)$ para todo $k \leq t-1$.
+  Sejam $I \subseteq A \subseteq [n] \setminus U$, com $U \subseteq [n]$. Suponha que
+  $U \cup I$ é Sidon $t$-forte no sentido global, isto é, suponha que as somas de
+  pares de elementos de $U \cup I$ são duas a duas $t$-separadas. Então $I$ é um
+  conjunto independente em $H_k^U(A)$ para todo $0 \leq k \leq t-1$. Em particular,
+  $I$ é independente em $H_{t-1}^U(A)$.
 \end{proposition}
 
 \begin{proof}
-  Suponha, por contradição, que existem $a_1, a_2 \in I$ tais que $\{a_1,a_2\}$ é uma aresta em
-  $H_{t-1}^U(A)$. Por definição, existe um par $(u_1, u_2) \in U \times U$ testemunhando essa
-  aresta, isto é,
+  Fixe $0 \leq k \leq t-1$. Suponha, por contradição, que $I$ não é independente em
+  $H_k^U(A)$. Então existem $a_1, a_2 \in I$, com $a_1 \neq a_2$, e existem
+  $u_1, u_2 \in U$ tais que $\{a_1, a_2\}$ é uma aresta de $H_k^U(A)$ testemunhada
+  por $(u_1, u_2)$. Pela definição de $H_k^U(A)$, isso significa que
   \[
-    |(a_1+u_1)-(a_2+u_2)| \;\leq\; t-1.
+    |a_1 - a_2| > k
   \]
-  Como $a_1, a_2 \in I$, $u_1, u_2 \in U$ e $I \cap U = \emptyset$, as partes $\{a_1, u_1\}$ e $\{a_2, u_2\}$ são subconjuntos disjuntos do conjunto $U$ e de $I$, respectivamente, e estão contidas em $U \cup I$. Além disso, como $a_1 \neq a_2$ (pois são vértices distintos da aresta), os conjuntos $\{a_1, u_1\}$ e $\{a_2, u_2\}$ são obrigatoriamente distintos (como multiconjuntos).
-  Dessa forma, como $U \cup I$ é $t$-Sidon forte, a definição impõe que:
+  e
   \[
-    |(a_1 + u_1) - (a_2 + u_2)| \;\geq\; t,
+    |(a_1 + u_1) - (a_2 + u_2)| \leq k.
   \]
-  o que contradiz a hipótese de que $|(a_1+u_1)-(a_2+u_2)| \leq t-1$. Portanto, $I$ é independente em $H_{t-1}^U(A)$.
+  Como $k \leq t-1$, obtemos
+  \[
+    |(a_1 + u_1) - (a_2 + u_2)| \leq t - 1. \tag{1}
+  \]
+
+  Como $I \subseteq A \subseteq [n] \setminus U$, temos $I \cap U = \emptyset$.
+  Logo $a_1, a_2$ pertencem a $I$, enquanto $u_1, u_2$ pertencem a $U$. Em
+  particular, os multiconjuntos
+  \[
+    \{a_1, u_1\} \qquad \text{e} \qquad \{a_2, u_2\}
+  \]
+  são multiconjuntos de elementos de $U \cup I$. Além disso, eles são distintos.
+  De fato, se fossem iguais como multiconjuntos, como cada um contém exatamente
+  um elemento de $I$ e um elemento de $U$, teríamos necessariamente
+  \[
+    a_1 = a_2 \qquad \text{e} \qquad u_1 = u_2,
+  \]
+  contradizendo $a_1 \neq a_2$.
+
+  Portanto, $\{a_1, u_1\}$ e $\{a_2, u_2\}$ são dois pares distintos de elementos
+  de $U \cup I$. Como $U \cup I$ é Sidon $t$-forte no sentido global, segue que
+  suas somas devem estar a distância pelo menos $t$, isto é,
+  \[
+    |(a_1 + u_1) - (a_2 + u_2)| \geq t. \tag{2}
+  \]
+  As desigualdades (1) e (2) são incompatíveis. Essa contradição mostra que $I$
+  é independente em $H_k^U(A)$.
+
+  Como $k \leq t-1$ foi escolhido arbitrariamente, concluímos que $I$ é
+  independente em $H_k^U(A)$ para todo $0 \leq k \leq t-1$. Em particular,
+  $I$ é independente em $H_{t-1}^U(A)$.
 \end{proof}
 
-As proposições precedentes articulam-se da seguinte forma. Se $U$ é $t$-Sidon forte, então
-$H_{t-1}^U(A)$ é o grafo mais ``grosso'' garantido pela Proposição~\ref{prop:independente},
-em que todo conjunto $t$-Sidon que estende $U$ é independente. Dentro da cadeia
-$H_0^U(A) \subseteq \cdots \subseteq H_{t-1}^U(A)$, o limiar de simplicidade é
-$k^* = \lfloor(t-1)/2\rfloor$: para $k \leq k^*$ o grafo é simples, e para $k > k^*$ tem
-multiplicidade no máximo $\lfloor 2k/t\rfloor + 1$.
+\medskip
 
- A tabela abaixo ilustra o caso $t = 10$, em que $k^* = 4$.
+As proposições precedentes articulam-se da seguinte forma.
+A Proposição~\ref{prop:independente} mostra que, se $U \cup I$ é Sidon $t$-forte,
+então $I$ é independente em cada um dos grafos
+\[
+  H_0^U(A),\; H_1^U(A),\; \ldots,\; H_{t-1}^U(A).
+\]
+Essa conclusão não depende de monotonicidade entre os grafos $H_k^U(A)$. De fato,
+com a definição adotada aqui, os grafos $H_k^U(A)$ não formam necessariamente uma
+cadeia crescente: ao aumentar $k$, a condição $|(a+u)-(b+v)| \leq k$ fica mais
+fraca, mas a condição $|a-b| > k$ fica mais forte. Portanto, uma aresta pode
+aparecer em $H_k^U(A)$ e desaparecer em $H_{k+1}^U(A)$.
+
+Por outro lado, a Proposição~\ref{prop:multiplicidade} mostra que, se $U$ é Sidon
+$t$-forte no sentido global, então a multiplicidade de qualquer aresta de
+$H_k^U(A)$ é no máximo
+\[
+  \left\lfloor \frac{2k}{t} \right\rfloor + 1.
+\]
+Em particular, $H_k^U(A)$ é garantidamente simples sempre que $t > 2k$.
+Assim, o maior valor de $k$ para o qual a simplicidade é garantida por essa
+proposição é
+\[
+  k^* = \left\lfloor \frac{t-1}{2} \right\rfloor.
+\]
+
+A tabela abaixo ilustra o caso $t = 10$, em que $k^* = 4$.
+A coluna de supersaturação usa a estimativa assintótica
+\[
+  e(H_k^U(A)) \gtrsim \frac{(k+1)|A|^2|U|^2}{8n},
+\]
+válida quando a hipótese correspondente do Lema~\ref{lem:supersaturacao} é
+satisfeita, pois para estimar $e(H_k^U(A))$ aplicamos o lema com parâmetro $k+1$.
 
 \begin{center}
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{cccc}
     \hline
-    $k$      & Mult.~máxima & $e(H_k^U) \gtrsim$            & Simples?\\
+    $k$      & Mult.\ máxima & $e(H_k^U(A)) \gtrsim$
+             & Simples?                                                     \\
     \hline
-    $0$      & $1$          & $\dfrac{|A|^2|U|^2}{8n}$      & sim     \\
-    $1$      & $1$          & $\dfrac{|A|^2|U|^2}{8n}$      & sim     \\
-    $2$      & $1$          & $\dfrac{2|A|^2|U|^2}{8n}$     & sim     \\
-    $3$      & $1$          & $\dfrac{3|A|^2|U|^2}{8n}$     & sim     \\
-    $4$      & $1$          & $\dfrac{4|A|^2|U|^2}{8n}$     & sim ($k^*=4$) \\
-    $5$      & $2$          & $\dfrac{5|A|^2|U|^2}{8n}$     & não     \\
-    $\vdots$ & $\vdots$     & $\vdots$                      & $\vdots$\\
-    $9$      & $2$          & $\dfrac{9|A|^2|U|^2}{8n}$     & não     \\
+    $0$      & $1$           & $\dfrac{|A|^2|U|^2}{8n}$   & sim             \\
+    $1$      & $1$           & $\dfrac{2|A|^2|U|^2}{8n}$  & sim             \\
+    $2$      & $1$           & $\dfrac{3|A|^2|U|^2}{8n}$  & sim             \\
+    $3$      & $1$           & $\dfrac{4|A|^2|U|^2}{8n}$  & sim             \\
+    $4$      & $1$           & $\dfrac{5|A|^2|U|^2}{8n}$  & sim ($k^* = 4$) \\
+    $5$      & $2$           & $\dfrac{6|A|^2|U|^2}{8n}$  & não garantido   \\
+    $\vdots$ & $\vdots$      & $\vdots$                   & $\vdots$        \\
+    $9$      & $2$           & $\dfrac{10|A|^2|U|^2}{8n}$ & não garantido   \\
     \hline
   \end{tabular}
 \end{center}
 
-O grafo $H_{k^*}^U(A) = H_4^U(A)$ é o maior grafo simples, adequado para containers
-diretos. O grafo $H_{t-1}^U(A) = H_9^U(A)$, garantido pela Proposição~\ref{prop:independente},
-tem o dobro das arestas porém multiplicidade $\leq 2$, exigindo uma versão adaptada
-do algoritmo de containers.
+Assim, no caso $t = 10$, o grafo
+\[
+  H_{k^*}^U(A) = H_4^U(A)
+\]
+é o grafo com maior parâmetro $k$ cuja simplicidade é garantida pela
+Proposição~\ref{prop:multiplicidade}. Ele é, portanto, adequado para uma
+aplicação direta do algoritmo de contêineres para grafos simples.
+
+Já o grafo
+\[
+  H_{t-1}^U(A) = H_9^U(A)
+\]
+também certifica a independência de $I$, pela
+Proposição~\ref{prop:independente}, mas pode ter multiplicidade até $2$.
+A vantagem é que sua cota de supersaturação no multigrafo é, assintoticamente,
+o dobro da cota obtida para $H_4^U(A)$. Para usá-lo em um argumento de
+contêineres simples, é necessário passar ao grafo simples subjacente e perder,
+no pior caso, um fator correspondente à multiplicidade.
+\subsection{Algoritmo multifásico e contagem final para Sidon $t$-forte}
+
+
+
 
 \subsection{Algoritmo multifásico e contagem final para Sidon $t$-forte}
 
@@ -1552,17 +1737,17 @@ Aplicamos o algoritmo de contêiner no grafo simples $H_{k^*}^{U_0}(A)$, partind
 \]
 Ao final desta subfase, definimos o certificado acumulado como $T_{\mathrm{I}}$ e o contêiner encolhido como $A_{\mathrm{I}}$.
 
-Pelo Lema~\ref{lem:supersaturacao} aplicado com parâmetro $k = k^*+1$ (note que o lema fornece uma cota para $e(H_{k-1}^U(A))$, de modo que para obter uma cota sobre $H_{k^*}^U(A)$ usamos $k-1 = k^*$, i.e., $k = k^*+1$), enquanto a densidade combinatória é alta (o que é garantido pela hipótese $|A| \cdot |U_0| \geq 4n$ para $n$ suficientemente grande), o grau médio dos vértices de $H_{k^*}^{U_0}(A)$ satisfaz:
+Pelo Lema~\ref{lem:supersaturacao} aplicado com parâmetro $k = k^*+1$ (note que o lema fornece uma cota para $e(H_{k-1}^U(A))$, de modo que para obter uma cota sobre $H_{k^*}^U(A)$ usamos $k-1 = k^*$, i.e., $k = k^*+1$), enquanto a densidade combinatória é alta (o que é garantido pela hipótese $|A| \cdot |U_0| \geq 5n$), o grau médio dos vértices de $H_{k^*}^{U_0}(A)$ satisfaz:
 \[
-  \bar{d}(H_{k^*}^{U_0}(A)) \;\geq\; \frac{t |A| |U_0|^2}{16n},
+  \bar{d}(H_{k^*}^{U_0}(A)) \;\geq\; \frac{2t |A| |U_0|^2}{25n},
 \]
-onde usamos que $k^*+1 \geq t/2$ e $2n+k^* \leq 2n(1+o(1))$. Em particular, como a fase termina quando $|A| = 6\sqrt{tn}\log^6 n$, o grau médio é pelo menos:
+onde usamos que $k^*+1 \geq t/2$. Em particular, como a fase termina quando $|A| = 6\sqrt{tn}\log^6 n$, o grau médio é pelo menos:
 \[
-  \bar{d}_{\min} \;\geq\; \frac{t \cdot 6\sqrt{tn}\log^6 n \cdot n/(t\log^4 n)}{16n} \;=\; \frac{3\sqrt{tn}\log^2 n}{8} \;=\; \frac{3t}{8}|U_0|\log^4 n.
+  \bar{d}_{\min} \;\geq\; \frac{2t \cdot 6\sqrt{tn}\log^6 n \cdot n/(t\log^4 n)}{25n} \;=\; \frac{12\sqrt{tn}\log^2 n}{25} \;=\; \frac{12t}{25}|U_0|\log^4 n.
 \]
-Portanto, ao longo de toda a Fase I(a), o grau médio é uniformemente no mínimo $\frac{3t}{8}|U_0|\log^4 n$. Cada adição de um vértice $v \in I$ ao certificado $T_\mathrm{I}$ remove pelo menos esse número de vértices de $A$. Como $A$ começa com no máximo $n$ vértices:
+Portanto, ao longo de toda a Fase I(a), o grau médio é uniformemente no mínimo $\frac{12t}{25}|U_0|\log^4 n$. Cada adição de um vértice $v \in I$ ao certificado $T_\mathrm{I}$ remove pelo menos esse número de vértices de $A$. Como $A$ começa com no máximo $n$ vértices:
 \[
-  |T_{\mathrm{I}}| \;\leq\; \frac{n}{\bar{d}_{\min}} \;\leq\; \frac{8n}{3t \cdot |U_0| \cdot \log^4 n} \;=\; \frac{8S}{3\log^2 n}.
+  |T_{\mathrm{I}}| \;\leq\; \frac{n}{\bar{d}_{\min}} \;\leq\; \frac{25n}{12t \cdot |U_0| \cdot \log^4 n} \;=\; \frac{25S}{12\log^2 n}.
 \]
 Em particular, $|T_{\mathrm{I}}| = O(S/\log^2 n)$, o que contribui com no máximo $2^{O(\sqrt{n/t}/\log n)}$ escolhas — subordem de $2^{O(S)}$.
 
@@ -1574,15 +1759,15 @@ Continuamos a encolher o contêiner usando o mesmo conjunto de teste $U_0$, redu
 \[
   |A| \;\geq\; 6\sqrt{t n}\log^2 n.
 \]
-Abaixo desse limiar, o produto $|A| \cdot |U_0|$ aproximar-se-ia de $4n$, violando a hipótese do lema de supersaturação. O grau médio no pior caso desta fase (quando $|A| = 6\sqrt{tn}\log^2 n$) é:
+Abaixo desse limiar, o produto $|A| \cdot |U_0|$ aproximar-se-ia de $5n$, violando a hipótese do lema de supersaturação. O grau médio no pior caso desta fase (quando $|A| = 5\sqrt{tn}\log^2 n$) é:
 \[
-  \bar{d}_{\min} \;\geq\; \frac{t \cdot 6\sqrt{tn}\log^2 n \cdot n/(t\log^4 n)}{16n} \;=\; \frac{3\sqrt{tn}}{8\log^2 n} \;=\; \frac{3t}{8}|U_0|.
+  \bar{d}_{\min} \;\geq\; \frac{2t \cdot 5\sqrt{tn}\log^2 n \cdot n/(t\log^4 n)}{25n} \;=\; \frac{2\sqrt{tn}}{5\log^2 n} \;=\; \frac{2t}{5}|U_0|.
 \]
 O contêiner de entrada desta fase tem $|A_\mathrm{I}| = 6\sqrt{tn}\log^6 n$. Logo:
 \[
-  |T'_{\mathrm{I}}| \;\leq\; \frac{|A_\mathrm{I}|}{\bar{d}_{\min}} \;=\; \frac{6\sqrt{tn}\log^6 n}{\frac{3\sqrt{tn}}{8\log^2 n}} \;=\; 16\log^8 n.
+  |T'_{\mathrm{I}}| \;\leq\; \frac{|A_\mathrm{I}|}{\bar{d}_{\min}} \;=\; \frac{6\sqrt{tn}\log^6 n}{\frac{2\sqrt{tn}}{5\log^2 n}} \;=\; 15\log^8 n.
 \]
-O número de escolhas para $T'_\mathrm{I}$ é $\binom{n}{16\log^8 n} \leq n^{16\log^8 n} = 2^{O(\log^9 n)} = 2^{o(S)}$.
+O número de escolhas para $T'_\mathrm{I}$ é $\binom{n}{15\log^8 n} \leq n^{15\log^8 n} = 2^{O(\log^9 n)} = 2^{o(S)}$.
 
 \bigskip
 
@@ -1592,20 +1777,20 @@ Como o contêiner agora é menor ($|A_{\mathrm{I}}| \leq 6\sqrt{t n}\log^2 n$), 
 \[
   |U_{\mathrm{II}}| \;=\; \frac{\sqrt{n/t}}{\log n}.
 \]
-Rodamos o algoritmo de contêiner no grafo simples $H_{k^*}^{U_{\mathrm{II}}}(A)$, partindo de $A_{\mathrm{I}}$ e parando assim que o contêiner reduzir para $|A| \geq 6\sqrt{t n}\log n$. O grau médio no pior caso desta fase (quando $|A| = 6\sqrt{tn}\log n$) é:
+Rodamos o algoritmo de contêiner no grafo simples $H_{k^*}^{U_{\mathrm{II}}}(A)$, partindo de $A_{\mathrm{I}}$ e parando assim que o contêiner reduzir para $|A| \geq 5\sqrt{t n}\log n$. O grau médio no pior caso desta fase (quando $|A| = 5\sqrt{tn}\log n$) é:
 \[
-  \bar{d}_{\min} \;\geq\; \frac{t \cdot 6\sqrt{tn}\log n \cdot n/(t\log^2 n)}{16n} \;=\; \frac{3\sqrt{tn}}{8\log n} \;=\; \frac{3t}{8}|U_\mathrm{II}|.
+  \bar{d}_{\min} \;\geq\; \frac{2t \cdot 5\sqrt{tn}\log n \cdot n/(t\log^2 n)}{25n} \;=\; \frac{2\sqrt{tn}}{5\log n} \;=\; \frac{2t}{5}|U_\mathrm{II}|.
 \]
 O contêiner de entrada tem $|A_\mathrm{I}| \leq 6\sqrt{tn}\log^2 n$, portanto:
 \[
-  |T_{\mathrm{II}}| \;\leq\; \frac{|A_\mathrm{I}|}{\bar{d}_{\min}} \;\leq\; \frac{6\sqrt{tn}\log^2 n}{\frac{3\sqrt{tn}}{8\log n}} \;=\; 16\log^3 n.
+  |T_{\mathrm{II}}| \;\leq\; \frac{|A_\mathrm{I}|}{\bar{d}_{\min}} \;\leq\; \frac{6\sqrt{tn}\log^2 n}{\frac{2\sqrt{tn}}{5\log n}} \;=\; 15\log^3 n.
 \]
 O número de escolhas para $T_\mathrm{II}$ é $2^{O(\log^3 n \cdot \log n)} = 2^{o(S)}$.
 
 Devemos também computar o número de escolhas para o próprio conjunto de teste expandido $U_{\mathrm{II}}$ dentro do container anterior $A_{\mathrm{I}}$ (cujo tamanho é no máximo $6\sqrt{t n}\log^2 n$):
 \begin{align*}
-  \binom{|A_{\mathrm{I}}|}{|U_{\mathrm{II}}|} \;&\leq\; \binom{6\sqrt{t n}\log^2 n}{\frac{\sqrt{n/t}}{\log n}} \;\leq\; \left( \frac{e \cdot 6\sqrt{t n}\log^2 n}{\frac{\sqrt{n/t}}{\log n}} \right)^{\frac{\sqrt{n/t}}{\log n}} \\
-  &=\; \left( 6e t \log^3 n \right)^{\frac{\sqrt{n/t}}{\log n}} \;=\; 2^{(1+o(1))\frac{\log_2(6e t)}{\log n}\sqrt{n/t}} \;=\; 2^{o(S)}.
+  \binom{|A_{\mathrm{I}}|}{|U_{\mathrm{II}}|} \; & \leq\; \binom{6\sqrt{t n}\log^2 n}{\frac{\sqrt{n/t}}{\log n}} \;\leq\; \left( \frac{e \cdot 6\sqrt{t n}\log^2 n}{\frac{\sqrt{n/t}}{\log n}} \right)^{\frac{\sqrt{n/t}}{\log n}} \\
+                                                 & =\; \left( 6e t \log^3 n \right)^{\frac{\sqrt{n/t}}{\log n}} \;=\; 2^{(1+o(1))\frac{\log_2(6e t)}{\log n}\sqrt{n/t}} \;=\; 2^{o(S)}.
 \end{align*}
 Portanto, as escolhas de todos os elementos nesta fase também são assintoticamente negligenciáveis.
 
@@ -1619,19 +1804,19 @@ Nesta etapa final e crucial, dividimos o tamanho do contêiner por um fator cons
 \]
 operando especificamente no intervalo diádico de tamanho de container:
 \[
-  \frac{6\sqrt{t n}\log n}{2^{j-1}} \;>\; |A| \;\geq\; \frac{6\sqrt{t n}\log n}{2^j}.
+  \frac{5\sqrt{t n}\log n}{2^{j-1}} \;>\; |A| \;\geq\; \frac{5\sqrt{t n}\log n}{2^j}.
 \]
-Aplicamos o algoritmo de contêiner no grafo $H_{k^*}^{U_j}(A)$ em cada fase $j$. O grau médio no pior caso (quando $|A| = 6\sqrt{tn}\log n/2^j$) é:
+Aplicamos o algoritmo de contêiner no grafo $H_{k^*}^{U_j}(A)$ em cada fase $j$. O grau médio no pior caso (quando $|A| = 5\sqrt{tn}\log n/2^j$) é:
 \[
-  \bar{d}_{\min} \;\geq\; \frac{t \cdot \frac{6\sqrt{tn}\log n}{2^j} \cdot \frac{4^j n}{t\log^2 n}}{16n} \;=\; \frac{3 \cdot 2^j\sqrt{tn}}{8\log n} \;=\; \frac{3t}{8}|U_j|.
+  \bar{d}_{\min} \;\geq\; \frac{2t \cdot \frac{5\sqrt{tn}\log n}{2^j} \cdot \frac{4^j n}{t\log^2 n}}{25n} \;=\; \frac{2 \cdot 2^j\sqrt{tn}}{5\log n} \;=\; \frac{2t}{5}|U_j|.
 \]
-O contêiner de entrada tem $|A_{j-1}| < 6\sqrt{tn}\log n / 2^{j-1}$, portanto:
+O contêiner de entrada tem $|A_{j-1}| < 5\sqrt{tn}\log n / 2^{j-1}$, portanto:
 \[
-  |T_j| \;\leq\; \frac{|A_{j-1}|}{\bar{d}_{\min}} \;<\; \frac{6\sqrt{tn}\log n / 2^{j-1}}{\frac{3 \cdot 2^j\sqrt{tn}}{8\log n}} \;=\; \frac{16\log^2 n}{2^{2j-1}}.
+  |T_j| \;\leq\; \frac{|A_{j-1}|}{\bar{d}_{\min}} \;<\; \frac{5\sqrt{tn}\log n / 2^{j-1}}{\frac{2 \cdot 2^j\sqrt{tn}}{5\log n}} \;=\; \frac{25\log^2 n}{4 \cdot 2^{2j-1}} \;=\; \frac{25\log^2 n}{2^{2j+1}}.
 \]
-Em particular, $|T_j| \leq 32\log^2 n$ para todo $j$. O número total de escolhas para todos os certificados $T_1, \ldots, T_{\log\log n}$ é:
+Em particular, $|T_j| \leq 13\log^2 n$ para todo $j$. O número total de escolhas para todos os certificados $T_1, \ldots, T_{\log\log n}$ é:
 \[
-  \prod_{j=1}^{\log\log n} \binom{n}{|T_j|} \;\leq\; n^{\sum_j |T_j|} \;\leq\; n^{16\log^2 n \sum_{j=1}^{\infty} 4^{-j}} \;=\; n^{\frac{16\log^2 n}{3}} \;=\; 2^{O(\log^3 n)} \;=\; 2^{o(S)},
+  \prod_{j=1}^{\log\log n} \binom{n}{|T_j|} \;\leq\; n^{\sum_j |T_j|} \;\leq\; n^{\frac{25}{2}\log^2 n \sum_{j=1}^{\infty} 4^{-j}} \;=\; n^{\frac{25\log^2 n}{6}} \;=\; 2^{O(\log^3 n)} \;=\; 2^{o(S)},
 \]
 
 O ponto principal de toda a prova reside em contar o número de escolhas para os conjuntos de teste diádicos $U_j \subset A_{j-1}$. Como o contêiner pai $A_{j-1}$ tem tamanho limitado por $|A_{j-1}| \leq 6\sqrt{t n}\log n / 2^{j-1}$, e a cardinalidade do teste é $|U_j| = 2^j \sqrt{n/t} / \log n$, estimamos o produto combinatório por:
@@ -1641,9 +1826,9 @@ O ponto principal de toda a prova reside em contar o número de escolhas para os
 Tomando o logaritmo na base 2 para calcular o expoente de forma precisa:
 \begin{align*}
   \log_2 \left( \prod_{j=1}^{\log\log n} \binom{|A_{j-1}|}{|U_j|} \right)
-  &\;\leq\; \sum_{j=1}^{\log\log n} 2^j \frac{\sqrt{n/t}}{\log n} \log_2 \left( \frac{6e t \log^2 n}{2^{2j-1}} \right) \\
-  &\;\leq\; \sum_{j=1}^{\log\log n} 2^j \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) + 2\log_2\log_2 n - 2j + 1 \right] \\
-  &\;\leq\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) \sum_{j=1}^{\log\log n} 2^j \;+\; \sum_{j=1}^{\log\log n} 2^j (2\log_2\log_2 n - 2j + 1) \right].
+   & \;\leq\; \sum_{j=1}^{\log\log n} 2^j \frac{\sqrt{n/t}}{\log n} \log_2 \left( \frac{6e t \log^2 n}{2^{2j-1}} \right)                                      \\
+   & \;\leq\; \sum_{j=1}^{\log\log n} 2^j \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) + 2\log_2\log_2 n - 2j + 1 \right]                                    \\
+   & \;\leq\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) \sum_{j=1}^{\log\log n} 2^j \;+\; \sum_{j=1}^{\log\log n} 2^j (2\log_2\log_2 n - 2j + 1) \right].
 \end{align*}
 Utilizando as identidades clássicas de somas de progressões geométricas com $L = \log_2\log_2 n$:
 \[
@@ -1655,8 +1840,8 @@ e
 \]
 obtemos que a contribuição total desse produtório é majorada de forma extremamente fina por:
 \begin{align*}
-  \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) (2\log_2 n) \;+\; 6 \log_2 n \right] \;&=\; 2\sqrt{n/t} \left[ \log_2(6e t) + 3 \log_2 e \right] \\
-  &=\; (2 + o(1)) \sqrt{n/t} \log_2(6e^3 t).
+  \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) (2\log_2 n) \;+\; 6 \log_2 n \right] \; & =\; 2\sqrt{n/t} \left[ \log_2(6e t) + 3 \log_2 e \right] \\
+                                                                                        & =\; (2 + o(1)) \sqrt{n/t} \log_2(6e^3 t).
 \end{align*}
 \subsection{Contagem Final e Balanço Combinatório Fino}
 \label{subsec:balanco-fino}
@@ -1678,42 +1863,42 @@ O número total de escolhas de $I$ é majorado pelo produto das opções de cada
 Vejamos a contribuição de cada termo de forma analítica:
 \begin{itemize}
   \item \textbf{Custo dos Certificados ($\mathcal{N}_{\text{certificados}}$):}
-    Como demonstrado nas seções anteriores, os tamanhos dos certificados são extremamente pequenos quando comparados ao limiar principal $\sqrt{n/t}$. O número acumulado de maneiras de selecionar todos os certificados de encolhimento satisfaz:
-    \[
-      \mathcal{N}_{\text{certificados}} \;=\; \binom{n}{|T_{\mathrm{I}}|} \binom{n}{|T'_{\mathrm{I}}|} \binom{n}{|T_{\mathrm{II}}|} \prod_{j=1}^{\log\log n} \binom{n}{|T_j|} \;\leq\; 2^{o(\sqrt{n/t})}.
-    \]
-  
+        Como demonstrado nas seções anteriores, os tamanhos dos certificados são extremamente pequenos quando comparados ao limiar principal $\sqrt{n/t}$. O número acumulado de maneiras de selecionar todos os certificados de encolhimento satisfaz:
+        \[
+          \mathcal{N}_{\text{certificados}} \;=\; \binom{n}{|T_{\mathrm{I}}|} \binom{n}{|T'_{\mathrm{I}}|} \binom{n}{|T_{\mathrm{II}}|} \prod_{j=1}^{\log\log n} \binom{n}{|T_j|} \;\leq\; 2^{o(\sqrt{n/t})}.
+        \]
+
   \item \textbf{Custo dos Conjuntos de Teste ($\mathcal{N}_{\text{testes}}$):}
-    Os conjuntos $U_{\mathrm{II}}$ e $U_j$ são escolhidos dentro de seus respectivos contêineres reduzidos. O produto sobre todos os passos $j$ é dominado pela Fase $\mathrm{III}$, sendo majorado por:
-    \[
-      \mathcal{N}_{\text{testes}} \;\le\; \prod_{j=1}^{\log\log n} \binom{|A_{j-1}|}{|U_j|} \;\le\; 2^{(2+o(1)) \sqrt{n/t} \log_2(6e^4 t)}.
-    \]
-    A constante $6e^4 t$ dentro do logaritmo provém diretamente da soma da PG:
-    \begin{align*}
-      \log_2 \left( \prod_{j=1}^{L} \binom{|A_{j-1}|}{|U_j|} \right)
-      &\;\le\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) \sum_{j=1}^L 2^j \;+\; \sum_{j=1}^L 2^j (2L - 2j + 1) \right] \\
-      &\;\le\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) (2\log_2 n) \;+\; 6\log_2 n \cdot \log_2 e \right] \\
-      &\;\le\; 2\sqrt{n/t} \left[ \log_2(6e t) + 3\log_2 e \right] \;=\; 2\sqrt{n/t} \log_2(6e^4 t).
-    \end{align*}
-    onde usamos que $3\log_2 e = \log_2(e^3)$, logo $6et \cdot e^3 = 6e^4 t$.
-  
+        Os conjuntos $U_{\mathrm{II}}$ e $U_j$ são escolhidos dentro de seus respectivos contêineres reduzidos. O produto sobre todos os passos $j$ é dominado pela Fase $\mathrm{III}$, sendo majorado por:
+        \[
+          \mathcal{N}_{\text{testes}} \;\le\; \prod_{j=1}^{\log\log n} \binom{|A_{j-1}|}{|U_j|} \;\le\; 2^{(2+o(1)) \sqrt{n/t} \log_2(6e^4 t)}.
+        \]
+        A constante $6e^4 t$ dentro do logaritmo provém diretamente da soma da PG:
+        \begin{align*}
+          \log_2 \left( \prod_{j=1}^{L} \binom{|A_{j-1}|}{|U_j|} \right)
+           & \;\le\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) \sum_{j=1}^L 2^j \;+\; \sum_{j=1}^L 2^j (2L - 2j + 1) \right] \\
+           & \;\le\; \frac{\sqrt{n/t}}{\log n} \left[ \log_2(6e t) (2\log_2 n) \;+\; 6\log_2 n \cdot \log_2 e \right]            \\
+           & \;\le\; 2\sqrt{n/t} \left[ \log_2(6e t) + 3\log_2 e \right] \;=\; 2\sqrt{n/t} \log_2(6e^4 t).
+        \end{align*}
+        onde usamos que $3\log_2 e = \log_2(e^3)$, logo $6et \cdot e^3 = 6e^4 t$.
+
   \item \textbf{Custo Residual no Contêiner Final ($\mathcal{N}_{\text{residual}}$):}
-    Ao final da Fase $\mathrm{III}_{\log\log n}$, o contêiner residual $C$ possui tamanho $|C| \le 6\sqrt{t n}$. Como o subconjunto $I \cap C$ tem tamanho no máximo $\sqrt{n/t}$, o número de escolhas possíveis é:
-    \[
-      \mathcal{N}_{\text{residual}} \;=\; \binom{|C|}{|I|} \;\le\; \binom{6\sqrt{t n}}{\sqrt{n/t}} \;\le\; \left( 6e t \right)^{\sqrt{n/t}} \;=\; 2^{\sqrt{n/t} \log_2(6e t)}.
-    \]
+        Ao final da Fase $\mathrm{III}_{\log\log n}$, o contêiner residual $C$ possui tamanho $|C| \le 6\sqrt{t n}$. Como o subconjunto $I \cap C$ tem tamanho no máximo $\sqrt{n/t}$, o número de escolhas possíveis é:
+        \[
+          \mathcal{N}_{\text{residual}} \;=\; \binom{|C|}{|I|} \;\le\; \binom{6\sqrt{t n}}{\sqrt{n/t}} \;\le\; \left( 6e t \right)^{\sqrt{n/t}} \;=\; 2^{\sqrt{n/t} \log_2(6e t)}.
+        \]
 \end{itemize}
 
 Ao multiplicarmos essas três parcelas dominantes, obtemos o total de conjuntos Sidon $t$-fortes:
 \begin{align*}
-  |\mathcal{S}_t([n])| \;&\le\; 2^{o(\sqrt{n/t})} \cdot 2^{2\sqrt{n/t}\log_2(6e^4 t)} \cdot 2^{\sqrt{n/t}\log_2(6e t)} \\
-  &=\; 2^{\sqrt{n/t} \left[ 2\log_2(6e^4 t) + \log_2(6e t) + o(1) \right]}.
+  |\mathcal{S}_t([n])| \; & \le\; 2^{o(\sqrt{n/t})} \cdot 2^{2\sqrt{n/t}\log_2(6e^4 t)} \cdot 2^{\sqrt{n/t}\log_2(6e t)} \\
+                          & =\; 2^{\sqrt{n/t} \left[ 2\log_2(6e^4 t) + \log_2(6e t) + o(1) \right]}.
 \end{align*}
 Para extrairmos a constante $C_0$ que acompanha o termo principal $\frac{\log_2 t}{\sqrt{t}}\sqrt{n}$, abrimos a soma dos logaritmos no expoente:
 \begin{align*}
-  2\log_2(6e^4 t) + \log_2(6e t) \;&= \log_2\left( 36 e^8 t^2 \cdot 6 e t \right) \\
-  &= \log_2\left( 216 e^9 t^3 \right) \\
-  &= 3\log_2 t + \log_2(216 e^9) \;\approx\; 3\log_2 t + 16.74.
+  2\log_2(6e^4 t) + \log_2(6e t) \; & = \log_2\left( 36 e^8 t^2 \cdot 6 e t \right)                \\
+                                    & = \log_2\left( 216 e^9 t^3 \right)                           \\
+                                    & = 3\log_2 t + \log_2(216 e^9) \;\approx\; 3\log_2 t + 16.74.
 \end{align*}
 Portanto, o expoente final é governado assintoticamente por:
 \[
@@ -1730,15 +1915,15 @@ A generalização de conjuntos de Sidon clássicos (que são 1-fortes) para conj
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{p{4.5cm}cc}
     \hline
-    \textbf{Propriedade / Parâmetro} & \textbf{Sidon Clássico ($t=1$)} & \textbf{Sidon $t$-Forte ($t \ge 2$)} \\
+    \textbf{Propriedade / Parâmetro}        & \textbf{Sidon Clássico ($t=1$)} & \textbf{Sidon $t$-Forte ($t \ge 2$)}                    \\
     \hline
-    \textbf{Definição Aritmética} & Unicidade de $x+y=u+v$ & $|(x+y)-(u+v)| \ge t$ \\
-    \textbf{Tamanho Extremo ($|I|_{\max}$)} & $\approx \sqrt{n}$ & $\approx \sqrt{n/t}$ \\
-    \textbf{Janela de Grafo ($k^*$)} & $0$ (diferença nula) & $\lfloor(t-1)/2\rfloor \approx t/2$ \\
-    \textbf{Multiplicidade no Grafo} & $1$ (grafo simples) & $1$ (grafo simples em $H_{k^*}$)\\
-    \textbf{Grau Médio $\bar{d}$} & $\approx \dfrac{|A||U|^2}{8n}$ & $\approx \dfrac{t|A||U|^2}{16n}$ \\
-    \textbf{Cota do Expoente Final} & $\Theta(\sqrt{n})$ & $\Theta\left(\dfrac{\log_2 t}{\sqrt{t}}\sqrt{n}\right)$ \\
-    \textbf{Algoritmo de Contêiner} & Multifásico (obrigatório) & Multifásico (obrigatório) \\
+    \textbf{Definição Aritmética}           & Unicidade de $x+y=u+v$          & $|(x+y)-(u+v)| \ge t$                                   \\
+    \textbf{Tamanho Extremo ($|I|_{\max}$)} & $\approx \sqrt{n}$              & $\approx \sqrt{n/t}$                                    \\
+    \textbf{Janela de Grafo ($k^*$)}        & $0$ (diferença nula)            & $\lfloor(t-1)/2\rfloor \approx t/2$                     \\
+    \textbf{Multiplicidade no Grafo}        & $1$ (grafo simples)             & $1$ (grafo simples em $H_{k^*}$)                        \\
+    \textbf{Grau Médio $\bar{d}$}           & $\approx \dfrac{|A||U|^2}{8n}$  & $\approx \dfrac{2t|A||U|^2}{25n}$                       \\
+    \textbf{Cota do Expoente Final}         & $\Theta(\sqrt{n})$              & $\Theta\left(\dfrac{\log_2 t}{\sqrt{t}}\sqrt{n}\right)$ \\
+    \textbf{Algoritmo de Contêiner}         & Multifásico (obrigatório)       & Multifásico (obrigatório)                               \\
     \hline
   \end{tabular}
 \end{center}
@@ -1750,7 +1935,7 @@ Discutimos a seguir as três principais divergências que justificam a necessida
 \subsubsection{1. Multiplicidade de representações e a escolha da janela de vizinhança}
 No caso clássico, definimos o grafo de colisões $H_0^U(A)$ conectando $a_1, a_2$ se $a_1+a_2 = u_1+u_2$. Como as somas em conjuntos de Sidon possuem representação única por definição, qualquer par $\{a_1,a_2\}$ pode colidir com no máximo uma representação de soma de $U$, de modo que a multiplicidade de arestas é estritamente 1.
 
-No caso $t$-forte, a colisão ocorre se $|(a_1+a_2) - (u_1+u_2)| \le k$. Se definíssemos o grafo com a janela inteira de restrição do problema ($k = t-1$), um par $\{a_1,a_2\}$ poderia colidir com até $2t-1$ somas diferentes de $U$, gerando um multigrafo com alta multiplicidade de arestas. Para contornar essa dificuldade e viabilizar o uso do algoritmo de contêiner clássico, somos obrigados a restringir a janela para $k^* = \lfloor(t-1)/2\rfloor$. 
+No caso $t$-forte, a colisão ocorre se $|(a_1+a_2) - (u_1+u_2)| \le k$. Se definíssemos o grafo com a janela inteira de restrição do problema ($k = t-1$), um par $\{a_1,a_2\}$ poderia colidir com até $2t-1$ somas diferentes de $U$, gerando um multigrafo com alta multiplicidade de arestas. Para contornar essa dificuldade e viabilizar o uso do algoritmo de contêiner clássico, somos obrigados a restringir a janela para $k^* = \lfloor(t-1)/2\rfloor$.
 Como $U \subset I$ é $t$-forte, a distância aritmética entre quaisquer duas somas distintas de $U$ é no mínimo $t$. Pela desigualdade triangular, nenhuma janela de tamanho $2k^* \le t-1$ pode conter mais de uma soma de $U$, garantindo de forma elegante que a multiplicidade em $H_{k^*}^U(A)$ seja no máximo 1.
 
 \subsubsection{2. Efeito da janela no grau médio do grafo}
