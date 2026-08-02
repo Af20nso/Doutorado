@@ -1412,6 +1412,148 @@ $(K_4,K_4,K_3)$, bem como casos em que um $K_4$ aparece junto a um
 clique maior, como $(K_3,K_4,K_5)$ e $(K_4,K_4,K_5)$. Nesses casos
 serão necessárias colorações determinísticas mais refinadas.
 
+\subsection{O caso $(K_3,K_3,K_4)$}
+
+Consideramos agora a tripla
+\[
+  (K_3,K_3,K_4).
+\]
+Nesse caso, buscamos uma coloração das arestas que não contenha
+um $K_3$ monocromático, um $K_3$ rainbow ou uma cópia
+min-lex ou max-lex de $K_4$.
+
+Novamente, no regime
+\[
+  p\ll n^{-1/m_2(K_4)}
+  =
+  n^{-2/5},
+\]
+a redução estrutural nos permite trabalhar com um bloco $B$
+satisfazendo
+\[
+  m(B)<m_2(K_4)=\frac52.
+\]
+
+Diferentemente do caso $(K_3,K_4,K_3)$, aqui é suficiente
+construir uma coloração utilizando apenas duas cores. De fato,
+uma 2-coloração não pode conter um triângulo rainbow e, além
+disso, uma cópia estritamente min-lex ou max-lex de $K_4$
+utiliza necessariamente três cores distintas. Assim, resta apenas
+garantir que a 2-coloração escolhida não contenha triângulos
+monocromáticos.
+
+\begin{lemma}
+  \label{lem:334-colouring}
+  Seja $B$ um grafo equipado com uma ordem total $\sigma$ e
+  suponha que
+  \[
+    m(B)<\frac52.
+  \]
+  Então existe uma 2-coloração
+  \[
+    \chi:E(B)\longrightarrow\{0,1\}
+  \]
+  tal que todo triângulo de $B$ utiliza exatamente duas cores.
+  Consequentemente, $\chi$ não contém um $K_3$ monocromático,
+  um $K_3$ rainbow, um $K_4$ min-lex ou um $K_4$ max-lex.
+\end{lemma}
+
+\begin{proof}
+  Para todo subgrafo não vazio $J\subseteq B$, temos
+  \[
+    \frac{e(J)}{v(J)}<\frac52,
+  \]
+  e portanto
+  \[
+    \frac{2e(J)}{v(J)}<5.
+  \]
+  Logo, todo subgrafo não vazio de $B$ possui um vértice de
+  grau no máximo $4$. Assim, $B$ é $4$-degenerado e,
+  consequentemente, admite uma coloração própria dos vértices
+  com cinco cores,
+  \[
+    \kappa:V(B)\longrightarrow[5].
+  \]
+
+  Fixemos uma 2-coloração
+  \[
+    \rho:E(K_5)\longrightarrow\{0,1\}
+  \]
+  sem triângulos monocromáticos. Tal coloração existe pois
+  $R(3,3)=6$; explicitamente, podemos tomar um ciclo $C_5$
+  em uma cor e seu complemento, que também é um $C_5$, na
+  outra cor.
+
+  Para cada aresta $uv\in E(B)$, definimos
+  \[
+    \chi(uv)
+    :=
+    \rho\bigl(\kappa(u)\kappa(v)\bigr).
+  \]
+
+  Seja $uvw$ uma cópia de $K_3$ em $B$. Como $\kappa$ é
+  uma coloração própria,
+  \[
+    \kappa(u),\kappa(v),\kappa(w)
+  \]
+  são três elementos distintos de $[5]$. Portanto, eles
+  determinam uma cópia de $K_3$ no grafo-template $K_5$.
+
+  Como $\rho$ não possui triângulos monocromáticos, as três
+  arestas
+  \[
+    \rho(\kappa(u)\kappa(v)),\qquad
+    \rho(\kappa(u)\kappa(w)),\qquad
+    \rho(\kappa(v)\kappa(w))
+  \]
+  não possuem todas a mesma cor. Consequentemente, $uvw$ não
+  é monocromático sob $\chi$.
+
+  Por outro lado, $\chi$ utiliza apenas duas cores. Assim,
+  nenhum triângulo pode ser rainbow. Portanto, todo triângulo
+  de $B$ utiliza exatamente duas cores.
+
+  Resta excluir as cópias lexicográficas de $K_4$. Considere
+  um clique ordenado
+  \[
+    x_1<_\sigma x_2<_\sigma x_3<_\sigma x_4.
+  \]
+  Se ele fosse min-lex, existiriam três cores distintas
+  $a,b,c$ tais que
+  \[
+    \chi(x_1x_2)
+    =
+    \chi(x_1x_3)
+    =
+    \chi(x_1x_4)
+    =
+    a,
+  \]
+  \[
+    \chi(x_2x_3)
+    =
+    \chi(x_2x_4)
+    =
+    b,
+  \]
+  e
+  \[
+    \chi(x_3x_4)=c.
+  \]
+  Em particular, uma cópia min-lex de $K_4$ utiliza exatamente
+  três cores.
+
+  Analogamente, uma cópia max-lex de $K_4$ também utiliza
+  exatamente três cores.
+
+  Como $\chi$ utiliza somente duas cores, nenhuma dessas
+  configurações pode ocorrer.
+\end{proof}
+
+
+
+
+
 \subsection{O teorema de densidade de Rödl--Ruciński}
 
 Recordamos que, para um grafo $F$, definimos sua densidade máxima por
