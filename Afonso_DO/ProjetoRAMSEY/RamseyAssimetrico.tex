@@ -1077,18 +1077,510 @@ A prova do Lema~\ref{lem:0-statement-K5} utiliza as seguintes proposições e af
 % PROVA ALTERNATIVA VIA LINKS À DIREITA E RAMSEY DE VÉRTICES
 % ============================================================
 
-\section{Uma prova alternativa via colorações dos links à direita}
+\section{Primeiros casos}
 
-Nesta seção apresentamos uma prova determinística alternativa para a
-coloração de grafos de densidade limitada, que evita $K_3$
-monocromático, $K_4$ arco-íris e $K_5$ lexicográfico. Ao contrário da
-abordagem por expansões (Definição de $R_\ell, T_\ell, Q_\ell, U_\ell$),
-esta prova não depende da estrutura de $K_5$-bloco (fechamento,
-função de penalidade): ela vale para \emph{qualquer} grafo finito com
-densidade máxima $m(B) \leq 3$.
+Nesta seção, iniciamos o estudo do problema de Ramsey canônico
+assimétrico para grafos completos. Mais precisamente, estamos
+interessados em propriedades da forma
+\[
+  G(n,p)
+  \xrightarrow{\mathrm{can}}
+  (K_r,K_s,K_t),
+  \qquad r,s,t\geq3,
+\]
+isto é, propriedades que garantem que toda coloração
+\[
+  \chi:E(G(n,p))\longrightarrow \mathbb{N}
+\]
+contém ao menos uma das seguintes configurações:
+\begin{enumerate}
+  \item uma cópia monocromática de $K_r$;
+  \item uma cópia rainbow de $K_s$;
+  \item uma cópia lexicográfica de $K_t$.
+\end{enumerate}
 
-Ao longo de toda a seção, $B$ denota um grafo \textbf{finito}, o que
-garante que todos os máximos e ínfimos considerados são atingidos.
+Começaremos pelos casos em que dois dos grafos envolvidos são
+triângulos. Além de fornecerem exemplos elementares da definição,
+esses casos evidenciam uma peculiaridade importante do triângulo:
+ao contrário do que ocorre para cliques $K_\ell$ com $\ell\geq4$,
+a escala natural da propriedade canônica para $K_3$ não é, até o
+momento, completamente determinada.
+
+\begin{remark}[Convenção: monocromático exclui lexicográfico]
+  \label{rem:convencao-mono-lex}
+  Ao longo de todo o texto, tratamos as quatro configurações
+  canônicas (monocromática, rainbow, min-lex, max-lex) como
+  mutuamente exclusivas: uma cópia é dita min-lex (ou max-lex)
+  apenas quando utiliza mais de uma cor. Essa convenção é essencial
+  para os argumentos de cota inferior desta seção — sem ela, uma
+  coloração constante seria vacuamente min-lex e max-lex ao mesmo
+  tempo, invalidando construções como a do Corolário adiante, que
+  usam colorações monocromáticas justamente para evitar cópias
+  lexicográficas.
+\end{remark}
+
+\subsection{Casos iniciais e cotas imediatas}
+
+Recordemos inicialmente a diferença entre as duas densidades que
+aparecerão ao longo do texto. Para um clique $K_\ell$,
+\[
+  m(K_\ell)
+  =
+  \frac{e(K_\ell)}{v(K_\ell)}
+  =
+  \frac{\ell-1}{2},
+  \qquad
+  m_2(K_\ell)
+  =
+  \frac{e(K_\ell)-1}{v(K_\ell)-2}
+  =
+  \frac{\ell+1}{2}.
+\]
+Consequentemente, a escala de aparecimento de uma cópia de
+$K_\ell$ em $G(n,p)$ é
+\[
+  n^{-1/m(K_\ell)}
+  =
+  n^{-2/(\ell-1)},
+\]
+ao passo que a escala Ramsey usual associada a $K_\ell$ é
+\[
+  n^{-1/m_2(K_\ell)}
+  =
+  n^{-2/(\ell+1)}.
+\]
+
+O primeiro caso a ser considerado é a tripla $(K_3,K_3,K_3)$. A
+observação fundamental é que toda coloração das arestas de um $K_4$
+ordenado contém um triângulo canônico.
+
+\begin{lemma}
+  \label{lem:K4-canonical-triangle}
+  Seja $V(K_4)=\{v_1<v_2<v_3<v_4\}$. Toda coloração
+  $\chi:E(K_4)\to\mathbb{N}$ contém um triângulo que é
+  monocromático, rainbow, min-lex ou max-lex.
+\end{lemma}
+
+\begin{proof}
+  Suponha, por contradição, que não exista nenhum triângulo
+  monocromático, rainbow, min-lex ou max-lex.
+
+  Considere três vértices $x<y<z$. Como o triângulo $xyz$ não é
+  monocromático nem rainbow, ele utiliza exatamente duas cores.
+  Existem três maneiras de repetir uma cor em duas arestas desse
+  triângulo. Se $\chi(xy)=\chi(xz)$, o triângulo é min-lex; se
+  $\chi(xz)=\chi(yz)$, ele é max-lex. Ambas as possibilidades foram
+  excluídas, logo necessariamente
+  \begin{equation}
+    \label{eq:pattern-triangulo}
+    \chi(xy)=\chi(yz)\neq\chi(xz).
+  \end{equation}
+
+  Aplicando \eqref{eq:pattern-triangulo} ao triângulo $v_1v_2v_3$,
+  obtemos $\chi(v_1v_2)=\chi(v_2v_3)\neq\chi(v_1v_3)$. Aplicando-a
+  ao triângulo $v_2v_3v_4$, temos $\chi(v_2v_3)=\chi(v_3v_4)$. Logo,
+  \begin{equation}
+    \label{eq:um}
+    \chi(v_1v_2)=\chi(v_2v_3)=\chi(v_3v_4).
+  \end{equation}
+
+  Por outro lado, aplicando \eqref{eq:pattern-triangulo} ao
+  triângulo $v_1v_3v_4$, obtemos
+  \begin{equation}
+    \label{eq:dois}
+    \chi(v_1v_3)=\chi(v_3v_4).
+  \end{equation}
+
+  As igualdades \eqref{eq:um} e \eqref{eq:dois} implicam
+  $\chi(v_1v_3)=\chi(v_1v_2)$, contradizendo
+  $\chi(v_1v_2)\neq\chi(v_1v_3)$ obtido acima. Portanto toda
+  coloração de $K_4$ contém um triângulo canônico.
+\end{proof}
+
+Como o limiar de aparecimento de $K_4$ é
+$n^{-1/m(K_4)}=n^{-2/3}$, o lema anterior fornece imediatamente a
+cota superior $\widehat p_{3,3,3}(n)\lesssim n^{-2/3}$: se
+$p\gg n^{-2/3}$, então, assintoticamente quase certamente,
+$G(n,p)$ contém uma cópia de $K_4$, e qualquer coloração dessa
+cópia contém um triângulo canônico.
+
+É importante observar que essa argumentação fornece apenas o
+$1$-enunciado: a ausência de cópias de $K_4$ não implica, por si
+só, a existência de uma coloração sem triângulos canônicos, de
+modo que o limite inferior correspondente não segue do argumento
+acima.
+
+\medskip
+
+A mesma ideia admite uma extensão assimétrica simples. Fixe
+$\ell\geq3$ e considere a tripla $(K_\ell,K_3,K_3)$.
+
+\begin{proposition}
+  \label{prop:l33-complete}
+  Para todo $\ell\geq3$, toda coloração das arestas do
+  $K_{\ell+1}$ ordenado contém um $K_\ell$ monocromático, um
+  $K_3$ rainbow, um $K_3$ min-lex ou um $K_3$ max-lex.
+\end{proposition}
+
+\begin{proof}
+  Seja $V(K_{\ell+1})=\{v_1<v_2<\cdots<v_{\ell+1}\}$ e
+  $\chi:E(K_{\ell+1})\to\mathbb{N}$ uma coloração. Suponha que não
+  exista nenhum $K_3$ rainbow, min-lex ou max-lex; mostraremos que
+  existe um $K_\ell$ monocromático.
+
+  Seja $v_i<v_j<v_k$ um triângulo qualquer. Se ele é monocromático,
+  então trivialmente $\chi(v_iv_j)=\chi(v_jv_k)$. Se não é
+  monocromático, como não é rainbow, utiliza exatamente duas cores;
+  como não é min-lex nem max-lex, a única repetição possível é
+  $\chi(v_iv_j)=\chi(v_jv_k)\neq\chi(v_iv_k)$, exatamente como em
+  \eqref{eq:pattern-triangulo}. Portanto, em todos os casos,
+  \begin{equation}
+    \label{eq:tres}
+    \chi(v_iv_j)=\chi(v_jv_k)
+    \qquad
+    \text{para todo }i<j<k.
+  \end{equation}
+
+  Seja $\alpha:=\chi(v_1v_2)$. Aplicando \eqref{eq:tres}
+  sucessivamente aos triângulos $v_iv_{i+1}v_{i+2}$, para
+  $1\leq i\leq\ell-1$, obtemos
+  \begin{equation}
+    \label{eq:quatro}
+    \chi(v_1v_2)=\chi(v_2v_3)=\cdots=\chi(v_\ell v_{\ell+1})=\alpha.
+  \end{equation}
+
+  Mostraremos que toda aresta, com a possível exceção de
+  $v_1v_{\ell+1}$, tem cor $\alpha$. Seja $v_iv_j$ uma aresta com
+  $j\leq\ell$. Aplicando \eqref{eq:tres} ao triângulo
+  $v_i<v_j<v_{j+1}$, temos $\chi(v_iv_j)=\chi(v_jv_{j+1})=\alpha$
+  por \eqref{eq:quatro}. Se, em vez disso, $j=\ell+1$ e $i\geq2$,
+  aplicando \eqref{eq:tres} ao triângulo $v_{i-1}<v_i<v_{\ell+1}$
+  obtemos $\chi(v_iv_{\ell+1})=\chi(v_{i-1}v_i)=\alpha$, novamente
+  por \eqref{eq:quatro}.
+
+  Assim, $\chi(e)=\alpha$ para toda aresta $e\neq v_1v_{\ell+1}$;
+  em particular, $\{v_1,\ldots,v_\ell\}$ induz um $K_\ell$
+  monocromático de cor $\alpha$.
+\end{proof}
+
+\begin{remark}
+  O Lema~\ref{lem:K4-canonical-triangle} é exatamente o caso
+  $\ell=3$ da Proposição~\ref{prop:l33-complete}: ambos tratam da
+  tripla $(K_3,K_3,K_3)$ sobre um $K_4$ ordenado, e as duas provas
+  seguem, essencialmente, o mesmo argumento — a diferença é que a
+  Proposição~\ref{prop:l33-complete} propaga o padrão
+  \eqref{eq:pattern-triangulo} ao longo de toda uma cadeia de
+  vértices, em vez de apenas quatro. Mantemos os dois enunciados
+  separados por clareza expositiva: o Lema serve de aquecimento
+  concreto antes do argumento geral.
+\end{remark}
+
+A Proposição~\ref{prop:l33-complete} fornece imediatamente uma cota
+superior probabilística. Como $m(K_{\ell+1})=\ell/2$, o limiar de
+aparecimento de $K_{\ell+1}$ é $n^{-1/m(K_{\ell+1})}=n^{-2/\ell}$;
+consequentemente, $\widehat p_{\ell,3,3}(n)\lesssim n^{-2/\ell}$.
+
+Também temos uma cota inferior elementar. Se um grafo $G$ não
+contém $K_\ell$, a coloração monocromática $\chi(e)=1$ para todo
+$e\in E(G)$ não contém $K_\ell$ monocromático (vacuamente, pois
+$K_\ell\not\subseteq G$) nem triângulos rainbow ou lexicográficos
+(pela Observação~\ref{rem:convencao-mono-lex}). Portanto,
+\[
+  G\xrightarrow{\mathrm{can}}(K_\ell,K_3,K_3)
+  \quad\Longrightarrow\quad
+  K_\ell\subseteq G,
+\]
+e, como o limiar de aparecimento de $K_\ell$ é
+$n^{-1/m(K_\ell)}=n^{-2/(\ell-1)}$, segue a cota
+\[
+  n^{-2/(\ell-1)}
+  \lesssim
+  \widehat p_{\ell,3,3}(n)
+  \lesssim
+  n^{-2/\ell}.
+\]
+
+Em particular, para $\ell=3$ recuperamos
+\[
+  n^{-1}
+  \lesssim
+  \widehat p_{3,3,3}(n)
+  \lesssim
+  n^{-2/3}.
+\]
+O limite superior $n^{-2/3}$ é consequência do
+Lema~\ref{lem:K4-canonical-triangle}; determinar uma cota inferior
+da mesma ordem para o caso do triângulo permanece uma questão
+distinta.
+
+\subsection{Casos governados pelo limiar anti-Ramsey}
+
+Apresentamos agora uma segunda família de casos em que o limiar
+assimétrico pode ser determinado diretamente a partir de resultados
+já conhecidos. O ponto de partida é que uma coloração própria de um
+grafo $G$ nunca contém clique monocromático nem cópia lexicográfica
+de ordem $\geq3$: em ambas as configurações, duas arestas adjacentes
+recebem necessariamente a mesma cor (as duas arestas do vértice
+mínimo, no caso min-lex; as do vértice máximo, no caso max-lex; um
+par arbitrário, no caso monocromático), o que é proibido por
+propriedade.
+
+\begin{proposition}
+  \label{prop:antiramsey-lower-bound}
+  Para todos $r,s,t\geq3$,
+  \[
+    \widehat p_{r,s,t}(n)
+    \geq
+    p^{\mathrm{rb}}_{K_s}(n)
+  \]
+  em ordem de grandeza.
+\end{proposition}
+
+\begin{proof}
+  Seja $p$ abaixo do limiar anti-Ramsey de $K_s$. Então,
+  assintoticamente quase certamente, existe uma coloração própria
+  $\chi:E(G(n,p))\to\mathbb{N}$ sem cópia rainbow de $K_s$.
+
+  Se $\chi$ contivesse um $K_r$ monocromático ($r\geq3$), suas
+  arestas incidentes a um vértice comum seriam adjacentes e da
+  mesma cor, contradizendo a propriedade. O mesmo argumento aplicado
+  às $t-1$ arestas do vértice mínimo (respectivamente, máximo) de
+  uma cópia de $K_t$ ($t\geq3$) exclui cópias min-lex e max-lex.
+
+  Assim, $\chi$ evita simultaneamente os três padrões da tripla
+  $(K_r,K_s,K_t)$, e portanto
+  $G(n,p)\not\xrightarrow{\mathrm{can}}(K_r,K_s,K_t)$.
+\end{proof}
+
+A proposição anterior torna-se especialmente útil quando o alvo
+rainbow é também o maior clique da tripla.
+
+\begin{theorem}
+  \label{thm:rainbow-largest}
+  Seja $\ell\geq5$ e sejam $r,t$ inteiros com $3\leq r,t\leq\ell$.
+  Então
+  \[
+    \widehat p_{r,\ell,t}(n)
+    =
+    n^{-1/m_2(K_\ell)}
+    =
+    n^{-2/(\ell+1)}
+  \]
+  em ordem de grandeza.
+\end{theorem}
+
+\begin{proof}
+  A hipótese $\ell\geq5$ é usada apenas na cota inferior, pois é
+  precisamente para $\ell\geq5$ que o limiar anti-Ramsey de $K_\ell$
+  coincide exatamente com $n^{-2/(\ell+1)}$ (ver
+  Observação~\ref{rem:K4-exception} adiante para o motivo pelo qual
+  isso falha em $\ell=4$).
+
+  \emph{Cota inferior.} Como $p^{\mathrm{rb}}_{K_\ell}(n)=
+    n^{-1/m_2(K_\ell)}=n^{-2/(\ell+1)}$ para $\ell\geq5$, a
+  Proposição~\ref{prop:antiramsey-lower-bound} dá
+  $\widehat p_{r,\ell,t}(n)\geq n^{-2/(\ell+1)}$.
+
+  \emph{Cota superior.} Pelo teorema de Ramsey canônico aleatório
+  para $K_\ell$, se $p\geq Cn^{-2/(\ell+1)}$ para $C$
+  suficientemente grande, então, assintoticamente quase certamente,
+  toda coloração de $G(n,p)$ contém uma cópia canônica
+  $Q\cong K_\ell$. Há quatro possibilidades: se $Q$ é
+  monocromático, como $r\leq\ell$, ele contém um $K_r$
+  monocromático; se $Q$ é rainbow, ele próprio é uma cópia rainbow
+  de $K_\ell$; se $Q$ é min-lex (ou max-lex), qualquer subconjunto
+  de $t$ de seus vértices, com a ordem induzida, determina uma
+  cópia min-lex (resp.\ max-lex) de $K_t$, já que a propriedade
+  "cor depende apenas do extremo mínimo (máximo)" é hereditária a
+  subconjuntos. Em todos os casos, $G(n,p)\xrightarrow{\mathrm{can}}
+    (K_r,K_\ell,K_t)$.
+\end{proof}
+
+\begin{remark}
+  O Teorema~\ref{thm:rainbow-largest} mostra que não é necessário
+  tratar separadamente os casos $(K_\ell,K_\ell,K_3)$,
+  $(K_3,K_\ell,K_3)$ e $(K_3,K_\ell,K_\ell)$: todos pertencem à
+  família mais geral $(K_r,K_\ell,K_t)$, $3\leq r,t\leq\ell$,
+  $\ell\geq5$, na qual o limiar é governado diretamente pelo alvo
+  rainbow e vale $n^{-1/m_2(K_\ell)}=n^{-2/(\ell+1)}$.
+\end{remark}
+
+\begin{remark}[A exceção do $K_4$]
+  \label{rem:K4-exception}
+  O argumento anterior deixa de determinar o limiar quando
+  $\ell=4$. O limiar anti-Ramsey de $K_4$ é
+  $p^{\mathrm{rb}}_{K_4}(n)=n^{-7/15}$, enquanto o limiar canônico
+  de $K_4$ está na escala $n^{-1/m_2(K_4)}=n^{-2/5}$. Assim, para
+  $3\leq r,t\leq4$, obtemos diretamente apenas
+  \[
+    n^{-7/15}
+    \lesssim
+    \widehat p_{r,4,t}(n)
+    \lesssim
+    n^{-2/5}.
+  \]
+  Essa discrepância é específica do $K_4$: para todo $\ell\geq5$,
+  os limiares anti-Ramsey e canônico coincidem na escala
+  $n^{-1/m_2(K_\ell)}$.
+\end{remark}
+
+\subsection{Casos pequenos envolvendo $K_4$}
+
+Os resultados anteriores determinam uma grande classe de triplas
+sem a necessidade de novas construções. Restam, entretanto, casos
+pequenos nos quais aparece uma ou mais cópias de $K_4$ entre os três
+alvos — casos que merecem tratamento separado precisamente porque
+$K_4$ é a única exceção, entre os cliques de ordem pelo menos $4$,
+para a qual o limiar anti-Ramsey não coincide com a escala
+$n^{-1/m_2(K_4)}$.
+
+Na próxima seção estudaremos triplas pequenas envolvendo um ou dois
+grafos $K_4$, entre elas $(K_3,K_4,K_3)$, $(K_3,K_4,K_4)$,
+$(K_4,K_4,K_3)$, bem como casos em que um $K_4$ aparece junto a um
+clique maior, como $(K_3,K_4,K_5)$ e $(K_4,K_4,K_5)$. Nesses casos
+serão necessárias colorações determinísticas mais refinadas.
+
+\subsection{O caso $(K_3,K_3,K_4)$}
+
+Consideramos agora a tripla
+\[
+  (K_3,K_3,K_4).
+\]
+Nesse caso, buscamos uma coloração das arestas que não contenha
+um $K_3$ monocromático, um $K_3$ rainbow ou uma cópia
+min-lex ou max-lex de $K_4$.
+
+Novamente, no regime
+\[
+  p\ll n^{-1/m_2(K_4)}
+  =
+  n^{-2/5},
+\]
+a redução estrutural nos permite trabalhar com um bloco $B$
+satisfazendo
+\[
+  m(B)<m_2(K_4)=\frac52.
+\]
+
+Diferentemente do caso $(K_3,K_4,K_3)$, aqui é suficiente
+construir uma coloração utilizando apenas duas cores. De fato,
+uma 2-coloração não pode conter um triângulo rainbow e, além
+disso, uma cópia estritamente min-lex ou max-lex de $K_4$
+utiliza necessariamente três cores distintas. Assim, resta apenas
+garantir que a 2-coloração escolhida não contenha triângulos
+monocromáticos.
+
+\begin{lemma}
+  \label{lem:334-colouring}
+  Seja $B$ um grafo equipado com uma ordem total $\sigma$ e
+  suponha que
+  \[
+    m(B)<\frac52.
+  \]
+  Então existe uma 2-coloração
+  \[
+    \chi:E(B)\longrightarrow\{0,1\}
+  \]
+  tal que todo triângulo de $B$ utiliza exatamente duas cores.
+  Consequentemente, $\chi$ não contém um $K_3$ monocromático,
+  um $K_3$ rainbow, um $K_4$ min-lex ou um $K_4$ max-lex.
+\end{lemma}
+
+\begin{proof}
+  Para todo subgrafo não vazio $J\subseteq B$, temos
+  \[
+    \frac{e(J)}{v(J)}<\frac52,
+  \]
+  e portanto
+  \[
+    \frac{2e(J)}{v(J)}<5.
+  \]
+  Logo, todo subgrafo não vazio de $B$ possui um vértice de
+  grau no máximo $4$. Assim, $B$ é $4$-degenerado e,
+  consequentemente, admite uma coloração própria dos vértices
+  com cinco cores,
+  \[
+    \kappa:V(B)\longrightarrow[5].
+  \]
+
+  Fixemos uma 2-coloração
+  \[
+    \rho:E(K_5)\longrightarrow\{0,1\}
+  \]
+  sem triângulos monocromáticos. Tal coloração existe pois
+  $R(3,3)=6$; explicitamente, podemos tomar um ciclo $C_5$
+  em uma cor e seu complemento, que também é um $C_5$, na
+  outra cor.
+
+  Para cada aresta $uv\in E(B)$, definimos
+  \[
+    \chi(uv)
+    :=
+    \rho\bigl(\kappa(u)\kappa(v)\bigr).
+  \]
+
+  Seja $uvw$ uma cópia de $K_3$ em $B$. Como $\kappa$ é
+  uma coloração própria,
+  \[
+    \kappa(u),\kappa(v),\kappa(w)
+  \]
+  são três elementos distintos de $[5]$. Portanto, eles
+  determinam uma cópia de $K_3$ no grafo-template $K_5$.
+
+  Como $\rho$ não possui triângulos monocromáticos, as três
+  arestas
+  \[
+    \rho(\kappa(u)\kappa(v)),\qquad
+    \rho(\kappa(u)\kappa(w)),\qquad
+    \rho(\kappa(v)\kappa(w))
+  \]
+  não possuem todas a mesma cor. Consequentemente, $uvw$ não
+  é monocromático sob $\chi$.
+
+  Por outro lado, $\chi$ utiliza apenas duas cores. Assim,
+  nenhum triângulo pode ser rainbow. Portanto, todo triângulo
+  de $B$ utiliza exatamente duas cores.
+
+  Resta excluir as cópias lexicográficas de $K_4$. Considere
+  um clique ordenado
+  \[
+    x_1<_\sigma x_2<_\sigma x_3<_\sigma x_4.
+  \]
+  Se ele fosse min-lex, existiriam três cores distintas
+  $a,b,c$ tais que
+  \[
+    \chi(x_1x_2)
+    =
+    \chi(x_1x_3)
+    =
+    \chi(x_1x_4)
+    =
+    a,
+  \]
+  \[
+    \chi(x_2x_3)
+    =
+    \chi(x_2x_4)
+    =
+    b,
+  \]
+  e
+  \[
+    \chi(x_3x_4)=c.
+  \]
+  Em particular, uma cópia min-lex de $K_4$ utiliza exatamente
+  três cores.
+
+  Analogamente, uma cópia max-lex de $K_4$ também utiliza
+  exatamente três cores.
+
+  Como $\chi$ utiliza somente duas cores, nenhuma dessas
+  configurações pode ocorrer.
+\end{proof}
+
+
+
+
 
 \subsection{O teorema de densidade de Rödl--Ruciński}
 
