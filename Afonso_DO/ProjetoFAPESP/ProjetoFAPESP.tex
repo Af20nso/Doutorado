@@ -52,7 +52,6 @@
 \newtheorem{proposition}[theorem]{Proposição}
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{corollary}[theorem]{Corolário}
-\newtheorem{conjecture}[theorem]{Conjectura}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definição}
@@ -71,14 +70,10 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 
-\newcommand{\dens}{d}
-\newcommand{\maxdens}{m}
-\newcommand{\dtwo}{d_2}
 \newcommand{\mtwo}{m_2}
-
 \newcommand{\can}{\mathrm{can}}
+\newcommand{\wcan}{\mathrm{wcan}}
 \newcommand{\rb}{\mathrm{rb}}
-\newcommand{\ram}{\mathrm{Ram}}
 
 % ============================================================
 % DOCUMENTO
@@ -97,8 +92,7 @@
   \vspace{0.7cm}
 
   {\LARGE\bfseries
-    LIMIARES PARA PROPRIEDADES RAMSEY CANÔNICAS\\
-    E ANTI-RAMSEY EM GRAFOS ALEATÓRIOS
+    Limiares para variantes canônicas e anti-Ramsey em grafos aleatórios
   }
 
   \vspace{1.2cm}
@@ -128,26 +122,23 @@
 \noindent
 \textbf{Resumo.}
 Este projeto de doutorado tem como objetivo investigar limiares para
-propriedades do tipo Ramsey em grafos aleatórios, com ênfase em problemas
-nos quais as colorações das arestas não estão sujeitas à restrição clássica
-de utilizar um número fixo de cores.
-O projeto será desenvolvido em três linhas principais.
-A primeira consiste no estudo de propriedades anti-Ramsey, buscando
-caracterizar classes de grafos para as quais o limiar é governado pela
-$2$-densidade máxima.
-A segunda trata de uma versão assimétrica da propriedade Ramsey canônica,
-na qual os grafos procurados nas configurações monocromática, arco-íris e
-lexicográfica podem ser distintos.
-A terceira linha investiga limiares Ramsey canônicos para grafos além de
-cliques, com particular interesse em ciclos e em condições estruturais que
-garantam que o limiar canônico coincida com a escala Ramsey clássica.
-Apesar de distintas, essas linhas são fortemente relacionadas por uma
-mesma estratégia: reduzir problemas probabilísticos sobre $\Gnp$ a
-problemas determinísticos de coloração em grafos de densidade controlada.
-Pretendemos utilizar técnicas provenientes do método probabilístico, da
-teoria de grafos aleatórios, de decomposições de grafos, degenerescência,
-arboricidade, métodos de containers e estruturas de blocos associadas a
-cópias dos grafos-alvo.
+propriedades do tipo Ramsey em grafos aleatórios nas quais as colorações
+das arestas podem utilizar um número arbitrário de cores. O projeto será
+desenvolvido em três linhas relacionadas. A primeira trata do limiar
+anti-Ramsey e busca compreender a fronteira entre os grafos para os quais
+a chamada $2$-densidade máxima --- parâmetro que governa o limiar Ramsey
+clássico --- determina a escala crítica e aqueles que apresentam
+comportamento excepcional. A segunda introduz e estuda uma versão Ramsey
+canônica assimétrica, na qual os grafos procurados nas configurações
+monocromática, arco-íris e lexicográfica podem ser distintos. A terceira
+investiga propriedades Ramsey canônicas para grafos gerais, comparando duas
+formulações naturais: uma baseada em embeddings que preservam uma ordem
+fixada no grafo ambiente e outra baseada na realização de todos os padrões
+lexicográficos do grafo-alvo. O tema unificador é determinar em que medida
+parâmetros de densidade, especialmente $m_2$, continuam governando limiares
+Ramsey em contextos com conjuntos de cores não limitados, e quais
+características estruturais dos grafos-alvo explicam possíveis desvios desse
+comportamento.
 
 \vspace{0.4cm}
 
@@ -162,210 +153,158 @@ cópias dos grafos-alvo.
 \section{Introdução}
 
 A Teoria de Ramsey estuda o aparecimento inevitável de estruturas
-organizadas em sistemas suficientemente grandes. Em sua formulação clássica
-para grafos, fixamos um grafo $H$ e um número finito de cores e perguntamos
-quão grande deve ser um grafo $G$ para que toda coloração de suas arestas
-contenha uma cópia monocromática de $H$. A partir dessa questão surgiram
-diversas variantes, nas quais se modificam tanto a estrutura ambiente quanto
-as restrições impostas à coloração.
+organizadas em sistemas suficientemente grandes. Em sua formulação
+clássica para grafos, fixam-se um grafo $H$ e um número finito de cores
+e procura-se garantir que toda coloração das arestas de um grafo
+suficientemente grande contenha uma cópia monocromática de $H$. Ao
+longo das últimas décadas, essa questão deu origem a diversas variantes,
+obtidas tanto pela modificação da estrutura ambiente quanto pela
+alteração das restrições impostas às colorações.
 
-Uma direção particularmente fértil consiste em substituir o grafo ambiente
-determinístico por um grafo aleatório. Denotamos por $\Gnp$ o grafo
-binomial em $n$ vértices, no qual cada possível aresta é escolhida
-independentemente com probabilidade $p=p(n)$. Para uma propriedade
-monótona crescente $\mathcal{P}$, uma questão fundamental é determinar a
-escala de $p$ na qual $\Gnp$ passa de não satisfazer $\mathcal{P}$,
-assintoticamente quase certamente, para satisfazê-la.
+Uma dessas direções consiste em substituir o grafo ambiente por um
+grafo aleatório. Denotamos por $\Gnp$ o grafo binomial em $n$
+vértices, no qual cada aresta é escolhida independentemente com
+probabilidade $p=p(n)$. Para uma propriedade monótona crescente
+$\mathcal P$, interessa determinar a escala de $p$ na qual
+\[
+  \Pr[\Gnp\in\mathcal P]
+\]
+passa de próxima de zero para próxima de um.
 
-No contexto Ramsey clássico, esse problema foi essencialmente resolvido por
-Rödl e Ruciński. Um dos aspectos centrais dessa teoria é o papel
-desempenhado pela \emph{$2$-densidade máxima}
+No problema Ramsey clássico, os trabalhos de Rödl e Ruciński mostram
+que um parâmetro central é a \emph{$2$-densidade máxima}
 \[
   \mtwo(H)
   :=
-  \max_{\substack{J\subseteq H\\ v(J)\geq 3}}
+  \max_{\substack{J\subseteq H\\v(J)\geq3}}
   \frac{e(J)-1}{v(J)-2}.
 \]
-Para uma ampla classe de grafos $H$, o limiar para que toda coloração das
-arestas de $\Gnp$ com um número fixo de cores contenha uma cópia
-monocromática de $H$ encontra-se na escala
+Para uma ampla classe de grafos $H$, o limiar Ramsey encontra-se na
+escala
 \[
-  p=n^{-1/\mtwo(H)}.
+  n^{-1/\mtwo(H)}.
 \]
+Esse resultado estabelece uma relação profunda entre a estrutura do
+grafo-alvo, parâmetros determinísticos de densidade e o comportamento
+probabilístico de propriedades Ramsey.
 
-Esse fenômeno sugere uma conexão profunda entre propriedades determinísticas
-de coloração, parâmetros de densidade e a estrutura local das cópias de $H$
-presentes no grafo aleatório. Em particular, os $0$-enunciados de resultados
-Ramsey aleatórios frequentemente possuem uma contraparte determinística:
-grafos cuja densidade máxima é suficientemente pequena admitem colorações
-que evitam as configurações Ramsey desejadas.
+O presente projeto pretende investigar até que ponto fenômenos dessa
+natureza permanecem válidos em variantes nas quais o conjunto de cores
+não é fixado. Serão consideradas três linhas relacionadas: propriedades
+anti-Ramsey, uma versão assimétrica da propriedade Ramsey canônica e a
+propriedade Ramsey canônica para grafos gerais.
 
-Essa filosofia foi desenvolvida de maneira sistemática em trabalhos
-posteriores. Em particular, o arcabouço algorítmico de Nenadov, Person,
-Škorić e Steger permite, em diversas situações, reduzir um problema
-probabilístico sobre $\Gnp$ à existência de determinadas obstruções
-determinísticas de tamanho e densidade limitados. Em linhas gerais, o grafo
-aleatório é submetido a um procedimento de remoção de estruturas facilmente
-coloríveis; o núcleo remanescente é decomposto em blocos de tamanho
-controlado; e a parte probabilística do argumento é então reduzida a um
-problema determinístico de coloração desses blocos.
-
-O presente projeto pretende investigar o que ocorre quando abandonamos
-algumas das restrições da Teoria de Ramsey clássica. A primeira direção
-considerada corresponde à propriedade \emph{anti-Ramsey}. Nesse contexto,
-consideramos colorações próprias das arestas e procuramos cópias
-\emph{arco-íris} de um grafo $H$, isto é, cópias cujas arestas recebem cores
-duas a duas distintas. Uma questão natural é determinar para quais funções
-$p=p(n)$ toda coloração própria das arestas de $\Gnp$ contém,
-assintoticamente quase certamente, uma cópia arco-íris de $H$.
-
-Em diversos casos, o limiar anti-Ramsey é novamente governado por
-$\mtwo(H)$. Isso ocorre, por exemplo, para cliques de ordem pelo menos $5$ e
-para ciclos de comprimento pelo menos $5$. Entretanto, o fenômeno não é
-universal. Grafos pequenos, como $K_4$ e $C_4$, apresentam limiares
-distintos da escala $n^{-1/\mtwo(H)}$. Essas exceções indicam que, ao
-contrário do problema Ramsey clássico, ainda não existe uma caracterização
-estrutural satisfatória dos grafos cujo limiar anti-Ramsey é determinado
-pela $2$-densidade máxima.
-
-Uma das linhas centrais deste projeto será, portanto, compreender quais
-características estruturais do grafo $H$ garantem que
+Na propriedade \emph{anti-Ramsey}, consideram-se colorações próprias das
+arestas e procura-se uma cópia arco-íris de um grafo $H$. Kohayakawa,
+Konstadinidis e Mota mostraram que
 \[
-  p_H^{\rb}(n)
-  =
   n^{-1/\mtwo(H)}
 \]
-em ordem de grandeza. Em particular, investigaremos inicialmente grafos de
-cintura grande, para os quais a ausência de ciclos curtos pode fornecer
-decomposições mais favoráveis e permitir a construção de colorações próprias
-sem cópias arco-íris do grafo-alvo.
+fornece uma escala superior geral para o limiar
+\cite{KohayakawaKonstadinidisMota2014}. Para importantes famílias, como
+cliques e ciclos com pelo menos cinco vértices, essa é também a ordem
+correta do limiar
+\cite{BarrosCavalarMotaParczyk2022,
+  KohayakawaMotaParczykSchnitzer2023}.
+Entretanto, exemplos como $K_4$ e $C_4$, bem como famílias infinitas
+construídas posteriormente, mostram que esse comportamento não é
+universal.
 
-Uma segunda direção surge quando não se impõe qualquer restrição ao número
-de cores utilizado. Nesse cenário, uma coloração pode evitar
-trivialmente cópias monocromáticas atribuindo, por exemplo, uma cor
-distinta a cada aresta. A Teoria Canônica de Ramsey, iniciada por Erdős e
-Rado, mostra que a ausência de uma restrição no número de cores não elimina
-toda forma de estrutura: em cliques suficientemente grandes aparecem
-necessariamente padrões especiais de coloração, entre eles cópias
-monocromáticas, arco-íris e lexicográficas.
+Resultados recentes reforçam os dois lados dessa questão. Por um lado,
+foram obtidas novas famílias para as quais a $2$-densidade não determina
+o limiar; por outro, Kuperwasser mostrou que a escala
+$n^{-1/\mtwo(H)}$ é correta sempre que $\mtwo(H)\geq19$
+\cite{AraujoMartinsMattosMendoncaMoreiraMota2024,Kuperwasser2026}.
+Surge, portanto, o problema de compreender a fronteira entre esses dois
+regimes. Nesta direção, estudaremos tanto classes para as quais a
+$2$-densidade pode permanecer válida, com particular interesse em
+grafos sem ciclos curtos, quanto novas famílias excepcionais e possíveis
+extensões dos regimes positivos atualmente conhecidos.
 
-O estudo de colorações canônicas já esteve no centro do trabalho de
-mestrado do candidato, no qual foram investigadas classes Ramsey em
-hipergrafos e construções canônicas por meio do método partido. O presente
-projeto dá continuidade natural a essa direção, agora com ênfase em
-problemas probabilísticos.
-
-Recentemente, Kamčev e Schacht determinaram o limiar Ramsey canônico para
-cliques no grafo aleatório. Para todo $\ell\geq4$, o limiar para que toda
-coloração arbitrária das arestas de $\Gnp$ contenha uma cópia canônica de
-$K_\ell$ encontra-se na escala
+A segunda linha trata de uma versão \emph{Ramsey canônica assimétrica}.
+O Teorema Canônico de Erdős--Rado mostra que, mesmo quando se permite um
+número arbitrário de cores, grandes cliques necessariamente contêm
+subcliques cuja coloração apresenta um padrão altamente estruturado:
+monocromático, arco-íris ou lexicográfico. No contexto aleatório,
+Kam\v{c}ev e Schacht provaram que, para todo $\ell\geq4$, o limiar
+canônico de $K_\ell$ possui ordem
 \[
   n^{-1/\mtwo(K_\ell)}
-  =
-  n^{-2/(\ell+1)}.
 \]
-Assim, para cliques de ordem pelo menos $4$, permitir um número arbitrário
-de cores não altera a escala do limiar Ramsey clássico.
+\cite{KamcevSchacht2025}.
 
-Esse resultado levanta uma questão consideravelmente mais ampla:
-\emph{para quais grafos $H$ o limiar Ramsey canônico é governado por
-  $\mtwo(H)$?} Mesmo para classes fundamentais de grafos, como ciclos, o
-cenário ainda não está completamente compreendido. Uma das linhas deste
-projeto será investigar limiares Ramsey canônicos para grafos além de
-cliques, com ênfase inicial em ciclos e em classes de grafos para as quais
-as técnicas probabilísticas e estruturais disponíveis possam ser
-adaptadas.
-
-Há ainda uma terceira possibilidade, situada entre o problema canônico
-simétrico e as diferentes variantes assimétricas da Teoria de Ramsey.
-Dados três grafos $H_1,H_2,H_3$, podemos perguntar pelo limiar para que
-toda coloração arbitrária das arestas de $\Gnp$ contenha pelo menos uma
-das seguintes configurações:
-\begin{enumerate}[label=\textup{(\roman*)}]
-  \item uma cópia monocromática de $H_1$;
-  \item uma cópia arco-íris de $H_2$;
-  \item uma cópia lexicográfica de $H_3$.
-\end{enumerate}
-Chamaremos essa propriedade de \emph{Ramsey canônica assimétrica}.
-
-Essa formulação é inspirada tanto no teorema canônico de Erdős--Rado quanto
-nos problemas Ramsey assimétricos, nos quais diferentes cores possuem
-diferentes grafos-alvo. No problema Ramsey assimétrico clássico, a
-interação entre grafos de densidades distintas leva naturalmente à
-introdução de parâmetros de densidade mistos, como aquele que aparece na
-conjectura de Kohayakawa--Kreuter. Além disso, avanços recentes mostram
-que grande parte desses $0$-enunciados pode ser reduzida a problemas
-determinísticos de coloração e decomposição.
-
-Esses resultados sugerem procurar um fenômeno análogo no contexto
-canônico: determinar quais parâmetros governam a interação entre as
-alternativas monocromática, arco-íris e lexicográfica e investigar até que
-ponto os respectivos problemas probabilísticos podem ser reduzidos a
-condições determinísticas de densidade.
-
-Um primeiro objetivo nessa direção será estudar sistematicamente triplas
-de cliques
+Motivados também por versões assimétricas da Teoria de Ramsey,
+consideramos três grafos $H_1,H_2,H_3$ e perguntamos quando toda
+coloração arbitrária de $\Gnp$ contém uma cópia monocromática de
+$H_1$, uma cópia arco-íris de $H_2$ ou uma cópia lexicográfica de
+$H_3$. O caso inicial de interesse é
 \[
-  (K_r,K_s,K_t).
+  (H_1,H_2,H_3)=(K_r,K_s,K_t).
 \]
-Os casos de cliques fornecem um ambiente suficientemente estruturado para
-que diferentes técnicas de coloração possam ser testadas e, ao mesmo
-tempo, apresentam fenômenos não triviais quando as ordens dos três alvos
-são distintas. A partir desses primeiros casos, pretendemos investigar
-formulações mais gerais envolvendo outros grafos e buscar parâmetros de
-densidade adequados à versão canônica assimétrica.
-
-As três direções descritas acima compartilham, portanto, uma mesma
-filosofia. Em cada uma delas, pretende-se compreender como
+Durante o período inicial do doutorado, obtivemos resultados
+preliminares nessa direção. Em particular, para a tripla
 \[
-  \boxed{
-    \text{estrutura do grafo-alvo}
-    \;+\;
-    \text{restrições sobre a coloração}
-    \;+\;
-    \text{densidade}
-  }
+  (K_3,K_4,K_5),
 \]
-determinam o limiar de uma propriedade do tipo Ramsey em $\Gnp$.
+o limiar possui ordem
+\[
+  n^{-1/\mtwo(K_5)}=n^{-1/3},
+\]
+sendo, nesse caso, governado pelo maior dos três cliques. A cota superior
+segue do teorema canônico para $K_5$, mas a cota inferior não é consequência
+direta dos resultados Ramsey, anti-Ramsey ou canônicos conhecidos: ela exige
+uma análise adicional das estruturas geradas pelas cópias de $K_5$ abaixo
+dessa escala e a construção de colorações que evitem simultaneamente as três
+configurações. Esse primeiro caso fornece, portanto, evidência técnica para
+a investigação da família geral $(K_r,K_s,K_t)$ e, posteriormente, de
+triplas de grafos não necessariamente completos.
 
-Em particular, um tema recorrente será a transformação de $0$-enunciados
-probabilísticos em problemas determinísticos sobre grafos de densidade
-limitada. Para isso, pretendemos explorar ferramentas como degenerescência,
-arboricidade e decomposições em florestas, estruturas de núcleos e blocos,
-argumentos de primeiro e segundo momento, métodos probabilísticos, técnicas
-de containers e construções de coloração adaptadas aos padrões que se
-deseja evitar.
+A terceira linha considera propriedades Ramsey canônicas para grafos-alvo
+mais gerais. Dois pontos de vista recentes devem ser distinguidos. Na
+formulação ordenada de Kam\v{c}ev e Schacht, tanto o grafo ambiente quanto o
+grafo-alvo possuem ordens fixadas previamente, e a cópia canônica encontrada
+deve preservar essas ordens. Já na formulação por padrões de Alvarado,
+Kohayakawa, Morris e Mota, o ambiente não é ordenado e exige-se que, para
+cada ordenação do grafo-alvo, apareça uma cópia que realize o padrão
+canônico correspondente.
 
-O projeto será organizado em três linhas principais de investigação:
-\begin{enumerate}
-  \item \textbf{Limiar anti-Ramsey:}
-        investigar condições estruturais sob as quais
-        \[
-          p_H^{\rb}(n)=n^{-1/\mtwo(H)},
-        \]
-        com ênfase inicial em grafos de cintura grande;
+Os padrões lexicográficos utilizados nas duas formulações são estreitamente
+relacionados: o padrão lexicográfico de Alvarado, Kohayakawa, Morris e Mota
+é o padrão min-lex estrito; o padrão max-lex de Kam\v{c}ev e Schacht é obtido
+invertendo-se a ordem. A diferença essencial está, portanto, nos
+quantificadores sobre as ordens e na exigência, ou não, de compatibilidade
+com uma ordem previamente fixada no grafo ambiente.
 
-  \item \textbf{Ramsey canônico assimétrico:}
-        estudar inicialmente triplas de cliques $(K_r,K_s,K_t)$ e,
-        posteriormente, buscar parâmetros de densidade e técnicas que permitam
-        tratar grafos mais gerais;
+Para cliques, todas as ordenações do alvo são equivalentes por automorfismos,
+de modo que a formulação por padrões possui apenas um tipo lexicográfico.
+A formulação ordenada ainda impõe a condição adicional de preservar a ordem
+do ambiente. Para $K_\ell$, $\ell\geq4$, ambas levam à mesma escala de
+limiar, $n^{-1/m_2(K_\ell)}$. O caso $K_3$ evidencia que as propriedades não
+devem ser confundidas: na formulação por padrões, a propriedade reduz-se ao
+aparecimento de um triângulo, enquanto o limiar da formulação ordenada de
+Kam\v{c}ev e Schacht permanece em aberto. Para grafos não completos, as duas
+formulações impõem exigências de naturezas distintas e sua comparação passa
+a ser parte do próprio problema. Resultados recentes para ciclos pares, na
+formulação por padrões, atingem a escala sugerida por $m_2(C_{2k})$ a menos
+de um fator logarítmico
+\cite{KamcevSchacht2025,AlvaradoKohayakawaMorrisMota2026Cycles}.
 
-  \item \textbf{Ramsey canônico para grafos gerais:}
-        investigar para quais grafos $H$ o limiar canônico coincide com
-        $n^{-1/\mtwo(H)}$, tendo ciclos como uma das primeiras classes de
-        interesse.
-\end{enumerate}
+As três linhas possuem, assim, uma motivação comum. Em todas elas
+pretende-se compreender em que medida parâmetros de densidade,
+especialmente $\mtwo$, continuam determinando os limiares de
+propriedades Ramsey quando se permitem conjuntos arbitrários de cores,
+e quais características estruturais dos grafos-alvo são responsáveis
+por eventuais desvios desse comportamento.
 
-Essas linhas contêm problemas de diferentes níveis de dificuldade. Algumas
-questões iniciais reduzem-se a construções explícitas de colorações em
-grafos de densidade limitada; outras exigem adaptações de frameworks
-probabilísticos conhecidos; e os objetivos mais ambiciosos buscam
-identificar princípios estruturais capazes de explicar os limiares
-observados em classes amplas de grafos.
-
-% ============================================================
-% PRÓXIMAS SEÇÕES
-% ============================================================
+Além da determinação dos limiares, um tema recorrente será a relação
+entre os problemas probabilísticos e questões determinísticas de
+coloração. Frameworks desenvolvidos para $0$-enunciados Ramsey mostram
+que, em diversas situações, o problema em $\Gnp$ pode ser reduzido à
+análise de estruturas finitas de densidade controlada
+\cite{NenadovPersonSkoricSteger2017}. Esses resultados constituem uma
+das referências metodológicas do projeto, sem que se pretenda fixar
+antecipadamente uma única estratégia para as diferentes questões
+propostas.
 
 % ============================================================
 % OBJETIVOS E JUSTIFICATIVA
@@ -373,208 +312,100 @@ observados em classes amplas de grafos.
 
 \section{Objetivos e justificativa}
 
-O objetivo geral deste projeto é investigar limiares para propriedades
-do tipo Ramsey em grafos aleatórios, com particular interesse em
-situações nas quais as colorações das arestas não estão restritas a um
-número fixo de cores. Pretendemos compreender de que maneira parâmetros
-de densidade do grafo-alvo, propriedades estruturais das colorações e
-interações entre diferentes configurações Ramsey determinam o
-comportamento assintótico dessas propriedades em $G(n,p)$.
+O objetivo geral deste projeto é investigar limiares de propriedades
+Ramsey em grafos aleatórios nas quais as colorações podem utilizar um
+número arbitrário de cores. Pretende-se compreender como a estrutura
+dos grafos-alvo e as diferentes restrições sobre as colorações
+determinam a escala crítica dessas propriedades e, em particular, em
+que medida a $2$-densidade máxima continua sendo o parâmetro relevante.
 
-Um fenômeno recorrente na teoria Ramsey aleatória é o aparecimento da
-$2$-densidade máxima
-\[
-  m_2(H)
-  =
-  \max_{\substack{J\subseteq H\\v(J)\geq 3}}
-  \frac{e(J)-1}{v(J)-2}
-\]
-como parâmetro determinante do limiar. No problema Ramsey clássico,
-esse fenômeno é amplamente compreendido: para uma extensa classe de
-grafos $H$, o limiar encontra-se na escala
-\[
-  n^{-1/m_2(H)}.
-\]
-Em variantes mais recentes, entretanto, o panorama é consideravelmente
-menos uniforme. Tanto no problema anti-Ramsey quanto no problema
-Ramsey canônico existem resultados que apontam novamente para a
-$2$-densidade como parâmetro natural, mas também aparecem exceções,
-problemas ainda em aberto e situações em que a interação entre
-diferentes grafos-alvo sugere a necessidade de novos parâmetros.
+O projeto será desenvolvido em três linhas principais.
 
-Uma das motivações centrais deste projeto é compreender até que ponto
-a filosofia desenvolvida para o problema Ramsey clássico pode ser
-estendida a essas variantes. Em particular, pretendemos explorar
-situações nas quais um problema probabilístico sobre $G(n,p)$ possa ser
-reduzido a um problema determinístico de coloração em grafos de
-densidade limitada. Esse princípio está presente, por exemplo, no
-framework algorítmico de Nenadov, Person, Škorić e Steger, no qual
-$0$-enunciados para propriedades Ramsey em grafos aleatórios são
-reduzidos à análise de obstruções determinísticas de tamanho e
-densidade controlados. Esse tipo de redução será uma das ideias
-norteadoras do projeto.
+\begin{enumerate}
 
-Nesse contexto, o projeto será desenvolvido em três direções
-principais, que embora distintas são fortemente relacionadas.
+  \item \textbf{Limiar anti-Ramsey.}
 
-\subsection*{Objetivo I: limiares anti-Ramsey}
+        Pretende-se compreender melhor a fronteira entre os grafos $H$ para
+        os quais
+        \[
+          p_H^{\mathrm{rb}}(n)
+          \asymp
+          n^{-1/\mtwo(H)}
+        \]
+        e aqueles para os quais o limiar ocorre em uma escala
+        assintoticamente menor. Entre as questões de interesse estão o
+        comportamento de grafos de cintura grande, a estrutura das
+        exceções conhecidas e a extensão das condições atualmente
+        conhecidas que garantem a validade da escala determinada por
+        $\mtwo(H)$.
 
-O primeiro objetivo é avançar na compreensão do limiar para a
-propriedade anti-Ramsey em grafos aleatórios. Dados grafos $G$ e $H$,
-consideramos a propriedade de que toda coloração própria das arestas de
-$G$ contenha uma cópia arco-íris de $H$.
+  \item \textbf{Ramsey canônico assimétrico.}
 
-Para diversas classes importantes de grafos, como cliques e ciclos
-suficientemente grandes, o limiar conhecido está na escala
-\[
-  n^{-1/m_2(H)}.
-\]
-Entretanto, grafos pequenos como $K_4$ e $C_4$ apresentam comportamento
-distinto, mostrando que a $2$-densidade, isoladamente, não fornece uma
-caracterização geral.
+        Pretende-se desenvolver o estudo probabilístico da propriedade
+        \[
+          G(n,p)\xrightarrow{\mathrm{can}}(H_1,H_2,H_3),
+        \]
+        em que se procura uma cópia monocromática de $H_1$, arco-íris de
+        $H_2$ ou lexicográfica de $H_3$. O ponto de partida será a família
+        \[
+          (K_r,K_s,K_t),
+        \]
+        estendendo os resultados preliminares já obtidos para cliques
+        pequenos. Em uma etapa posterior, pretende-se substituir
+        progressivamente os cliques por outras classes de grafos e
+        compreender quais parâmetros governam os diferentes regimes da
+        propriedade.
 
-Nosso objetivo será identificar condições estruturais sobre $H$ que
-garantam que
-\[
-  p_H^{\mathrm{rb}}(n)
-  =
-  n^{-1/m_2(H)}
-\]
-em ordem de grandeza. Uma primeira classe de interesse será formada por
-grafos de cintura grande. A ausência de ciclos curtos pode restringir
-fortemente as possíveis interações entre diferentes cópias de $H$ e
-permitir a construção de colorações próprias em grafos de densidade
-limitada.
+  \item \textbf{Ramsey canônico para grafos gerais.}
 
-Mais amplamente, pretendemos compreender quais estruturas locais
-produzem as exceções conhecidas ao comportamento governado por
-$m_2(H)$ e buscar critérios determinísticos que distingam grafos
-``regulares'' do ponto de vista anti-Ramsey daqueles que apresentam
-obstruções de baixa densidade.
+        Pretende-se investigar até que ponto os resultados conhecidos para
+        cliques se estendem a grafos não completos e como diferentes
+        formulações da canonicidade se relacionam. Os primeiros problemas
+        considerados incluem o limiar canônico \emph{ordenado} de $K_3$,
+        os limiares para ciclos na formulação por padrões e a comparação
+        entre essas propriedades e a versão canônica fraca. Em perspectiva
+        mais ampla, busca-se identificar classes de grafos $H$ para as quais
+        a escala $n^{-1/\mtwo(H)}$ governa uma ou mais dessas formulações.
 
-\subsection*{Objetivo II: Ramsey canônico assimétrico}
+\end{enumerate}
 
-O segundo objetivo é desenvolver uma teoria probabilística para uma
-versão assimétrica do problema Ramsey canônico.
+A escolha dessas três linhas é motivada pela existência simultânea de
+resultados positivos, exceções e problemas fundamentais ainda em aberto.
+No caso anti-Ramsey, já se sabe que a $2$-densidade governa o limiar para
+diversas famílias, mas não universalmente. No caso canônico, o quadro está
+bem compreendido para cliques de ordem pelo menos quatro em sua formulação
+ordenada, enquanto permanece amplamente aberto para grafos não completos e
+para a comparação entre diferentes noções de canonicidade. A versão
+canônica assimétrica, por sua vez, permite investigar a interação entre os
+três tipos de padrão dentro de uma mesma propriedade.
 
-Dados três grafos ordenados $H_1,H_2,H_3$, pretendemos estudar a
-propriedade
-\[
-  G(n,p)
-  \xrightarrow{\mathrm{can}}
-  (H_1,H_2,H_3),
-\]
-segundo a qual toda coloração arbitrária das arestas de $G(n,p)$ contém
-uma cópia monocromática de $H_1$, uma cópia arco-íris de $H_2$ ou uma
-cópia lexicográfica de $H_3$.
+As três frentes também compartilham uma ponte técnica concreta. O resultado
+preliminar para $(K_3,K_4,K_5)$ já apresenta a arquitetura típica de vários
+$0$-enunciados Ramsey aleatórios: a parte probabilística reduz o problema a
+estruturas finitas associadas às cópias do grafo crítico e, nessas
+estruturas, resta um problema determinístico de coloração. No caso em
+questão, a cota inferior na escala $n^{-1/3}$ passa pela análise de blocos
+de $K_5$ e por colorações que evitam simultaneamente $K_3$ monocromático,
+$K_4$ arco-íris e $K_5$ lexicográfico. Esse mesmo paradigma de redução
+probabilístico-determinística está presente nos frameworks usados para
+$0$-enunciados anti-Ramsey
+\cite{NenadovPersonSkoricSteger2017,BehagueHancockHydeLetzterMorrison2025}.
 
-O caso em que
-\[
-  H_1=H_2=H_3
-\]
-corresponde à propriedade Ramsey canônica usual. Quando os três grafos
-são distintos, entretanto, surge um fenômeno genuinamente assimétrico:
-cada uma das três alternativas pode ser governada por parâmetros de
-densidade diferentes, e a interação entre essas escalas pode produzir
-um comportamento mais complexo.
+O projeto possui uma hierarquia deliberada de objetivos. No curto prazo, o
+núcleo da investigação será a continuação da linha canônica assimétrica para
+triplas de cliques, já em andamento, e o estudo anti-Ramsey de classes sem
+ciclos curtos. Na terceira frente, os casos concretos do triângulo ordenado
+e dos ciclos funcionarão como pontos de entrada. Questões de classificação
+mais ampla --- como novas famílias excepcionais, a extensão uniforme do
+regime de alta $2$-densidade, a passagem além de cliques no problema
+assimétrico e a comparação geral entre as diferentes noções canônicas ---
+são objetivos de maior alcance, a serem desenvolvidos conforme os resultados
+iniciais indicarem as direções mais promissoras.
 
-Pretendemos iniciar esse estudo pela família
-\[
-  (K_r,K_s,K_t),
-\]
-para a qual a estrutura dos cliques permite testar diferentes
-estratégias de coloração e formular conjecturas precisas para os
-limiares. Resultados preliminares sugerem que, em diversos regimes, a
-ordem do maior clique exerce papel dominante, mas também indicam a
-existência de casos pequenos excepcionais, em particular quando
-$K_3$ ou $K_4$ aparecem entre os alvos.
-
-Um objetivo de maior alcance será identificar um parâmetro de densidade
-adequado à versão canônica assimétrica, possivelmente análogo aos
-parâmetros mistos que aparecem na teoria Ramsey assimétrica clássica.
-Também investigaremos até que ponto os $0$-enunciados desse problema
-podem ser reduzidos a questões determinísticas sobre grafos de
-densidade limitada.
-
-\subsection*{Objetivo III: limiares Ramsey canônicos para grafos gerais}
-
-O terceiro objetivo é investigar a propriedade Ramsey canônica em
-grafos aleatórios para grafos-alvo que não sejam necessariamente
-completos.
-
-O resultado de Kamčev e Schacht para cliques mostra que, para todo
-$\ell\geq4$, o limiar Ramsey canônico de $K_\ell$ está na escala
-\[
-  n^{-1/m_2(K_\ell)}.
-\]
-Esse resultado sugere perguntar em que medida o mesmo fenômeno ocorre
-para outras classes de grafos.
-
-Pretendemos estudar inicialmente ciclos, que constituem uma das classes
-mais naturais para testar essa questão. Em particular, interessa
-determinar o limiar canônico para ciclos ímpares, compreender com maior
-precisão o caso dos ciclos pares e investigar se a escala
-\[
-  n^{-1/m_2(H)}
-\]
-continua sendo a escala correta.
-
-Em uma perspectiva mais geral, pretendemos buscar condições estruturais
-sobre $H$ que garantam que o limiar Ramsey canônico coincida com o
-limiar Ramsey clássico. Entre as propriedades que poderão ser
-investigadas estão $2$-balanceamento, cintura, bipartição,
-degenerescência e outras condições de esparsidade ou regularidade.
-
-\subsection*{Justificativa e integração das linhas de pesquisa}
-
-As três linhas propostas não constituem problemas independentes.
-Todas elas podem ser vistas como manifestações de uma mesma questão
-fundamental: determinar quais propriedades estruturais de um grafo e
-de uma classe de colorações controlam o aparecimento inevitável de
-configurações Ramsey em grafos aleatórios.
-
-Um aspecto particularmente importante do projeto será explorar a
-relação entre argumentos probabilísticos e problemas determinísticos
-de coloração. O framework de Nenadov, Person, Škorić e Steger mostra
-que, em diversas propriedades Ramsey, o estudo do $0$-enunciado pode
-ser reduzido à seguinte questão: dado um grafo $B$ cuja densidade
-máxima está abaixo de um determinado parâmetro crítico, é possível
-colorir suas arestas evitando a configuração proibida?
-Esse paradigma está diretamente relacionado às três linhas deste
-projeto.
-
-No problema anti-Ramsey, isso leva à busca por colorações próprias
-sem cópias arco-íris. No problema Ramsey canônico assimétrico, conduz
-à construção de colorações que evitem simultaneamente padrões
-monocromáticos, arco-íris e lexicográficos. Finalmente, no problema
-Ramsey canônico usual, pode fornecer uma ferramenta para estender a
-teoria atualmente conhecida para classes de grafos mais gerais.
-
-As técnicas necessárias para essas questões incluem métodos
-probabilísticos, argumentos de primeiro e segundo momento,
-decomposições de grafos, degenerescência, arboricidade, orientações
-com grau de saída controlado, estruturas de núcleos e blocos e
-técnicas de containers. Em várias situações, problemas probabilísticos
-serão acompanhados por lemas puramente determinísticos de coloração,
-permitindo uma interação constante entre combinatória extremal e
-probabilidade.
-
-Além dos problemas centrais, o projeto foi concebido de forma a
-oferecer diferentes níveis de dificuldade e múltiplas possibilidades
-de desenvolvimento. Algumas questões admitem inicialmente o estudo de
-casos particulares, como cliques pequenos ou ciclos de comprimento
-fixo, enquanto outras permitem formular conjecturas estruturais mais
-amplas. Essa organização possibilita que avanços parciais produzam
-resultados independentes e, ao mesmo tempo, contribuam para os
-objetivos gerais do projeto.
-
-Por fim, o projeto representa uma continuação natural da formação do
-candidato em Teoria de Ramsey e Combinatória Extremal. O trabalho de
-mestrado foi dedicado ao estudo de colorações canônicas em hipergrafos
-e ao uso de construções do tipo partido. O presente projeto amplia
-essa perspectiva ao contexto probabilístico e busca conectar técnicas
-de Ramsey canônico, anti-Ramsey e grafos aleatórios em um único
-programa de pesquisa.
+Não se pretende resolver todos os problemas apresentados nas seções
+seguintes. Avanços em famílias específicas já constituem resultados
+independentes relevantes e, ao mesmo tempo, podem fornecer ferramentas e
+exemplos para as questões estruturais de longo prazo.
 
 % ============================================================
 % TÓPICOS ESPECÍFICOS DE PESQUISA
@@ -588,7 +419,7 @@ programa de pesquisa.
 A primeira linha de pesquisa deste projeto trata de propriedades
 anti-Ramsey em grafos aleatórios. Dados grafos $G$ e $H$, escrevemos
 \[
-  G\xrightarrow{\mathrm{rb}} H
+  G\xrightarrow{\mathrm{rb}}H
 \]
 quando toda coloração própria das arestas de $G$ contém uma cópia
 arco-íris de $H$. Denotaremos por
@@ -597,9 +428,26 @@ arco-íris de $H$. Denotaremos por
 \]
 o limiar correspondente no grafo aleatório $G(n,p)$.
 
-O estudo sistemático dessa propriedade no contexto aleatório foi iniciado
-por Kohayakawa, Konstadinidis e Mota, que provaram que, para todo grafo
-fixo $H$, existe uma constante $C>0$ tal que
+Assim como ocorre em diversos problemas Ramsey em grafos aleatórios, um
+parâmetro fundamental é a $2$-densidade máxima
+\[
+  m_2(H)
+  :=
+  \max_{\substack{J\subseteq H\\v(J)\geq3}}
+  \frac{e(J)-1}{v(J)-2}.
+\]
+Para um grafo $F$ com $v(F)\geq3$, escrevemos
+\[
+  d_2(F):=\frac{e(F)-1}{v(F)-2}.
+\]
+Diremos que $H$ é \emph{estritamente $2$-balanceado} se
+$d_2(H)=m_2(H)$ e
+\[
+  d_2(J)<d_2(H)
+\]
+para todo subgrafo próprio $J\subsetneq H$ com $v(J)\geq3$.
+Kohayakawa, Konstadinidis e Mota mostraram que, para todo grafo fixo
+$H$, existe uma constante $C=C(H)>0$ tal que
 \[
   p\geq Cn^{-1/m_2(H)}
 \]
@@ -607,36 +455,23 @@ implica
 \[
   G(n,p)\xrightarrow{\mathrm{rb}}H
 \]
-assintoticamente quase certamente. Em particular,
-\[
-  p_H^{\mathrm{rb}}
-  \leq
-  n^{-1/m_2(H)}
-\]
-em ordem de grandeza
-\cite{KohayakawaKonstadinidisMota2014}.
+assintoticamente quase certamente
+\cite{KohayakawaKonstadinidisMota2014}. Dessa forma,
+$n^{-1/m_2(H)}$ fornece uma escala superior natural para o limiar
+anti-Ramsey.
 
-Assim como no problema Ramsey clássico, a principal dificuldade está no
-$0$-enunciado: determinar em quais situações é possível construir uma
-coloração própria de $G(n,p)$ sem uma cópia arco-íris de $H$ quando
-$p$ está abaixo da escala sugerida pela $2$-densidade.
-
-\subsubsection*{O problema determinístico associado}
-
-Um dos principais avanços nessa direção foi o framework desenvolvido por
-Nenadov, Person, Škorić e Steger
-\cite{NenadovPersonSkoricSteger2017}. A filosofia desse método consiste
-em transformar o problema probabilístico em uma questão determinística
-sobre grafos de densidade limitada.
-
-Para um grafo $G$, recordemos que
+Para um grafo $G$, considere
 \[
   m(G)
   :=
   \max_{\substack{J\subseteq G\\v(J)\geq1}}
   \frac{e(J)}{v(J)}.
 \]
-Quando $H$ é estritamente $2$-balanceado, uma condição natural é
+Resultados de Nenadov, Person, Škorić e Steger, posteriormente
+estendidos ao contexto anti-Ramsey, mostram que, para grafos $H$
+estritamente $2$-balanceados sob as hipóteses correspondentes, o
+$0$-enunciado na escala $n^{-1/m_2(H)}$ pode ser reduzido à condição
+determinística
 \[
   m(G)\leq m_2(H)
   \quad\Longrightarrow\quad
@@ -644,1282 +479,387 @@ Quando $H$ é estritamente $2$-balanceado, uma condição natural é
   \tag{$\mathcal D_H$}
   \label{eq:anti-condition}
 \]
-Em outras palavras, todo grafo cuja densidade máxima é, no máximo, a
-$2$-densidade do alvo deve admitir uma coloração própria sem uma cópia
-arco-íris de $H$.
-
-Sob as hipóteses do framework, a validade de
-\eqref{eq:anti-condition} fornece o $0$-enunciado na escala
+Equivalentemente, todo grafo anti-Ramsey para $H$ deve satisfazer
 \[
-  n^{-1/m_2(H)}.
+  m(G)>m_2(H).
 \]
-Dessa forma, uma questão probabilística sobre $G(n,p)$ é reduzida a um
-problema puramente determinístico de coloração.
-
-Neste projeto estaremos inicialmente interessados no limiar em ordem de
-grandeza, isto é, em resultados no regime
-\[
-  p\ll n^{-1/m_2(H)}.
-\]
-Nesse caso, a condição determinística que aparecerá naturalmente em
-muitas aplicações será a versão estrita
-\[
-  m(G)<m_2(H)
-  \quad\Longrightarrow\quad
-  G\not\xrightarrow{\mathrm{rb}}H.
-  \tag{$\mathcal D_H^{<}$}
-  \label{eq:anti-condition-strict}
-\]
-A distinção entre as versões estrita e não estrita será importante
-quando se pretender posteriormente fortalecer os resultados para
-limiares semi-agudos.
+A validade dessa condição fornece um $0$-enunciado da forma
+$p\leq c n^{-1/m_2(H)}$ para alguma constante $c>0$. Se se pretende
+apenas o regime $p\ll n^{-1/m_2(H)}$, a condição correspondente pode
+ser enfraquecida substituindo $\leq$ por $<$
+\cite{NenadovPersonSkoricSteger2017,BehagueHancockHydeLetzterMorrison2025}.
 
 \subsubsection*{Resultados conhecidos}
 
-O problema apresenta comportamentos bastante distintos dependendo da
-estrutura do grafo $H$. O framework de
-Nenadov, Person, Škorić e Steger resolveu inicialmente o $0$-enunciado
-na escala $n^{-1/m_2(H)}$ para ciclos suficientemente longos e cliques
-suficientemente grandes.
-
-Posteriormente, esses resultados foram refinados. Para cliques,
-Kohayakawa, Mota, Parczyk e Schnitzer determinaram que
+Para cliques, Kohayakawa, Mota, Parczyk e Schnitzer mostraram que
 \[
   p_{K_\ell}^{\mathrm{rb}}
-  =
+  \asymp
   n^{-1/m_2(K_\ell)}
-  =
-  n^{-2/(\ell+1)}
-\]
-para todo $\ell\geq5$
-\cite{KohayakawaMotaParczykSchnitzer2023}. Entretanto,
-\[
-  p_{K_4}^{\mathrm{rb}}
-  =
-  n^{-7/15},
-\]
-que é assintoticamente menor que
-\[
-  n^{-1/m_2(K_4)}
-  =
-  n^{-2/5}.
-\]
-
-Um fenômeno análogo ocorre para ciclos. Barros, Cavalar, Mota e Parczyk
-provaram que
-\[
-  p_{C_\ell}^{\mathrm{rb}}
-  =
-  n^{-1/m_2(C_\ell)}
-  =
-  n^{-(\ell-2)/(\ell-1)}
 \]
 para todo $\ell\geq5$, enquanto
 \[
-  p_{C_4}^{\mathrm{rb}}
-  =
-  n^{-3/4}
+  p_{K_4}^{\mathrm{rb}}
+  \asymp
+  n^{-7/15}
   \ll
-  n^{-1/m_2(C_4)}
-  =
-  n^{-2/3}
+  n^{-1/m_2(K_4)}=n^{-2/5}
+\]
+\cite{KohayakawaMotaParczykSchnitzer2023}. Para ciclos,
+\[
+  p_{C_\ell}^{\mathrm{rb}}
+  \asymp
+  n^{-1/m_2(C_\ell)}
+\]
+para todo $\ell\geq5$, mas
+\[
+  p_{C_4}^{\mathrm{rb}}
+  \asymp n^{-3/4}
+  \ll n^{-1/m_2(C_4)}=n^{-2/3}
 \]
 \cite{BarrosCavalarMotaParczyk2022}.
 
-Esses exemplos mostram que a escala $n^{-1/m_2(H)}$ não governa
-universalmente o problema anti-Ramsey. De fato, são conhecidas
-infinitas famílias de grafos para as quais o limiar ocorre
-assintoticamente abaixo dessa escala. Entre as obstruções conhecidas
-aparecem grafos contendo triângulos, além de exemplos pequenos como
-$K_4$, $C_4$ e $K_4$ menos uma aresta.
-
-Por outro lado, resultados recentes mostram que o comportamento previsto
-pela $2$-densidade volta a ser universal quando $H$ é suficientemente
-denso. Kuperwasser provou que
+A $2$-densidade, portanto, não governa universalmente o limiar
+anti-Ramsey. Famílias infinitas de exceções são conhecidas
+\cite{KohayakawaKonstadinidisMota2018,
+  AraujoMartinsMattosMendoncaMoreiraMota2024}. Por outro lado, Behague,
+Hancock, Hyde, Letzter e Morrison obtiveram resultados positivos para
+classes de grafos estritamente $2$-balanceados, e Kuperwasser mostrou
+que, para todo grafo $H$ com
 \[
-  m_2(H)\geq19
+  m_2(H)\geq19,
 \]
-é suficiente para que
+tem-se
 \[
   p_H^{\mathrm{rb}}
-  =
+  \asymp
   n^{-1/m_2(H)}
 \]
-em ordem de grandeza \cite{Kuperwasser2026}. A prova é baseada em uma
-decomposição de grafos inspirada no teorema das Nine Dragon Trees e
-fornece, em particular, uma coloração própria na qual todo subgrafo
-arco-íris possui $2$-densidade estritamente menor que um parâmetro de
-densidade do grafo ambiente.
+\cite{BehagueHancockHydeLetzterMorrison2025,Kuperwasser2026}.
+A constante $19$ não é apresentada como ótima.
 
-Há ainda resultados positivos para outras classes de grafos
-estritamente $2$-balanceados, obtidos no contexto de Ramsey restrito
-por Behague, Hancock, Hyde, Letzter e Morrison
-\cite{BehagueHancockHydeLetzterMorrison2025}. Esses resultados mostram
-que a validade da condição determinística não depende exclusivamente
-de uma hipótese de alta $2$-densidade e reforçam a importância de se
-buscar propriedades estruturais do grafo-alvo.
+Esses resultados colocam em evidência uma questão mais ampla: compreender
+a fronteira entre os grafos para os quais $m_2(H)$ determina o limiar
+anti-Ramsey e aqueles para os quais alguma estrutura faz com que a
+propriedade apareça em uma escala assintoticamente menor.
 
-\subsubsection*{Grafos de cintura grande}
+\subsubsection*{Problemas de pesquisa}
 
-Os exemplos conhecidos sugerem investigar uma direção complementar à de
-alta densidade. Enquanto muitas das obstruções conhecidas apresentam
-triângulos ou ciclos de comprimento quatro, grafos de cintura grande
-possuem uma estrutura local muito mais restrita.
+\begin{enumerate}[label=\textup{(AR\arabic*)}, leftmargin=*]
 
-Isso motiva a seguinte questão, que será um dos problemas centrais deste
-projeto.
+  \item \textbf{Grafos de cintura grande.}
 
-\begin{question}
-  \label{que:antiramsey-girth}
-  Seja $H$ um grafo que contém um ciclo e satisfaz
-  \[
-    \operatorname{girth}(H)>4.
-  \]
-  É verdade que
-  \[
-    p_H^{\mathrm{rb}}
-    =
-    n^{-1/m_2(H)}
-  \]
-  em ordem de grandeza?
-\end{question}
+        Os resultados para ciclos sugerem investigar a influência da
+        ausência de ciclos curtos. Enquanto $C_4$ é excepcional, para todo
+        $\ell\geq5$ o limiar de $C_\ell$ é governado por $m_2(C_\ell)$.
+        Pretende-se estudar se fenômeno análogo ocorre em classes mais
+        gerais de grafos $H$ cuja cintura --- isto é, o comprimento de um
+        menor ciclo de $H$ --- seja maior que $4$, admitindo, durante a
+        investigação, o estudo inicial de subclasses ou hipóteses mais
+        fortes quando isso for matematicamente útil.
 
-Em vista da redução descrita anteriormente, para grafos estritamente
-$2$-balanceados uma primeira versão determinística da
-Questão~\ref{que:antiramsey-girth} é a seguinte.
+  \item \textbf{Exceções e obstruções de baixa densidade.}
 
-\begin{problem}
-\label{prob:antiramsey-girth-deterministic}
-Determine condições de cintura sobre $H$ que garantam que todo grafo
-$G$ satisfazendo
-\[
-  m(G)<m_2(H)
-\]
-admite uma coloração própria de suas arestas sem uma cópia
-arco-íris de $H$.
-\end{problem}
+        Embora famílias infinitas de exceções sejam conhecidas, ainda não
+        há uma caracterização estrutural satisfatória dos grafos para os
+        quais a escala $n^{-1/m_2(H)}$ falha. Pretende-se buscar novas
+        famílias naturais com esse comportamento e compreender as
+        obstruções determinísticas de baixa densidade associadas a elas.
+        Como primeiro recorte concreto, interessa investigar obstruções de
+        baixa densidade associadas a grafos estritamente $2$-balanceados e
+        testar se o fenômeno pode ocorrer em famílias infinitas dentro dessa
+        classe.
 
-Uma estratégia será começar com uma hipótese de cintura mais forte e,
-a partir da compreensão das estruturas que aparecem na prova, tentar
-reduzi-la progressivamente. Em particular, uma primeira meta será
-investigar o Problema~\ref{prob:antiramsey-girth-deterministic} sob a
-hipótese
-\[
-  \operatorname{girth}(H)>8,
-\]
-e posteriormente estudar se as mesmas ideias podem ser refinadas até a
-condição conjectural
-\[
-  \operatorname{girth}(H)>4.
-\]
+  \item \textbf{Extensão do regime positivo conhecido.}
 
-Essa abordagem possui a vantagem de separar claramente as duas partes
-do problema. A componente probabilística é tratada por ferramentas já
-desenvolvidas para $0$-enunciados Ramsey, enquanto a principal questão
-nova passa a ser encontrar uma coloração determinística adequada para
-grafos de densidade limitada.
+        O resultado de Kuperwasser fornece um regime universal no qual a
+        $2$-densidade determina o limiar, dado por $m_2(H)\geq19$.
+        Pretende-se investigar até que ponto essa hipótese pode ser
+        enfraquecida, seja por melhorias quantitativas, seja pela
+        identificação de propriedades estruturais de $H$ que garantam a
+        mesma conclusão em regimes de menor $2$-densidade.
 
-\subsubsection*{Estratégias de coloração}
-
-Uma primeira abordagem que pretendemos explorar combina decomposições
-por degenerescência com a hipótese de cintura. A ideia é decompor um
-grafo $G$ com
-\[
-  m(G)<m_2(H)
-\]
-em partes estruturalmente simples e colorir essas partes de forma
-coordenada.
-
-Um modelo importante para essa estratégia aparece no trabalho recente
-de Kuperwasser. Em linhas gerais, procura-se um subgrafo
-$B\subseteq G$ de grau máximo limitado com a propriedade de que toda
-cópia de $H$ utilize muitas arestas de $B$. As arestas de $B$ podem
-então ser coloridas propriamente com poucas cores, enquanto as arestas
-de $G\setminus B$ recebem cores novas. Se toda cópia de $H$ utiliza
-mais arestas de $B$ do que o número de cores empregado em $B$, então
-alguma cor necessariamente se repete nessa cópia, impedindo que ela
-seja arco-íris.
-
-No contexto deste projeto, pretendemos investigar se a ausência de
-ciclos curtos em $H$ permite obter versões mais eficientes dessa
-decomposição. A hipótese de cintura pode restringir a maneira como uma
-cópia de $H$ se distribui entre uma parte degenerada e uma parte de
-grau limitado, permitindo reduzir significativamente os parâmetros
-necessários no argumento geral.
-
-Uma segunda possibilidade é utilizar decomposições em florestas.
-Parâmetros como arboricidade e degenerescência fornecem partições
-naturais das arestas de grafos de densidade limitada. Pretendemos
-investigar colorações próprias dessas florestas nas quais cores possam
-ser reutilizadas de maneira controlada, de forma que toda cópia de
-$H$ contenha necessariamente duas arestas de mesma cor. Novamente, a
-cintura de $H$ deverá desempenhar um papel importante no controle das
-possíveis interseções entre as diferentes partes da decomposição.
-
-Também será considerada uma abordagem indutiva por contraexemplo
-minimal. Nesse cenário, assume-se a existência de um grafo $G$ de
-densidade mínima possível que seja anti-Ramsey para $H$ e procura-se
-remover um vértice de baixo grau, colorir o grafo restante e estender
-a coloração. A condição
-\[
-  m(G)<m_2(H)
-\]
-fornece controle sobre a degenerescência de $G$, enquanto a hipótese
-de cintura restringe as configurações locais que poderiam impedir a
-extensão da coloração.
-
-\subsubsection*{Problemas intermediários e extensões}
-
-Além da Questão~\ref{que:antiramsey-girth}, pretendemos investigar
-alguns problemas intermediários que podem fornecer resultados
-independentes e, ao mesmo tempo, esclarecer a estrutura da questão
-principal.
-
-\begin{enumerate}[label=\textup{(AR\arabic*)}]
-  \item
-        Determinar uma constante $g_0$ para a qual a condição
-        \[
-          \operatorname{girth}(H)>g_0
-        \]
-        implique a validade de
-        \eqref{eq:anti-condition-strict} para todo grafo
-        estritamente $2$-balanceado $H$.
-
-  \item
-        Reduzir progressivamente a hipótese sobre a cintura, tendo como
-        objetivo final o caso
-        \[
-          \operatorname{girth}(H)>4.
-        \]
-
-  \item
-        Investigar separadamente classes de grafos de cintura grande que
-        apresentem estrutura adicional, como grafos regulares, quase
-        regulares ou bipartidos, comparando os resultados obtidos com as
-        classes já cobertas pela literatura.
-
-  \item
-        Estender os resultados obtidos para grafos não necessariamente
-        $2$-balanceados, analisando o papel dos subgrafos que realizam
-        $m_2(H)$.
-
-  \item
-        Estudar as obstruções determinísticas de baixa densidade para a
-        propriedade anti-Ramsey, buscando identificar quais estruturas
-        locais permitem que um grafo $G$ com
-        \[
-          m(G)<m_2(H)
-        \]
-        seja anti-Ramsey para $H$.
-
-  \item
-        Comparar as técnicas desenvolvidas com variantes do problema em
-        que as colorações são localmente limitadas, procurando determinar
-        quais argumentos permanecem válidos no contexto Ramsey restrito.
 \end{enumerate}
 
-Os problemas acima oferecem diferentes níveis de dificuldade. Os primeiros
-resultados poderão ser obtidos sob hipóteses estruturais mais fortes sobre
-$H$, enquanto a Questão~\ref{que:antiramsey-girth} representa o objetivo
-mais amplo dessa linha de pesquisa. Mesmo que a condição de cintura maior
-que $4$ não seja suficiente em toda generalidade, a identificação de novas
-famílias positivas ou de novas obstruções de baixa densidade já contribuirá
-para uma compreensão mais estrutural do limiar anti-Ramsey.
+Para classes cujo limiar venha a ser determinado, questões mais refinadas
+sobre a natureza da transição, incluindo a existência de limiares
+\emph{sharp}, poderão ser consideradas como desdobramentos.
+
+% ============================================================
+% RAMSEY CANÔNICO ASSIMÉTRICO
+% ============================================================
 
 \subsection{Ramsey canônico assimétrico}
 \label{sec:ramsey-canonico-assimetrico}
 
-A segunda linha de pesquisa deste projeto consiste no estudo de uma
-versão assimétrica da propriedade Ramsey canônica em grafos aleatórios.
-A motivação vem de duas direções clássicas da Teoria de Ramsey:
-problemas off-diagonal, nos quais diferentes configurações possuem
-diferentes grafos-alvo, e o teorema canônico de Erdős--Rado, no qual
-se permitem colorações das arestas com um número arbitrário de cores.
+A segunda linha de pesquisa deste projeto trata de uma versão
+assimétrica da propriedade Ramsey canônica em grafos aleatórios. A
+motivação combina duas extensões clássicas da Teoria de Ramsey. Por um
+lado, em problemas Ramsey assimétricos, diferentes cores podem estar
+associadas a diferentes grafos-alvo. Por outro, no teorema canônico de
+Erdős--Rado, permite-se um número arbitrário de cores e procura-se uma
+subestrutura cuja coloração apresente um dos padrões canônicos.
 
-Recordemos que, no problema canônico usual, dada uma ordem total sobre
-os vértices, procura-se uma cópia de um grafo $H$ cuja coloração seja
-de um dos tipos canônicos: monocromática, arco-íris, min-lex ou
-max-lex. Para cliques, Kamčev e Schacht provaram recentemente que,
-para todo $\ell\geq4$, o limiar dessa propriedade em $G(n,p)$
-coincide com o limiar Ramsey clássico e está na escala
+No problema canônico para cliques, Kam\v{c}ev e Schacht provaram que, para
+todo $\ell\geq4$, o limiar em $G(n,p)$ possui ordem
 \[
-  n^{-1/m_2(K_\ell)}
-  =
-  n^{-2/(\ell+1)}
+  n^{-1/m_2(K_\ell)}=n^{-2/(\ell+1)}
 \]
-\cite{KamcevSchacht2025}.
+\cite{KamcevSchacht2025}. Em contexto determinístico, Araujo e Peng
+estudaram uma variante off-diagonal próxima, na qual as ordens dos
+cliques procurados nas configurações monocromática, lexical e arco-íris
+podem ser distintas
+\cite{AraujoPeng2025}. Sua formulação é distinta da propriedade
+probabilística ordenada considerada aqui, mas fornece uma motivação
+natural para associar alvos diferentes aos três tipos de padrão.
 
-No contexto determinístico, variantes assimétricas do teorema
-canônico também vêm sendo estudadas. Em particular, Araujo e Peng
-consideram números off-diagonal de Erdős--Rado nos quais se procuram
-cliques de ordens distintas nas configurações monocromática,
-lexicográfica e arco-íris
-\cite{AraujoPeng2025}. Esses resultados indicam que a assimetria entre
-os três padrões canônicos constitui uma extensão natural da teoria
-clássica.
-
-Neste projeto propomos estudar a versão probabilística dessa questão.
-
-\begin{definition}
-  \label{def:asymmetric-canonical}
-  Sejam $H_1,H_2,H_3$ grafos e seja $G$ um grafo equipado com uma
-  ordem total $\sigma$ sobre seus vértices. Escrevemos
-  \[
-    G
-    \xrightarrow{\mathrm{can}}
-    (H_1,H_2,H_3)
-  \]
-  quando toda coloração
-  \[
-    \chi:E(G)\longrightarrow\mathbb N
-  \]
-  contém ao menos uma das seguintes configurações:
-  \begin{enumerate}[label=\textup{(\roman*)}]
-    \item uma cópia monocromática de $H_1$;
-    \item uma cópia arco-íris de $H_2$;
-    \item uma cópia lexicográfica de $H_3$.
-  \end{enumerate}
-\end{definition}
-
-Nesta formulação inicial, por cópia lexicográfica entendemos uma
-cópia min-lex ou max-lex com respeito à ordem induzida por $\sigma$.
-Versões em que apenas um desses dois padrões é permitido também são
-naturais e poderão ser estudadas separadamente.
-
-Denotaremos por
+Nesta linha adotamos a convenção ordenada de Kam\v{c}ev--Schacht: a ordem
+do grafo ambiente é fixada antes da coloração, e os padrões lexicográficos
+são lidos relativamente a essa ordem. Sejam $H_1,H_2,H_3$ grafos e
+considere o grafo ambiente $G$ equipado com uma ordem total de seus
+vértices. Escrevemos
 \[
-  \widehat p_{H_1,H_2,H_3}(n)
-\]
-o limiar correspondente para a propriedade
-\[
-  G(n,p)
-  \xrightarrow{\mathrm{can}}
-  (H_1,H_2,H_3).
-\]
-
-O primeiro objetivo será compreender essa função quando os três
-grafos são completos, isto é,
-\[
-  (H_1,H_2,H_3)
-  =
-  (K_r,K_s,K_t).
-\]
-Mesmo essa família já apresenta diferentes regimes de comportamento,
-dependendo de qual dos três parâmetros $r,s,t$ é dominante.
-
-\subsubsection*{Uma primeira cota superior}
-
-Seja
-\[
-  M:=\max\{r,s,t\}.
-\]
-Para $M\geq4$, o teorema de Kamčev--Schacht fornece imediatamente uma
-cota superior natural para o problema assimétrico. De fato, se
-\[
-  p\gg n^{-1/m_2(K_M)},
-\]
-então, assintoticamente quase certamente, toda coloração de $G(n,p)$
-contém uma cópia canônica de $K_M$.
-
-Se essa cópia é monocromática, ela contém um $K_r$ monocromático.
-Se é arco-íris, contém um $K_s$ arco-íris. Finalmente, se é
-lexicográfica, contém um $K_t$ com o mesmo padrão lexicográfico.
-Assim,
-\[
-  \widehat p_{K_r,K_s,K_t}(n)
-  \leq
-  n^{-1/m_2(K_M)}
-  =
-  n^{-2/(M+1)}
-\]
-em ordem de grandeza.
-
-Essa observação sugere investigar quando o maior dos três cliques
-também determina o $0$-enunciado.
-
-\begin{question}
-  \label{que:canonical-cliques-max}
-  Para quais triplas de inteiros $r,s,t\geq3$ vale
-  \[
-    \widehat p_{K_r,K_s,K_t}(n)
-    =
-    n^{-1/m_2(K_M)},
-    \qquad
-    M=\max\{r,s,t\}?
-  \]
-\end{question}
-
-Resultados preliminares e as diferentes teorias já existentes
-sugerem que a resposta depende não apenas do valor de $M$, mas
-também da posição ocupada pelo maior clique na tripla.
-
-\subsubsection*{Regimes governados por resultados conhecidos}
-
-Alguns regimes podem ser relacionados diretamente com teoremas
-Ramsey ou anti-Ramsey já conhecidos.
-
-Suponha, por exemplo, que o maior clique apareça na posição
-monocromática. Uma $2$-coloração sem $K_r$ monocromático evita
-automaticamente qualquer clique arco-íris e, quando o alvo
-lexicográfico possui ordem pelo menos $4$, também não pode conter uma
-cópia lexicográfica estrita, que utiliza pelo menos três cores.
-Assim, em diversos casos a cota inferior para o problema assimétrico
-pode ser herdada diretamente do $0$-enunciado de Rödl--Ruciński.
-
-De maneira análoga, suponha que o maior clique apareça na posição
-arco-íris. Para cliques $K_s$ com $s\geq5$, o limiar anti-Ramsey
-próprio é
-\[
-  n^{-1/m_2(K_s)}.
-\]
-Abaixo dessa escala existe uma coloração própria sem uma cópia
-arco-íris de $K_s$. Como uma coloração própria não possui cliques
-monocromáticos de ordem pelo menos $3$ e também não possui cópias
-lexicográficas de ordem pelo menos $3$, a mesma coloração pode ser
-utilizada diretamente no problema canônico assimétrico.
-
-Essas observações mostram que uma parte da classificação das triplas
-de cliques deverá seguir de resultados já conhecidos. O principal
-interesse estará nos regimes em que nenhuma dessas reduções imediatas
-é suficiente.
-
-\subsubsection*{O caso em que o alvo lexicográfico é dominante}
-
-Uma situação particularmente interessante ocorre quando
-\[
-  t=\max\{r,s,t\}.
-\]
-Nesse caso, a escala sugerida é
-\[
-  n^{-1/m_2(K_t)}
-  =
-  n^{-2/(t+1)},
-\]
-mas nem o teorema Ramsey usual nem o resultado anti-Ramsey fornecem
-diretamente uma coloração para o $0$-enunciado.
-
-Resultados preliminares obtidos durante o desenvolvimento deste
-projeto sugerem uma estratégia baseada nas vizinhanças posteriores
-dos vértices.
-
-Fixada uma ordem total $\sigma$ sobre $V(G)$, definimos, para cada
-$v\in V(G)$,
-\[
-  N_\sigma^+(v)
-  :=
-  \{u\in N_G(v):v<_\sigma u\}
-\]
-e
-\[
-  L_v:=G[N_\sigma^+(v)].
-\]
-A ideia é construir uma coloração das arestas na forma
-\[
-  \chi(vu)
-  =
-  \bigl(\lambda(v),\varphi_v(u)\bigr),
-  \qquad
-  v<_\sigma u,
-\]
-onde $\lambda$ é injetiva e
-\[
-  \varphi_v:N_\sigma^+(v)\longrightarrow[q]
-\]
-é uma coloração auxiliar dos vértices de $L_v$.
-
-A primeira coordenada impede imediatamente cópias monocromáticas de
-qualquer clique de ordem pelo menos $3$ e também elimina padrões
-max-lex. A segunda coordenada pode então ser escolhida para cumprir
-duas funções simultâneas: utilizar poucas cores nas arestas incidentes
-ao menor vértice de um clique, impedindo que ele seja arco-íris, e
-evitar grandes conjuntos monocromáticos em $L_v$, destruindo os
-padrões min-lex.
-
-Para impedir um $K_s$ arco-íris, uma escolha natural é
-\[
-  q=s-2.
-\]
-Com essa escolha, as $s-1$ arestas incidentes ao menor vértice de
-qualquer $K_s$ utilizam apenas $s-2$ possíveis valores na segunda
-coordenada, e portanto duas delas recebem a mesma cor.
-
-Por outro lado, um $K_t$ min-lex com menor vértice $v$ implicaria a
-existência de um $K_{t-1}$ monocromático sob $\varphi_v$ em $L_v$.
-O problema é então reduzido à existência de uma coloração
-\[
-  \varphi_v:
-  V(L_v)\longrightarrow[s-2]
-\]
-sem um $K_{t-1}$ monocromático.
-
-Essa redução conecta o problema canônico assimétrico a resultados
-sobre densidade Ramsey por vértices e sugere que comparações entre
-\[
-  m_2(K_t)
-\]
-e a densidade necessária para forçar
-\[
-  L_v\xrightarrow{v}(K_{t-1})_{s-2}
-\]
-podem fornecer colorações para amplas famílias de parâmetros.
-
-\begin{problem}
-\label{prob:rst-lex-largest}
-Determine para quais $r,s,t$, com $t\geq r,s$, todo grafo
-ordenado $B$ satisfazendo
-\[
-  m(B)<m_2(K_t)
-\]
-admite uma coloração sem $K_r$ monocromático, sem $K_s$
-arco-íris e sem $K_t$ lexicográfico.
-\end{problem}
-
-Uma primeira família de interesse é
-\[
-  3\leq r<s<t.
-\]
-Os cálculos preliminares indicam que, nesse regime, a estratégia das
-vizinhanças é particularmente eficiente. Além disso, a família
-consecutiva
-\[
-  (K_{\ell-1},K_\ell,K_{\ell+1})
-\]
-constitui um primeiro modelo natural para o problema.
-
-\subsubsection*{Casos pequenos e fenômenos excepcionais}
-
-Assim como no problema anti-Ramsey, os primeiros cliques apresentam
-fenômenos especiais que não são necessariamente capturados pelas
-construções gerais. Em particular, $K_3$ e $K_4$ desempenham um papel
-importante.
-
-Pretendemos estudar inicialmente, entre outros, os casos
-\[
-  (K_3,K_4,K_3),\qquad
-  (K_3,K_3,K_4),\qquad
-  (K_3,K_4,K_4),
-\]
-\[
-  (K_4,K_4,K_5)
-  \qquad\text{e}\qquad
-  (K_3,K_4,K_5).
-\]
-
-Esses exemplos são suficientemente pequenos para permitir construções
-explícitas e, ao mesmo tempo, ilustram diferentes mecanismos de
-coloração.
-
-Resultados preliminares sugerem, por exemplo, que grafos de densidade
-máxima menor que
-\[
-  m_2(K_4)=\frac52
-\]
-admitem colorações particularmente simples para os casos
-$(K_3,K_4,K_3)$ e $(K_3,K_3,K_4)$.
-
-No primeiro caso, a condição de densidade implica degenerescência
-limitada e permite colorir propriamente os vértices com cinco cores.
-Identificando essas cores com $\mathbb Z_5$, pode-se definir a cor de
-uma aresta $uv$ por
-\[
-  \chi(uv)
-  =
-  \kappa(u)+\kappa(v)
-  \pmod 5.
-\]
-Essa construção torna todos os triângulos arco-íris e, por utilizar
-apenas cinco cores, impede cópias arco-íris de $K_4$.
-
-No caso $(K_3,K_3,K_4)$, uma coloração própria dos vértices com cinco
-cores pode ser combinada com uma $2$-coloração de $K_5$ sem triângulo
-monocromático. A coloração induzida nas arestas utiliza apenas duas
-cores, não possui triângulos monocromáticos e, consequentemente,
-também não possui triângulos arco-íris ou cópias lexicográficas
-estritas de $K_4$.
-
-Essas construções ainda deverão ser integradas cuidadosamente à parte
-probabilística do argumento, mas constituem evidência de que pequenas
-obstruções podem ser tratadas por \emph{templates} finitos de
-coloração. Essa técnica deverá ser explorada sistematicamente ao longo
-do projeto.
-
-\subsubsection*{Templates finitos e degenerescência}
-
-Mais geralmente, suponha que a condição
-\[
-  m(B)<d
-\]
-implique que $B$ seja $q$-colorível nos vértices. Uma estratégia
-natural consiste em escolher uma coloração das arestas de um grafo
-completo $K_q$ que já evite os padrões desejados e transferi-la para
-$B$ através de uma coloração própria
-\[
-  \kappa:V(B)\longrightarrow V(K_q).
-\]
-
-Mais precisamente, se
-\[
-  \rho:E(K_q)\longrightarrow\mathcal C
-\]
-é uma coloração adequada, definimos
-\[
-  \chi(uv)
-  :=
-  \rho\bigl(\kappa(u)\kappa(v)\bigr).
-\]
-
-Como $\kappa$ é injetiva em todo clique de $B$, cada clique de $B$
-reproduz exatamente o padrão de algum clique do template $K_q$.
-Assim, problemas infinitos de coloração em todos os grafos de
-determinada densidade podem, em certos casos, ser reduzidos à procura
-de um template finito.
-
-Pretendemos investigar quais triplas $(r,s,t)$ admitem esse tipo de
-construção e em que situações a busca por templates pode ser
-automatizada computacionalmente para sugerir novas colorações e
-obstruções. Os resultados computacionais serão utilizados apenas como
-ferramenta exploratória; os resultados finais deverão ser acompanhados
-de demonstrações matemáticas.
-
-\subsubsection*{Um possível parâmetro de densidade assimétrico}
-
-No problema Ramsey assimétrico clássico, quando se buscam diferentes
-grafos em diferentes cores, o limiar não é necessariamente governado
-simplesmente por
-\[
-  \max_i m_2(H_i).
-\]
-A conjectura de Kohayakawa--Kreuter introduz densidades mistas que
-capturam a interação entre grafos-alvo distintos.
-
-Um dos objetivos de longo prazo desta linha será investigar se existe
-um fenômeno semelhante na versão canônica assimétrica.
-
-\begin{question}
-  \label{que:mixed-canonical-density}
-  Existe um parâmetro
-  \[
-    m_{\mathrm{can}}(H_1,H_2,H_3)
-  \]
-  definido em termos das estruturas de $H_1,H_2,H_3$ que determine,
-  em uma classe ampla de casos, o limiar
-  \[
-    \widehat p_{H_1,H_2,H_3}(n)
-    =
-    n^{-1/m_{\mathrm{can}}(H_1,H_2,H_3)}?
-  \]
-\end{question}
-
-Para cliques, uma primeira possibilidade a ser testada é que, em
-regimes suficientemente regulares,
-\[
-  m_{\mathrm{can}}(K_r,K_s,K_t)
-  =
-  m_2(K_{\max\{r,s,t\}}).
-\]
-Os casos pequenos deverão indicar precisamente onde essa heurística
-falha e quais informações adicionais precisam entrar no parâmetro.
-
-Outra possibilidade é que diferentes posições da tripla sejam
-governadas por parâmetros de naturezas distintas: densidades Ramsey
-para a alternativa monocromática, densidades anti-Ramsey para a
-alternativa arco-íris e densidades associadas a problemas Ramsey por
-vértices para a alternativa lexicográfica. Compreender essa interação
-é uma das questões conceituais mais interessantes da proposta.
-
-\subsubsection*{Uma redução probabilístico-determinística}
-
-Um objetivo central será desenvolver uma versão do paradigma de
-Nenadov--Person--Škorić--Steger adaptada ao problema canônico
-assimétrico.
-
-Idealmente, gostaríamos de obter um princípio da seguinte forma.
-Fixados $H_1,H_2,H_3$ e um parâmetro crítico $d$, se todo grafo
-ordenado $B$ com
-\[
-  m(B)<d
-\]
-admite uma coloração evitando simultaneamente $H_1$ monocromático,
-$H_2$ arco-íris e $H_3$ lexicográfico, então
-\[
-  p\ll n^{-1/d}
-\]
-deveria permitir construir, assintoticamente quase certamente, uma
-coloração correspondente de $G(n,p)$.
-
-A principal dificuldade está em determinar qual das três
-configurações deve governar o procedimento de remoção e a definição
-dos blocos. Quando o maior alvo é, por exemplo, $K_t$ na posição
-lexicográfica, é natural explorar blocos construídos a partir de
-cópias de $K_t$. Em outros regimes, o alvo relevante pode estar na
-posição monocromática ou arco-íris, e uma decomposição diferente pode
-ser mais apropriada.
-
-\begin{problem}
-\label{prob:canonical-framework}
-Desenvolver condições suficientes sob as quais um $0$-enunciado
-para a propriedade
-\[
-  G(n,p)
-  \xrightarrow{\mathrm{can}}
-  (H_1,H_2,H_3)
-\]
-possa ser reduzido a um problema determinístico de coloração em
-grafos de tamanho e densidade limitados.
-\end{problem}
-
-A obtenção de um resultado desse tipo permitiria separar de maneira
-clara a parte probabilística da parte de coloração e tornaria possível
-estudar diferentes triplas utilizando um mesmo framework.
-
-\subsubsection*{Problemas propostos}
-
-A investigação será inicialmente organizada em torno dos seguintes
-problemas.
-
-\begin{enumerate}[label=\textup{(RC\arabic*)}]
-  \item
-        Determinar o limiar para as triplas
-        \[
-          (K_r,K_s,K_t)
-        \]
-        em todos os regimes possíveis de $r,s,t$, começando pelos casos
-        pequenos e pelas famílias em que um dos parâmetros domina os
-        demais.
-
-  \item
-        Estudar sistematicamente o regime
-        \[
-          3\leq r<s<t,
-        \]
-        com particular atenção à família consecutiva
-        \[
-          (K_{\ell-1},K_\ell,K_{\ell+1}).
-        \]
-
-  \item
-        Classificar os casos em que o limiar segue diretamente de um
-        resultado Ramsey clássico ou anti-Ramsey e identificar os regimes
-        genuinamente canônicos.
-
-  \item
-        Resolver os casos pequenos envolvendo $K_3$ e $K_4$, incluindo
-        \[
-          (K_3,K_4,K_3),\quad
-          (K_3,K_3,K_4),\quad
-          (K_3,K_4,K_4),\quad
-          (K_4,K_4,K_5)
-        \]
-        e outras triplas próximas.
-
-  \item
-        Desenvolver e sistematizar métodos de coloração baseados em
-        vizinhanças posteriores, degenerescência e templates finitos.
-
-  \item
-        Investigar a existência de um parâmetro de densidade misto para
-        o problema Ramsey canônico assimétrico.
-
-  \item
-        Obter uma redução probabilístico-determinística que permita
-        transferir lemas de coloração para $0$-enunciados em $G(n,p)$.
-
-  \item
-        Após a compreensão do caso de cliques, estudar triplas envolvendo
-        ciclos e outras classes de grafos, como
-        \[
-          (K_r,C_s,K_t),\qquad
-          (C_r,K_s,K_t)
-          \qquad\text{e}\qquad
-          (C_r,C_s,C_t).
-        \]
-\end{enumerate}
-
-O estudo das triplas de cliques fornecerá um laboratório para a
-formulação de conjecturas gerais. Além de permitir resultados
-concretos em estágios iniciais do doutorado, esses casos deverão
-indicar quais parâmetros de densidade e quais mecanismos de coloração
-são realmente relevantes para a teoria assimétrica.
-
-Em uma etapa posterior, pretendemos utilizar essa compreensão para
-investigar grafos menos homogêneos, nos quais diferentes subgrafos
-podem realizar as densidades críticas e nos quais a ordem dos vértices
-pode influenciar de maneira mais significativa a existência de padrões
-lexicográficos.
-
-\subsection{Ramsey canônico para grafos gerais}
-\label{sec:ramsey-canonico-geral}
-
-A terceira linha de pesquisa deste projeto busca compreender a propriedade
-Ramsey canônica em grafos aleatórios quando o grafo-alvo não é
-necessariamente completo.
-
-Seja $H$ um grafo equipado com uma ordem total $\sigma$ sobre seus
-vértices. Dado um grafo ordenado $G$, escrevemos
-\[
-  G\xrightarrow{\mathrm{can}}H
+  G\xrightarrow{\mathrm{can}}(H_1,H_2,H_3)
 \]
 quando toda coloração
 \[
   \chi:E(G)\longrightarrow\mathbb N
 \]
-contém uma cópia de $H$ cuja coloração é canônica, isto é, uma cópia
-monocromática, arco-íris, min-lex ou max-lex, respeitando a ordem
-prescrita em $H$.
-
+contém pelo menos uma das seguintes configurações:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item uma cópia monocromática de $H_1$;
+  \item uma cópia arco-íris de $H_2$;
+  \item uma cópia min-lex ou max-lex estrita de $H_3$.
+\end{enumerate}
 Denotaremos por
 \[
-  \widehat p_H(n)
+  \widehat p_{H_1,H_2,H_3}(n)
 \]
-o limiar para essa propriedade em $G(n,p)$, equipado com uma ordem
-total fixa sobre seus vértices.
+o limiar correspondente em $G(n,p)$.
 
-No caso em que $H$ é um clique, esse problema foi recentemente
-resolvido por Kamčev e Schacht. Para todo $\ell\geq4$,
+O primeiro caso natural é
 \[
-  \widehat p_{K_\ell}(n)
-  =
-  n^{-1/m_2(K_\ell)}
-  =
-  n^{-2/(\ell+1)}
+  (H_1,H_2,H_3)=(K_r,K_s,K_t).
 \]
-em ordem de grandeza
+Se $M=\max\{r,s,t\}$ e $M\geq4$, o resultado de Kam\v{c}ev--Schacht
+fornece a cota superior
+\[
+  \widehat p_{K_r,K_s,K_t}(n)
+  =
+  O\!\left(n^{-1/m_2(K_M)}\right).
+\]
+De fato, acima dessa escala toda coloração contém uma cópia canônica de
+$K_M$, da qual se obtém uma das três configurações procuradas.
+
+Durante o desenvolvimento inicial do doutorado, obtivemos resultados
+preliminares nessa direção. Em particular,
+\[
+  \widehat p_{K_3,K_4,K_5}(n)
+  \asymp
+  n^{-1/m_2(K_5)}
+  =
+  n^{-1/3}.
+\]
+A cota superior segue do teorema de Kam\v{c}ev--Schacht para $K_5$.
+A cota inferior, entretanto, não é fornecida pelas teorias conhecidas
+separadamente. Por exemplo, uma coloração própria sem $K_4$ arco-íris
+garante apenas a escala anti-Ramsey
+\[
+  n^{-7/15},
+\]
+que é assintoticamente menor que $n^{-1/3}$. Para atingir a escala
+$n^{-1/3}$, o argumento obtido analisa os blocos formados pelas cópias de
+$K_5$ abaixo da escala crítica e resolve, em cada bloco, um problema
+determinístico de coloração que evita simultaneamente $K_3$ monocromático,
+$K_4$ arco-íris e $K_5$ lexicográfico. Assim, o primeiro caso já exige uma
+adaptação não trivial do paradigma de $0$-enunciados ao cenário canônico
+assimétrico e constitui o ponto de partida técnico para o estudo sistemático
+de triplas de cliques.
+
+\subsubsection*{Problemas de pesquisa}
+
+\begin{enumerate}[label=\textup{(RC\arabic*)}, leftmargin=*]
+
+  \item \textbf{Triplas de cliques e regimes assimétricos.}
+
+        Pretende-se estudar a propriedade
+        \[
+          G(n,p)\xrightarrow{\mathrm{can}}(K_r,K_s,K_t)
+        \]
+        para famílias de parâmetros $r,s,t$, determinando em quais
+        regimes o maior clique governa o limiar e identificando situações
+        em que a interação entre as alternativas monocromática, arco-íris
+        e lexicográfica é genuinamente assimétrica. Esse estudo deverá
+        também indicar se as $2$-densidades individuais são suficientes
+        para descrever as escalas relevantes ou se parâmetros que combinem
+        os três alvos se tornam necessários.
+
+  \item \textbf{Além de cliques.}
+
+        Uma vez compreendidos alguns regimes da família
+        $(K_r,K_s,K_t)$, pretende-se substituir progressivamente os
+        cliques por outras classes de grafos. O primeiro passo será tratar
+        triplas nas quais apenas um dos três alvos é substituído, mantendo
+        os outros dois completos. Ciclos são candidatos naturais para esse
+        teste, pois seus limiares Ramsey e anti-Ramsey são relativamente
+        bem compreendidos e já existem resultados canônicos recentes. O
+        objetivo de longo prazo é compreender quais características dos
+        grafos $H_1,H_2,H_3$ determinam a escala crítica da propriedade.
+
+\end{enumerate}
+
+% ============================================================
+% RAMSEY CANÔNICO PARA GRAFOS GERAIS
+% ============================================================
+
+\subsection{Ramsey canônico para grafos gerais}
+\label{sec:ramsey-canonico-geral}
+
+A terceira linha de pesquisa busca compreender propriedades Ramsey
+canônicas em grafos aleatórios quando o grafo-alvo não é necessariamente
+completo. Nesse contexto, é importante distinguir duas formulações recentes
+que coincidem em vários casos básicos, mas impõem exigências diferentes.
+
+Sejam $G$ e $H$ grafos com ordens totais $\tau$ e $\sigma$ sobre seus
+vértices. Na formulação ordenada de Kam\v{c}ev e Schacht, escrevemos
+\[
+  (G,\tau)\xrightarrow{\mathrm{can}}(H,\sigma)
+\]
+quando toda coloração de $E(G)$ contém uma cópia de $H$ que preserva a
+ordem e que é monocromática, arco-íris, min-lex estrita ou max-lex estrita.
+No padrão min-lex estrito, duas arestas recebem a mesma cor se, e somente
+se, possuem o mesmo menor extremo na ordem; o padrão max-lex é definido de
+forma análoga pelo maior extremo
+\cite{KamcevSchacht2025}. Denotaremos por
+\[
+  \widehat p^{\mathrm{ord}}_{(H,\sigma)}(n)
+\]
+o limiar dessa propriedade no grafo aleatório sobre o conjunto ordenado
+$[n]$.
+
+Alvarado, Kohayakawa, Morris e Mota adotam uma formulação diferente, baseada
+em padrões de cor e sem uma ordem previamente fixada no grafo ambiente.
+Dada uma ordem $\sigma$ de $V(H)$, uma coloração lexicográfica atribui
+injetivamente uma cor a cada vértice e colore uma aresta $uv$, com
+$u<_\sigma v$, pela cor associada a $u$. Esse é precisamente o padrão
+min-lex estrito acima; inverter $\sigma$ transforma o padrão max-lex em um
+padrão min-lex. Portanto, a diferença essencial entre as duas abordagens não
+está no padrão lexicográfico em si, mas na forma como as ordens entram na
+propriedade.
+
+Escreveremos, neste projeto,
+\[
+  G\xrightarrow{\mathrm{can}_{\mathrm{pat}}}H
+\]
+quando, para toda coloração de $E(G)$ e para toda ordem total $\sigma$ sobre
+$V(H)$, existe uma cópia de $H$ canônica com respeito a $\sigma$. Denotaremos
+por $\widehat p_H^{\mathrm{pat}}(n)$ o limiar correspondente. Essa é a
+formulação forte por padrões de Alvarado, Kohayakawa, Morris e Mota
+\cite{AlvaradoKohayakawaMorrisMota2026Cycles}. Há ainda a versão fraca
+\[
+  G\xrightarrow{\mathrm{wcan}}H,
+\]
+na qual, para cada coloração, basta encontrar uma cópia de $H$ canônica com
+respeito a alguma ordem de seus vértices.
+
+As duas formulações principais enfatizam aspectos diferentes. A propriedade
+ordenada exige compatibilidade com uma ordem do ambiente fixada antes da
+coloração. A propriedade por padrões não impõe essa compatibilidade, mas
+exige a realização dos padrões correspondentes a todas as ordenações do
+alvo. Para grafos gerais, portanto, não há razão para identificar as duas
+propriedades a priori.
+
+Para cliques, a situação simplifica-se. Todas as ordenações de $K_\ell$ são
+equivalentes por automorfismos e, como observado por Alvarado, Kohayakawa,
+Morris e Mota, há apenas um tipo lexicográfico de $K_\ell$ na formulação por
+padrões. Nesse caso, a exigência adicional característica de
+Kam\v{c}ev--Schacht é a compatibilidade com a ordem fixada no ambiente, de
+modo que sua formulação ordenada é a mais restritiva das duas. Ainda assim,
+para $\ell\geq4$, ambas possuem a mesma escala de limiar:
+\[
+  n^{-1/m_2(K_\ell)}=n^{-2/(\ell+1)}.
+\]
+A cota superior segue de Kam\v{c}ev--Schacht, enquanto a cota inferior para
+a formulação por padrões já segue do limiar Ramsey usual, utilizando uma
+$2$-coloração sem $K_\ell$ monocromático.
+
+O triângulo mostra que a distinção pode ser substancial. Na formulação por
+padrões, toda coloração de um triângulo é monocromática, arco-íris ou
+lexicográfica para alguma identificação de sua ordem; como todas as ordens
+de $K_3$ são equivalentes, a propriedade
+$G\xrightarrow{\mathrm{can}_{\mathrm{pat}}}K_3$ equivale simplesmente à
+existência de um triângulo. Seu limiar é, portanto, da ordem de $n^{-1}$.
+Já na formulação ordenada de Kam\v{c}ev e Schacht, sabe-se apenas que
+\[
+  \widehat p^{\mathrm{ord}}_{K_3}(n)=O(n^{-2/3}),
+\]
+e a ordem exata permanece em aberto
 \cite{KamcevSchacht2025}.
 
-É notável que essa é exatamente a mesma escala que aparece no Teorema
-de Ramsey aleatório de Rödl e Ruciński. Assim, ao menos para cliques,
-permitir um número arbitrário de cores e substituir a conclusão
-monocromática por uma conclusão canônica não altera a ordem do limiar.
+Para grafos não completos, Kam\v{c}ev e Schacht observam que seus métodos
+produzem, para grafos estritamente $2$-balanceados, cópias canônicas na
+escala $n^{-1/m_2(H)}$ quando não se exige uma ordenação específica do alvo.
+Esse resultado, contudo, não resolve a formulação ordenada para uma ordem
+prescrita nem a exigência de realizar todos os padrões lexicográficos.
 
-Esse fenômeno motiva uma das questões gerais desta linha de pesquisa.
-
-\begin{question}
-  \label{que:canonical-general}
-  Para quais grafos ordenados $H$ vale
-  \[
-    \widehat p_H(n)
-    =
-    n^{-1/m_2(H)}
-  \]
-  em ordem de grandeza?
-\end{question}
-
-A Questão~\ref{que:canonical-general} contém duas dificuldades
-distintas. A primeira é probabilística: compreender em que escala
-$G(n,p)$ possui estrutura suficiente para forçar um padrão canônico.
-A segunda é estrutural e está relacionada à ordenação dos vértices.
-Para grafos que não são completos, diferentes ordenações de um mesmo
-grafo não precisam se comportar da mesma forma do ponto de vista
-canônico.
-
-\subsubsection*{Resultados além dos cliques}
-
-O trabalho de Kamčev e Schacht fornece algumas indicações de que a
-escala
+Na formulação por padrões, Alvarado, Kohayakawa, Morris e Mota provaram que,
+para $k\geq2$, se
 \[
-  n^{-1/m_2(H)}
+  p=\omega\!\left(n^{-1+1/(2k-1)}\log n\right),
 \]
-deve permanecer relevante para grafos mais gerais. Em particular,
-para um grafo estritamente $2$-balanceado $H$, suas técnicas garantem,
-no regime
+então, assintoticamente quase certamente, toda coloração de $G(n,p)$ contém
+cópias canônicas de $C_{2k}$ para todas as ordenações de seus vértices
+\cite{AlvaradoKohayakawaMorrisMota2026Cycles}. Como
 \[
-  p\gg n^{-1/m_2(H)},
+  m_2(C_{2k})=\frac{2k-1}{2k-2},
 \]
-a existência de uma cópia canonicamente colorida de $H$. Entretanto,
-nessa formulação não se pode, em geral, prescrever previamente a
-ordenação dos vértices da cópia.
+a escala obtida é $n^{-1/m_2(C_{2k})}\log n$. Além disso, para a versão
+fraca de $C_4$ o limiar é $n^{-3/4}$, mostrando que diferentes exigências
+canônicas podem de fato produzir escalas distintas.
 
-Isso revela uma distinção que é invisível no caso de cliques. Como
-toda ordenação de $K_\ell$ é isomorfa como grafo ordenado, a ordem não
-representa uma dificuldade adicional. Para um grafo geral $H$, porém,
-o problema de encontrar alguma ordenação canônica e o problema de
-encontrar uma ordenação previamente fixada podem ser genuinamente
-diferentes.
+\subsubsection*{Problemas de pesquisa}
 
-Outra classe para a qual já existem avanços importantes é a dos ciclos
-pares. Alvarado, Kohayakawa, Morris e Mota provaram um teorema
-canônico para $C_{2\ell}$ em grafos aleatórios
-\cite{AlvaradoKohayakawaMorrisMotaCycles}. Em particular, seu resultado
-fornece uma cópia canônica quando
-\[
-  p
-  \gg
-  n^{-1/m_2(C_{2\ell})}\log n.
-\]
-Como
-\[
-  m_2(C_{2\ell})
-  =
-  \frac{2\ell-1}{2\ell-2},
-\]
-essa escala pode ser escrita como
-\[
-  p
-  \gg
-  n^{-1+1/(2\ell-1)}\log n.
-\]
+\begin{enumerate}[label=\textup{(CG\arabic*)}, leftmargin=*]
 
-O resultado determina, portanto, o limiar esperado até um fator
-logarítmico. Há, contudo, uma diferença importante entre essa
-formulação e a versão ordenada que pretendemos estudar neste projeto:
-no resultado para ciclos pares, a ordenação relevante pode ser
-escolhida após a coloração do grafo aleatório.
+  \item \textbf{O limiar canônico ordenado de $K_3$.}
 
-Esses resultados sugerem que há pelo menos três versões naturais do
-problema:
-\begin{enumerate}[label=\textup{(\roman*)}]
-  \item encontrar alguma ordenação de $H$ cuja cópia seja canônica;
-  \item fixar a ordem do grafo ambiente antes da coloração, mas
-        permitir qualquer tipo ordenado de $H$;
-  \item fixar previamente um grafo ordenado $(H,\sigma)$ e exigir
-        uma cópia que preserve exatamente essa ordem.
+        Pretende-se investigar a ordem de grandeza de
+        \[
+          \widehat p^{\mathrm{ord}}_{K_3}(n).
+        \]
+        Esse é o único clique para o qual o limiar da formulação ordenada
+        de Kam\v{c}ev--Schacht permanece desconhecido. A comparação com a
+        formulação por padrões, cujo limiar é apenas o de aparecimento de
+        $K_3$, mostra que o papel da ordem do ambiente já é relevante no
+        menor caso não trivial.
+
+  \item \textbf{Ciclos.}
+
+        Na formulação por padrões, pretende-se investigar se o fator
+        $\log n$ do resultado para $C_{2k}$ pode ser removido e determinar
+        o comportamento dos ciclos ímpares, começando por $C_5$. Esses
+        casos fornecem um laboratório concreto tanto para testar a escala
+        $n^{-1/m_2(C_\ell)}$ quanto para comparar, posteriormente, a
+        propriedade por padrões com formulações ordenadas dos mesmos
+        grafos.
+
+  \item \textbf{Grafos gerais e comparação entre as formulações canônicas.}
+
+        Em perspectiva mais ampla, pretende-se determinar para quais
+        classes de grafos $H$ a escala $n^{-1/m_2(H)}$ governa a
+        formulação por padrões, a formulação ordenada ou ambas. Como
+        primeiro recorte, serão considerados grafos estritamente
+        $2$-balanceados e famílias nas quais diferentes ordenações do alvo
+        geram padrões lexicográficos não equivalentes. Interessa também
+        identificar situações em que as versões ordenada, por padrões e
+        fraca possuem a mesma escala e situações em que divergem.
+
 \end{enumerate}
 
-Pretendemos compreender em que situações essas versões possuem o
-mesmo limiar e em que situações a ordem prescrita introduz um novo
-fenômeno.
+Para as classes cujo limiar venha a ser determinado ao longo do projeto,
+questões mais refinadas, como a existência de limiares \emph{sharp}, poderão
+ser consideradas como desdobramentos dos resultados obtidos.
 
-\subsubsection*{Ciclos}
-
-Os ciclos constituem uma primeira classe natural para investigar a
-Questão~\ref{que:canonical-general}. Além de possuírem uma estrutura
-simples e $2$-densidade explicitamente conhecida, eles já apresentam
-uma diferença fundamental entre os casos par e ímpar.
-
-Para todo $\ell\geq3$,
-\[
-  m_2(C_\ell)
-  =
-  \frac{\ell-1}{\ell-2},
-\]
-de modo que a escala sugerida pelo problema Ramsey clássico é
-\[
-  n^{-1/m_2(C_\ell)}
-  =
-  n^{-(\ell-2)/(\ell-1)}.
-\]
-
-Para ciclos pares, o primeiro problema será entender se o fator
-logarítmico presente nos resultados conhecidos é necessário.
-
-\begin{problem}
-\label{prob:even-cycle-canonical}
-Determine o limiar exato para a propriedade Ramsey canônica de
-$C_{2\ell}$. Em particular, determine se
-\[
-  \widehat p_{C_{2\ell}}(n)
-  =
-  n^{-1/m_2(C_{2\ell})}
-\]
-em ordem de grandeza.
-\end{problem}
-
-Uma etapa adicional será estudar a versão com ordenação previamente
-prescrita.
-
-\begin{problem}
-\label{prob:ordered-even-cycle}
-Seja $(C_{2\ell},\sigma)$ um ciclo par equipado com uma ordem total
-fixa sobre seus vértices. Determine o limiar para que toda
-coloração arbitrária de $G(n,p)$ contenha uma cópia canônica de
-$(C_{2\ell},\sigma)$.
-\end{problem}
-
-Para ciclos ímpares, a situação parece ainda menos compreendida, o que
-motiva uma segunda família de problemas.
-
-\begin{problem}
-\label{prob:odd-cycle-canonical}
-Para $\ell\geq2$, determine o limiar Ramsey canônico de
-\[
-  C_{2\ell+1}.
-\]
-Em particular, determine se a escala correta é
-\[
-  n^{-1/m_2(C_{2\ell+1})}
-  =
-  n^{-(2\ell-1)/(2\ell)}.
-\]
-\end{problem}
-
-O primeiro caso não trivial,
-\[
-  C_5,
-\]
-deverá servir como modelo inicial. A análise de $C_5$ pode revelar
-fenômenos que não aparecem para cliques e, ao mesmo tempo, permanece
-suficientemente pequena para permitir o estudo explícito das possíveis
-ordenações e padrões de coloração.
-
-Posteriormente, pretende-se investigar $C_7$ e $C_9$ e buscar uma
-construção que se estenda a ciclos ímpares arbitrários.
-
-\subsubsection*{O papel da ordenação}
-
-Um aspecto que pretendemos estudar sistematicamente é a dependência do
-limiar em relação à ordenação escolhida para o grafo-alvo.
-
-Para um grafo $H$ e duas ordens totais $\sigma_1,\sigma_2$ sobre
-$V(H)$, não é evidente que
-\[
-  \widehat p_{(H,\sigma_1)}
-\]
-e
-\[
-  \widehat p_{(H,\sigma_2)}
-\]
-devam possuir a mesma ordem de grandeza.
-
-Isso sugere definir os parâmetros
-\[
-  \widehat p_H^{\min}(n)
-  :=
-  \min_{\sigma}
-  \widehat p_{(H,\sigma)}(n)
-\]
-e
-\[
-  \widehat p_H^{\max}(n)
-  :=
-  \max_{\sigma}
-  \widehat p_{(H,\sigma)}(n)
-\]
-e investigar quão diferentes essas funções podem ser.
-
-\begin{question}
-  \label{que:canonical-order}
-  Existe um grafo $H$ para o qual duas ordenações $\sigma_1$ e
-  $\sigma_2$ produzem limiares Ramsey canônicos de ordens de
-  grandeza distintas?
-\end{question}
-
-Mesmo que os limiares sejam sempre da mesma ordem de grandeza, as
-constantes ou os mecanismos envolvidos nos $0$-enunciados podem
-depender significativamente da ordem.
-
-Para ciclos, essa questão já pode ser estudada concretamente. Uma
-ordenação em que os vértices aparecem na ordem cíclica é
-estruturalmente bastante diferente de uma ordenação alternada entre
-as duas partes de um ciclo par, por exemplo. Pretendemos classificar,
-ao menos para ciclos pequenos, os diferentes tipos ordenados e
-comparar seus respectivos comportamentos.
-
-\subsubsection*{Grafos estritamente $2$-balanceados}
-
-A evidência existente sugere que a classe dos grafos estritamente
-$2$-balanceados é um ponto natural de partida para uma teoria mais
-geral.
-
-\begin{question}
-  \label{que:strictly-balanced-canonical}
-  Seja $H$ um grafo estritamente $2$-balanceado que contém um ciclo.
-  É verdade que existe uma ordenação $\sigma$ para a qual
-  \[
-    \widehat p_{(H,\sigma)}(n)
-    =
-    n^{-1/m_2(H)}?
-  \]
-\end{question}
-
-Uma versão mais forte seria exigir o resultado para toda ordenação.
-
-\begin{question}
-  \label{que:every-order-canonical}
-  Seja $H$ estritamente $2$-balanceado. Para toda ordem total
-  $\sigma$ sobre $V(H)$, vale
-  \[
-    \widehat p_{(H,\sigma)}(n)
-    =
-    n^{-1/m_2(H)}?
-  \]
-\end{question}
-
-Os resultados existentes fornecem evidência para a primeira questão,
-mas a segunda envolve diretamente a dificuldade adicional de
-prescrever a ordem.
-
-Entre as classes a serem consideradas nessa direção estão:
-\begin{itemize}
-  \item ciclos;
-  \item grafos regulares esparsos;
-  \item grafos de cintura grande;
-  \item grafos bipartidos estritamente $2$-balanceados;
-  \item grafos com degenerescência limitada.
-\end{itemize}
-
-A escolha dessas classes também permitirá comparar os fenômenos
-canônicos com aqueles observados na parte anti-Ramsey deste projeto.
-
-\subsubsection*{$0$-enunciados e problemas determinísticos}
-
-Assim como nas duas linhas anteriores, um objetivo importante será
-compreender os $0$-enunciados através de problemas determinísticos de
-coloração.
-
-Para cliques, a escala crítica sugere estudar grafos $B$ satisfazendo
-\[
-  m(B)<m_2(K_\ell)
-\]
-e construir uma coloração de suas arestas sem uma cópia canônica de
-$K_\ell$.
-
-Para grafos gerais, entretanto, o problema determinístico pode
-depender fortemente da ordem e da estrutura de $H$. Isso motiva a
-seguinte questão.
-
-\begin{problem}
-\label{prob:canonical-deterministic-general}
-Dado um grafo ordenado $(H,\sigma)$, determine condições sobre
-um grafo ordenado $B$ com
-\[
-  m(B)<m_2(H)
-\]
-que garantam a existência de uma coloração de $E(B)$ sem uma
-cópia canônica de $(H,\sigma)$.
-\end{problem}
-
-A ausência de uma cópia canônica significa evitar simultaneamente
-cópias monocromáticas, arco-íris, min-lex e max-lex. Diferentes partes
-dessa condição sugerem técnicas distintas.
-
-Uma coloração com poucas cores elimina automaticamente cópias
-arco-íris grandes. Uma coloração própria elimina configurações
-monocromáticas e lexicográficas. Colorações baseadas em
-degenerescência ou em templates finitos podem permitir um compromisso
-entre esses dois extremos.
-
-Pretendemos investigar em quais classes de grafos essas estratégias
-podem ser combinadas e se uma decomposição do grafo ambiente em
-partes com diferentes tipos de coloração fornece uma abordagem
-sistemática para o problema.
-
-\subsubsection*{Relação com resultados de Ramsey canônico determinístico}
-
-Outra direção será utilizar construções determinísticas Ramsey
-canônicas como inspiração para o problema aleatório.
-
-Resultados clássicos de Erdős--Rado e Nešetřil--Rödl mostram que é
-possível construir grafos com propriedades Ramsey canônicas bastante
-fortes. Trabalhos recentes também investigam grafos Ramsey canônicos
-com restrições estruturais adicionais.
-
-Uma questão natural é determinar até que ponto tais construções podem
-ser combinadas com argumentos probabilísticos ou de esparsificação.
-
-\begin{question}
-  \label{que:sparse-canonical-host}
-  Dado um grafo ordenado $H$, quão esparso pode ser um grafo $G$
-  satisfazendo
-  \[
-    G\xrightarrow{\mathrm{can}}H?
-  \]
-  Em particular, quais parâmetros de densidade são necessários em
-  grafos Ramsey canônicos para $H$?
-\end{question}
-
-Essa questão determinística está intimamente relacionada ao estudo dos
-limiares. A existência de uma obstrução Ramsey canônica $G$ com
-\[
-  m(G)<m_2(H)
-\]
-poderia indicar que a escala natural prevista por $m_2(H)$ não é
-correta, de maneira semelhante ao que ocorre no problema anti-Ramsey.
-
-Assim, além de provar resultados positivos, será importante procurar
-sistematicamente pequenas obstruções que possam produzir exceções.
-
-\subsubsection*{Métodos com listas}
-
-Uma ferramenta adicional que poderá ser utilizada é a versão Ramsey
-canônica com restrições por listas desenvolvida por Alvarado,
-Kohayakawa, Morris e Mota
-\cite{AlvaradoKohayakawaMorrisMotaLists}.
-
-Problemas com listas surgem naturalmente quando uma coloração global é
-construída em etapas. Após colorir uma parte do grafo, as cores
-disponíveis para as arestas restantes podem ser descritas por listas,
-e um resultado canônico para colorações sujeitas a essas listas pode
-permitir concluir o argumento.
-
-Essa técnica já desempenha papel importante no estudo de ciclos pares
-e poderá ser útil tanto na remoção do fator logarítmico quanto no
-tratamento de outras classes de grafos.
-
-\subsubsection*{Problemas propostos}
-
-A terceira linha do projeto será inicialmente organizada em torno dos
-seguintes problemas.
-
-\begin{enumerate}[label=\textup{(CG\arabic*)}]
-  \item
-        Determinar o limiar Ramsey canônico para ciclos ímpares,
-        começando por
-        \[
-          C_5
-          \qquad\text{e}\qquad
-          C_7.
-        \]
-
-  \item
-        Determinar se o fator logarítmico presente no resultado conhecido
-        para ciclos pares pode ser removido.
-
-  \item
-        Estudar o limiar de ciclos pares quando uma ordenação específica
-        é fixada previamente.
-
-  \item
-        Classificar as diferentes ordenações de ciclos pequenos do ponto
-        de vista da propriedade Ramsey canônica.
-
-  \item
-        Determinar se diferentes ordenações de um mesmo grafo podem
-        produzir limiares de ordens de grandeza distintas.
-
-  \item
-        Investigar se todo grafo estritamente $2$-balanceado possui
-        limiar canônico governado por
-        \[
-          n^{-1/m_2(H)}
-        \]
-        quando não se prescreve a ordem.
-
-  \item
-        Investigar a mesma questão quando uma ordenação arbitrária é
-        previamente fixada.
-
-  \item
-        Desenvolver critérios determinísticos para colorir grafos
-        $B$ satisfazendo
-        \[
-          m(B)<m_2(H)
-        \]
-        sem produzir cópias canônicas de $H$.
-
-  \item
-        Procurar obstruções de baixa densidade que possam produzir
-        exceções ao comportamento governado por $m_2(H)$.
-
-  \item
-        Estender os resultados obtidos para outras classes naturais,
-        incluindo grafos regulares esparsos, grafos bipartidos e grafos
-        de cintura grande.
-
-  \item
-        Investigar extensões da propriedade canônica para famílias
-        finitas de grafos e, em uma etapa posterior, para hipergrafos.
-\end{enumerate}
-
-O estudo de ciclos deverá fornecer a primeira ponte entre o resultado
-para cliques e uma teoria Ramsey canônica para grafos gerais. Ao mesmo
-tempo, a dependência em relação à ordenação introduz um fenômeno que
-não aparece no caso completo e que poderá exigir novas ferramentas.
-
-Em uma perspectiva mais ampla, pretende-se compreender se a
-$2$-densidade máxima desempenha na Teoria de Ramsey canônica o mesmo
-papel universal que desempenha na Teoria de Ramsey aleatória clássica,
-ou se existem classes de grafos e ordenações para as quais novos
-parâmetros estruturais são necessários.
 % ============================================================
 % METODOLOGIA DE ESTUDO
 % ============================================================
@@ -1927,284 +867,52 @@ parâmetros estruturais são necessários.
 \section{Metodologia de estudo}
 \label{sec:metodologia}
 
-Os problemas apresentados na Seção~\ref{sec:anti-ramsey} e nas
-subseções seguintes encontram-se na interseção entre Teoria de Ramsey,
-Combinatória Extremal e Teoria de Grafos Aleatórios. Seu estudo exigirá
-a combinação de técnicas probabilísticas com argumentos determinísticos
-de coloração e decomposição de grafos.
+O projeto é de natureza teórica e será desenvolvido principalmente por
+meio do estudo aprofundado da literatura, da investigação dos problemas
+descritos nas seções anteriores e da elaboração de demonstrações
+matemáticas.
 
-Uma característica comum às três linhas propostas é a separação entre
-os chamados $0$-enunciados e $1$-enunciados. Para uma propriedade
-monótona $\mathcal P$ em $G(n,p)$, o $1$-enunciado consiste em mostrar
-que
-\[
-  \Pr[G(n,p)\in\mathcal P]\longrightarrow1
-\]
-acima de determinada escala de $p$, enquanto o $0$-enunciado consiste
-em construir, abaixo dessa escala, uma coloração que testemunhe a
-falha da propriedade.
+Os problemas considerados envolvem Teoria de Ramsey, Combinatória
+Probabilística e Teoria de Grafos Aleatórios. Dependendo da questão,
+serão empregadas ferramentas probabilísticas e determinísticas. Entre
+as técnicas potencialmente relevantes estão argumentos de primeiro e
+segundo momento, resultados sobre aparecimento de subgrafos em
+$G(n,p)$, métodos de transferência e containers, além de argumentos
+estruturais de coloração. A escolha das ferramentas será feita de
+acordo com os problemas que se mostrarem mais promissores ao longo do
+desenvolvimento da pesquisa.
 
-Embora essas duas partes estejam fortemente relacionadas, as técnicas
-necessárias para tratá-las costumam ser diferentes. Resultados de
-transferência, métodos de containers e versões esparsas de teoremas
-extremais são particularmente apropriados para $1$-enunciados. Por
-outro lado, os $0$-enunciados frequentemente exigem uma compreensão
-mais fina da estrutura local do grafo aleatório e a construção
-explícita de colorações que evitem as configurações desejadas.
+Uma atenção particular será dada à relação entre os problemas
+probabilísticos e suas versões determinísticas. Em diversos resultados
+Ramsey e anti-Ramsey em grafos aleatórios, $0$-enunciados podem ser
+obtidos após reduzir a análise do grafo aleatório a problemas de coloração
+em grafos finitos com restrições de densidade. Frameworks desse tipo, como
+o desenvolvido por Nenadov, Person, Škorić e Steger
+\cite{NenadovPersonSkoricSteger2017}, constituem uma referência importante
+para o projeto.
 
-Uma das principais estratégias metodológicas deste projeto será
-explorar essa distinção, procurando reduzir os $0$-enunciados
-probabilísticos a problemas determinísticos de coloração.
+Essa ponte já aparece no resultado preliminar para $(K_3,K_4,K_5)$: abaixo
+da escala crítica, a análise probabilística conduz a blocos associados às
+cópias de $K_5$, e o problema restante é construir em cada bloco uma
+coloração que evite simultaneamente as três configurações proibidas. Esse
+exemplo mostra que as linhas anti-Ramsey e canônica assimétrica compartilham
+mais do que uma motivação via $m_2$: ambas conduzem naturalmente a problemas
+determinísticos de coloração após uma etapa probabilística de redução. As
+ferramentas específicas, entretanto, serão escolhidas de acordo com cada
+problema, sem se pressupor que uma única estratégia seja adequada às três
+linhas.
 
-\subsection*{Reduções probabilístico-determinísticas}
+Nos casos pequenos, ferramentas computacionais poderão ser utilizadas
+de maneira exploratória para testar exemplos, procurar obstruções e
+auxiliar na formulação de hipóteses. Eventuais resultados obtidos por
+meio dessas buscas servirão como orientação para a investigação
+matemática e deverão ser acompanhados de demonstrações independentes.
 
-Um modelo fundamental para essa abordagem é o framework de Nenadov,
-Person, Škorić e Steger
-\cite{NenadovPersonSkoricSteger2017}. Em diversas propriedades do tipo
-Ramsey, o método consiste inicialmente em remover arestas que podem ser
-coloridas sem dificuldade e, posteriormente, decompor o subgrafo
-remanescente em estruturas menores, usualmente denominadas blocos.
-
-No regime abaixo da escala crítica, esses blocos possuem,
-assintoticamente quase certamente, tamanho limitado. Além disso, um
-argumento de primeiro momento permite controlar sua densidade. Dessa
-forma, a parte probabilística do problema pode ser reduzida a uma
-afirmação determinística da forma
-\[
-  m(B)<d
-  \quad\Longrightarrow\quad
-  B\text{ admite uma coloração adequada},
-\]
-onde $d$ é o parâmetro de densidade associado ao problema em questão.
-
-Pretendemos utilizar essa filosofia nas três linhas do projeto.
-
-No problema anti-Ramsey, a questão determinística consiste em produzir
-uma coloração própria de $B$ sem uma cópia arco-íris de $H$.
-
-No problema Ramsey canônico assimétrico, será necessário evitar
-simultaneamente uma cópia monocromática de $H_1$, uma cópia arco-íris
-de $H_2$ e uma cópia lexicográfica de $H_3$.
-
-Finalmente, no problema Ramsey canônico para grafos gerais, será
-necessário evitar simultaneamente os diferentes padrões canônicos do
-grafo-alvo, levando também em consideração a ordenação prescrita de
-seus vértices.
-
-Uma parte importante do projeto será determinar até que ponto o
-framework existente pode ser aplicado diretamente a essas propriedades
-e quais modificações são necessárias para capturar os diferentes tipos
-de coloração envolvidos.
-
-\subsection*{Decomposições de grafos e degenerescência}
-
-Uma segunda família de ferramentas será formada por técnicas de
-decomposição de grafos.
-
-Se um grafo $G$ satisfaz uma condição do tipo
-\[
-  m(G)<d,
-\]
-então sua densidade limitada impõe restrições à degenerescência, à
-arboricidade e à possibilidade de decompor seu conjunto de arestas em
-subgrafos estruturalmente simples.
-
-Essas propriedades deverão desempenhar um papel particularmente
-importante na linha anti-Ramsey. Uma estratégia será decompor o grafo
-ambiente em florestas, grafos de grau máximo controlado ou subgrafos
-orientados com grau de saída limitado, procurando reutilizar cores de
-forma coordenada. O objetivo será garantir que toda cópia do
-grafo-alvo contenha duas arestas de mesma cor, sem violar a condição de
-a coloração global ser própria.
-
-A hipótese de cintura grande deverá ser combinada com essas
-decomposições. Como duas regiões distintas de um grafo de cintura
-grande não podem ser conectadas por caminhos curtos arbitrários,
-esperamos que a ausência de ciclos pequenos restrinja a maneira como
-uma cópia de $H$ pode se distribuir entre as diferentes partes de uma
-decomposição.
-
-Pretendemos também estudar decomposições inspiradas em resultados
-recentes utilizados no problema anti-Ramsey, incluindo decomposições
-em florestas e subgrafos de grau limitado.
-
-\subsection*{Colorações locais e vizinhanças}
-
-Na linha Ramsey canônica assimétrica, uma técnica que deverá receber
-atenção especial é a utilização das vizinhanças orientadas pela ordem
-dos vértices.
-
-Dada uma ordem total $\sigma$, para cada vértice $v$ consideramos
-\[
-  N_\sigma^+(v)
-  =
-  \{u\in N_G(v):v<_\sigma u\}.
-\]
-Uma coloração local dos vértices do grafo
-\[
-  G[N_\sigma^+(v)]
-\]
-pode ser utilizada para definir as cores das arestas incidentes a
-$v$.
-
-Construções desse tipo permitem transformar um problema de coloração
-de arestas em um problema Ramsey por vértices. Em particular, podem
-ser utilizadas simultaneamente para limitar o número de cores
-presentes nas arestas incidentes ao menor vértice de um clique e para
-impedir padrões lexicográficos.
-
-Essa abordagem deverá ser comparada com resultados conhecidos sobre
-densidade Ramsey por vértices e poderá fornecer construções gerais
-para famílias inteiras de triplas
-\[
-  (K_r,K_s,K_t).
-\]
-
-\subsection*{Templates finitos de coloração}
-
-Outra técnica que aparece naturalmente nos casos pequenos consiste no
-uso de templates finitos.
-
-Se uma condição de densidade garante que um grafo $B$ admite uma
-coloração própria de seus vértices com $q$ cores, podemos escolher uma
-coloração auxiliar
-\[
-  \rho:E(K_q)\longrightarrow\mathcal C
-\]
-e transferi-la para $B$ através de uma coloração própria
-\[
-  \kappa:V(B)\longrightarrow[q]
-\]
-definindo
-\[
-  \chi(uv)
-  :=
-  \rho(\kappa(u)\kappa(v)).
-\]
-
-Como toda cópia de um clique em $B$ utiliza vértices de cores distintas
-sob $\kappa$, seu padrão de coloração é reproduzido por uma cópia do
-mesmo clique no template $K_q$.
-
-Essa técnica já fornece construções naturais para alguns dos primeiros
-casos da propriedade Ramsey canônica assimétrica e será investigada de
-maneira sistemática.
-
-Além de construções explícitas, será possível realizar buscas
-computacionais por pequenos templates. Esses experimentos terão caráter
-exploratório: poderão sugerir padrões de coloração, identificar casos
-excepcionais ou indicar conjecturas, mas os resultados matemáticos do
-projeto serão acompanhados de demonstrações independentes das buscas
-computacionais.
-
-\subsection*{Método probabilístico e argumentos de contagem}
-
-Ferramentas clássicas do método probabilístico serão utilizadas ao
-longo de todo o projeto.
-
-Argumentos de primeiro momento serão empregados, por exemplo, para
-mostrar que determinados subgrafos de densidade elevada não aparecem
-em $G(n,p)$ abaixo de uma escala crítica. Em situações mais delicadas,
-poderão ser utilizados argumentos de segundo momento, desigualdades de
-concentração e resultados gerais sobre o aparecimento de subgrafos
-fixos em grafos aleatórios.
-
-Para $1$-enunciados, pretendemos utilizar resultados existentes sempre
-que possível. Por exemplo, o teorema Ramsey canônico de
-Kamčev--Schacht fornece diretamente vários limites superiores para os
-problemas estudados neste projeto.
-
-Quando os resultados existentes não puderem ser aplicados
-diretamente, estudaremos adaptações de métodos de containers de
-hipergrafos e princípios de transferência para ambientes esparsos.
-
-O método de containers é particularmente natural em problemas Ramsey:
-uma coloração que evita determinada configuração pode ser descrita
-através de conjuntos independentes de um hipergrafo auxiliar cujos
-vértices representam as arestas do grafo ambiente e cujas
-hiperarestas correspondem às cópias da configuração proibida.
-
-\subsection*{Colorações canônicas com listas}
-
-Na investigação de grafos gerais, especialmente ciclos, pretendemos
-também explorar versões da Teoria de Ramsey canônica com listas de
-cores.
-
-Essas versões são úteis quando uma coloração é construída
-iterativamente. Depois de colorida parte do grafo, as escolhas
-possíveis para uma nova aresta podem ser representadas por uma lista de
-cores admissíveis.
-
-Resultados Ramsey canônicos com listas poderão, portanto, funcionar
-como ferramenta intermediária para construir colorações globais ou
-para encontrar padrões canônicos em subgrafos esparsos.
-
-Essa abordagem já aparece em trabalhos recentes relacionados ao
-problema canônico para ciclos pares e será estudada com o objetivo de
-adaptá-la a ciclos ímpares, ordenações prescritas e outros grafos
-esparsos.
-
-\subsection*{Análise de obstruções pequenas}
-
-Além de procurar provas gerais, pretendemos estudar sistematicamente
-possíveis obstruções determinísticas.
-
-Dado um problema cuja escala candidata é
-\[
-  n^{-1/d},
-\]
-um grafo fixo $B$ satisfazendo
-\[
-  m(B)<d
-\]
-e que já possua a propriedade Ramsey correspondente pode impedir que o
-limiar conjecturado seja correto.
-
-Esse fenômeno ocorre, por exemplo, em diferentes variantes anti-Ramsey
-e mostra a importância de compreender estruturas pequenas antes de
-formular conjecturas gerais.
-
-Nos casos envolvendo cliques pequenos e ciclos pequenos, pretende-se
-combinar argumentos matemáticos com enumeração computacional de grafos
-de ordem limitada. O objetivo será identificar potenciais obstruções,
-classificá-las e compreender quais características estruturais são
-responsáveis por seu comportamento.
-
-Essa análise poderá também fornecer evidências para a escolha de novos
-parâmetros de densidade nos casos em que $m_2(H)$ não seja suficiente.
-
-\subsection*{Desenvolvimento da pesquisa}
-
-O desenvolvimento do projeto será acompanhado por estudo contínuo da
-literatura recente em Teoria de Ramsey, grafos aleatórios e
-Combinatória Extremal. Parte importante do trabalho inicial será a
-consolidação das técnicas presentes nos resultados de
-Rödl--Ruciński, Nenadov--Steger, Nenadov--Person--Škorić--Steger,
-Kamčev--Schacht e nos trabalhos recentes sobre propriedades
-anti-Ramsey.
-
-A pesquisa será desenvolvida em reuniões regulares com o orientador e
-o coorientador. Além da discussão dos problemas específicos do
-projeto, essas reuniões serão utilizadas para a análise crítica das
-estratégias empregadas, escolha das direções mais promissoras e
-acompanhamento dos resultados obtidos.
-
-O candidato participará também dos seminários e atividades dos grupos
-de Combinatória e Teoria dos Grafos do Instituto de Matemática e
-Estatística da Universidade de São Paulo, mantendo contato com
-pesquisadores visitantes e colaboradores que trabalham em temas
-próximos aos propostos neste projeto.
-
-A interação com outros pesquisadores será particularmente importante,
-uma vez que os problemas investigados se relacionam diretamente com
-linhas de pesquisa ativas em Teoria de Ramsey aleatória,
-anti-Ramsey, métodos probabilísticos e Combinatória Extremal.
-
-Pretende-se ainda realizar, durante o doutorado, um estágio de pesquisa
-no exterior em um grupo com atuação em Teoria de Ramsey e grafos
-aleatórios. A escolha do grupo e do pesquisador anfitrião será feita
-em função do desenvolvimento das linhas propostas e dos problemas que
-se mostrarem mais promissores ao longo dos primeiros anos do projeto.
+A pesquisa será acompanhada por reuniões regulares com o orientador e
+o coorientador, nas quais serão discutidos a literatura relevante, os
+resultados parciais e as direções a serem priorizadas. Os resultados
+obtidos serão redigidos progressivamente, com vistas à preparação de
+artigos científicos e, posteriormente, à composição da tese.
 
 % ============================================================
 % O CANDIDATO
@@ -2217,323 +925,96 @@ O candidato concluiu o mestrado em Ciência da Computação no Instituto de
 Matemática e Estatística da Universidade de São Paulo em 2025, sob
 orientação de Yoshiharu Kohayakawa. Sua dissertação, intitulada
 \emph{Classes Ramsey e Colorações Canônicas via Método Partido}, foi
-dedicada ao estudo de problemas em Teoria de Ramsey, com ênfase em classes
-Ramsey, hipergrafos, colorações canônicas e no método partido de
+dedicada ao estudo de problemas em Teoria de Ramsey, com ênfase em
+colorações canônicas, estruturas ordenadas e no método partido de
 Nešetřil--Rödl.
 
-Durante o mestrado, o candidato adquiriu formação em Combinatória Extremal
-e Teoria de Ramsey, estudando tanto resultados clássicos quanto técnicas
-estruturais utilizadas em problemas modernos da área. Uma parte importante
-do trabalho foi dedicada ao método partido, ferramenta introduzida por
-Nešetřil e Rödl que permite construir estruturas Ramsey preservando
-restrições combinatórias adicionais.
+Durante o mestrado, o candidato adquiriu formação em Teoria de Ramsey e
+Combinatória Extremal, estudando construções do tipo partido para
+problemas Ramsey e Ramsey canônicos. Esse trabalho proporcionou
+experiência com argumentos construtivos em grafos e hipergrafos, com
+estruturas ordenadas e com os diferentes padrões que aparecem em
+colorações canônicas, constituindo parte importante da formação
+necessária para o presente projeto.
 
-Na primeira parte da dissertação, o candidato estudou em detalhe
-propriedades Ramsey de sistemas de Steiner e as técnicas de amalgamação
-utilizadas em construções do tipo partido. Esse estudo forneceu experiência
-com argumentos construtivos em grafos e hipergrafos, bem como com a
-organização de provas Ramsey em várias etapas.
+O candidato iniciou o doutorado em julho de 2025. Desde então, vem
+aprofundando sua formação em Combinatória Probabilística e Teoria de
+Grafos Aleatórios, com particular atenção a limiares Ramsey, anti-Ramsey
+e Ramsey canônicos.
 
-Na segunda parte do trabalho, o foco passou à Teoria Canônica de Ramsey.
-Nesse contexto, em vez de considerar apenas colorações com um número fixo
-de cores, estudam-se colorações arbitrárias e os padrões estruturados que
-inevitavelmente aparecem em subestruturas suficientemente grandes.
-
-Como resultado principal da dissertação, foi obtida uma construção
-canônica para hipergrafos completos ordenados. Mais precisamente, para
-inteiros $n$ e $k$ com
+Durante o período inicial do doutorado, o candidato obteve, em
+colaboração com Hugo Vicente, Guilherme Mota, Walner Mendonça e Taísa Martins, resultados preliminares sobre a propriedade Ramsey canônica
+assimétrica considerada neste projeto. Em particular, para a tripla
 \[
-  n\geq 2k+1,
+  (K_3,K_4,K_5),
 \]
-foi construído um $k$-grafo ordenado $\mathcal G$, livre de
-$K_{n+1}^{(k)}$, com a propriedade de que toda coloração arbitrária de
-suas arestas contém uma cópia ordenada de $K_n^{(k)}$ cuja coloração
-restrita é canônica.
+foi determinada a ordem do limiar,
+\[
+  n^{-1/m_2(K_5)}=n^{-1/3}.
+\]
+Além da cota superior proveniente do teorema canônico para $K_5$, o trabalho
+exigiu tratar o $0$-enunciado por meio de uma análise determinística dos
+blocos de $K_5$. Esse resultado motivou a investigação de famílias mais
+gerais $(K_r,K_s,K_t)$ e constitui o ponto de partida da segunda linha de
+pesquisa proposta neste projeto.
 
-O desenvolvimento desse resultado exigiu uma compreensão detalhada dos
-padrões canônicos possíveis, do papel desempenhado pela ordenação dos
-vértices e de técnicas de amalgamação de hipergrafos. Em particular, o
-trabalho forneceu ao candidato experiência prévia diretamente relacionada
-a duas das linhas propostas neste projeto: Teoria de Ramsey canônica e
-problemas em que a estrutura da coloração possui importância tão grande
-quanto a estrutura do grafo subjacente.
-
-O projeto de doutorado representa uma continuação natural dessa formação,
-mas introduz uma componente nova e essencialmente probabilística. O
-objetivo agora é estudar propriedades Ramsey e anti-Ramsey em grafos
-aleatórios e determinar as escalas de probabilidade em que determinados
-padrões de coloração passam a ser inevitáveis.
-
-Desde o início do doutorado, o candidato vem aprofundando sua formação em
-Combinatória Probabilística e Teoria de Grafos Aleatórios, particularmente
-no estudo de limiares Ramsey. Entre os resultados e técnicas estudados
-estão o Teorema de Ramsey aleatório de Rödl--Ruciński, as provas e
-frameworks desenvolvidos por Nenadov, Steger e colaboradores, métodos para
-$0$-enunciados Ramsey, propriedades anti-Ramsey e os recentes resultados
-sobre colorações canônicas em grafos aleatórios.
-
-Esse período inicial também deu origem às primeiras investigações
-diretamente relacionadas ao presente projeto. Em particular, o candidato
-vem estudando a versão Ramsey canônica assimétrica, na qual os grafos-alvo
-nas configurações monocromática, arco-íris e lexicográfica podem ser
-distintos. Os primeiros casos considerados envolvem cliques pequenos e
-têm servido tanto para identificar possíveis limiares quanto para
-desenvolver construções determinísticas de coloração que poderão ser
-utilizadas nos respectivos $0$-enunciados.
-
-Paralelamente, o candidato vem estudando o problema anti-Ramsey em grafos
-aleatórios e, em especial, os métodos utilizados para transformar o
-$0$-enunciado probabilístico em problemas determinísticos de decomposição
-e coloração. Essa investigação motivou a linha do projeto dedicada a
-grafos de cintura grande.
-
-A formação adquirida no mestrado, juntamente com o estudo desenvolvido no
-período inicial do doutorado, fornece assim uma base adequada para os
-problemas propostos neste projeto. Ao longo do doutorado, espera-se que o
-candidato amplie essa formação, sobretudo em métodos probabilísticos,
-teoria de grafos aleatórios, técnicas de decomposição e métodos de
-containers, adquirindo progressivamente maior independência na formulação
-e resolução de problemas de pesquisa.
+A formação adquirida durante o mestrado e o trabalho desenvolvido no
+período inicial do doutorado fornecem, assim, uma base adequada para a
+investigação dos problemas propostos.
 
 % ============================================================
-% CRONOGRAMA E PLANO DE TRABALHO
+% CRONOGRAMA
 % ============================================================
 
 \section{Cronograma e plano de trabalho}
 \label{sec:cronograma}
 
-O doutorado do candidato foi iniciado em julho de 2025 e tem término
-previsto para julho de 2029. O projeto será desenvolvido ao longo desse
-período combinando formação acadêmica, estudo da literatura, investigação
-dos problemas apresentados na Seção~\ref{sec:anti-ramsey}, preparação e
-submissão de artigos científicos, participação em eventos e, em etapa
-posterior, redação da tese.
+O doutorado foi iniciado em julho de 2025 e tem término previsto para
+julho de 2029. As três linhas apresentadas neste projeto não serão
+necessariamente desenvolvidas de maneira sequencial. A escolha dos
+problemas priorizados em cada período dependerá dos resultados obtidos e
+das questões que se mostrarem mais promissoras durante a pesquisa.
 
-Embora as três linhas de pesquisa apresentadas neste projeto estejam
-fortemente relacionadas, não se pretende desenvolvê-las de maneira
-completamente sequencial. Problemas de diferentes linhas poderão ser
-investigados simultaneamente, sobretudo quando compartilharem técnicas
-ou quando resultados obtidos em uma delas sugerirem aplicações nas
-demais. Ainda assim, o cronograma abaixo descreve a distribuição
-principal das atividades previstas.
+O primeiro ano foi dedicado principalmente à consolidação da formação
+em Teoria de Ramsey aleatória e ao início da investigação da propriedade
+Ramsey canônica assimétrica. Nesse período foram estudados resultados
+fundamentais sobre limiares Ramsey, anti-Ramsey e canônicos em grafos
+aleatórios, e o candidato obteve, em colaboração, os primeiros resultados
+relacionados à tripla $(K_3,K_4,K_5)$.
 
-\subsection{Primeiro ano: julho de 2025 a julho de 2026}
+No segundo ano, a prioridade será consolidar e ampliar a investigação de
+triplas $(K_r,K_s,K_t)$ e desenvolver a frente anti-Ramsey para classes sem
+ciclos curtos, iniciando também o estudo dos casos concretos da terceira
+linha. Está prevista ainda, para meados de 2027, a realização do exame de
+qualificação, de acordo com os prazos estabelecidos pelo Programa de
+Pós-Graduação em Ciência da Computação do IME-USP. A preparação para o
+exame ocorrerá em paralelo ao desenvolvimento das atividades de pesquisa.
 
-O primeiro ano do doutorado foi dedicado principalmente à consolidação
-da formação necessária para o desenvolvimento do projeto e ao início das
-investigações em Ramsey canônico assimétrico.
+No terceiro ano, pretende-se aprofundar as direções que se mostrarem
+mais promissoras e avançar para questões de maior alcance, como grafos-alvo
+não completos e comparações entre diferentes formulações canônicas. O
+quarto ano será dedicado principalmente à conclusão dos trabalhos em
+andamento, preparação de artigos e redação da tese.
 
-Nesse período, o candidato aprofundou o estudo de Teoria de Grafos,
-Combinatória Extremal e métodos probabilísticos, com particular atenção
-aos resultados fundamentais sobre limiares Ramsey em grafos aleatórios.
-Entre os tópicos estudados estão o Teorema de Ramsey aleatório de
-Rödl--Ruciński, os frameworks para $0$-enunciados desenvolvidos por
-Nenadov, Steger e colaboradores, resultados anti-Ramsey em grafos
-aleatórios e o recente teorema Ramsey canônico de Kamčev--Schacht.
+Os resultados serão redigidos progressivamente e submetidos para
+publicação à medida que conjuntos suficientemente completos de
+resultados forem obtidos. A participação em seminários, escolas e
+conferências ocorrerá durante todo o doutorado. Também se considera a
+realização de um estágio de pesquisa no exterior, preferencialmente na
+segunda metade do programa, em instituição e com pesquisador a serem
+definidos de acordo com o desenvolvimento das linhas de pesquisa.
 
-Paralelamente, foi iniciada a primeira frente ativa de pesquisa do
-projeto: a propriedade Ramsey canônica assimétrica. O foco inicial foi
-a compreensão de triplas de cliques pequenos e das ferramentas
-determinísticas necessárias para construir colorações abaixo das escalas
-candidatas.
-
-Essa etapa incluiu:
-\begin{itemize}
-  \item estudo sistemático da literatura sobre Ramsey canônico e
-        Ramsey aleatório;
-
-  \item estudo do framework de blocos para $0$-enunciados;
-
-  \item formulação da propriedade Ramsey canônica assimétrica;
-
-  \item investigação inicial de triplas envolvendo
-        $K_3$, $K_4$ e $K_5$;
-
-  \item desenvolvimento de construções baseadas em degenerescência,
-        templates finitos e colorações de vizinhanças;
-
-  \item início do estudo da literatura recente sobre limiares
-        anti-Ramsey.
-\end{itemize}
-
-Durante esse período, o candidato também cursou disciplinas de
-pós-graduação relacionadas à sua formação matemática e computacional,
-incluindo Análise de Algoritmos e Métodos Algébricos em Combinatória,
-além de participar regularmente de seminários e atividades de pesquisa
-em Combinatória no IME-USP.
-
-\subsection{Segundo ano: julho de 2026 a julho de 2027}
-
-No segundo ano, o objetivo principal será consolidar os primeiros
-resultados sobre Ramsey canônico assimétrico e ampliar progressivamente
-a investigação para famílias gerais de cliques.
-
-Uma primeira meta será organizar os casos
-\[
-  (K_r,K_s,K_t)
-\]
-segundo a posição ocupada pelo maior dos três parâmetros, separando os
-regimes que seguem diretamente de resultados Ramsey ou anti-Ramsey dos
-casos que exigem novas construções.
-
-Pretende-se, em particular:
-\begin{itemize}
-  \item finalizar a análise dos primeiros casos pequenos, incluindo
-        as triplas envolvendo $K_3$, $K_4$ e $K_5$;
-
-  \item investigar famílias gerais de triplas de cliques e buscar
-        uma classificação dos regimes em que
-        \[
-          n^{-1/m_2(K_{\max\{r,s,t\}})}
-        \]
-        fornece a escala correta;
-
-  \item desenvolver de maneira sistemática as técnicas de links,
-        degenerescência e templates de coloração;
-
-  \item estudar a possibilidade de uma redução geral
-        probabilístico-determinística para a propriedade Ramsey canônica
-        assimétrica;
-
-  \item preparar para publicação os resultados obtidos nessa linha.
-\end{itemize}
-
-Em paralelo, será intensificada a investigação da linha anti-Ramsey.
-A primeira meta será atacar o problema determinístico para grafos de
-cintura suficientemente grande, inicialmente sob hipóteses mais fortes,
-como
-\[
-  \operatorname{girth}(H)>8.
-\]
-Pretende-se estudar decomposições em florestas, subgrafos degenerados
-e partes de grau limitado que permitam construir colorações próprias
-sem cópias arco-íris de $H$.
-
-Os resultados obtidos nessa etapa deverão indicar quais aspectos da
-hipótese de cintura são realmente necessários e orientar tentativas
-posteriores de reduzir a condição até
-\[
-  \operatorname{girth}(H)>4.
-\]
-
-Também será iniciado de maneira mais sistemática o estudo da terceira
-linha do projeto, especialmente dos resultados recentes sobre Ramsey
-canônico para ciclos.
-
-\subsection{Terceiro ano: julho de 2027 a julho de 2028}
-
-O terceiro ano será dedicado principalmente ao aprofundamento das duas
-direções estruturais mais amplas do projeto: anti-Ramsey para grafos
-gerais e Ramsey canônico além dos cliques.
-
-Na linha anti-Ramsey, pretende-se:
-\begin{itemize}
-  \item aperfeiçoar as decomposições desenvolvidas no segundo ano;
-
-  \item reduzir progressivamente a hipótese sobre a cintura do
-        grafo-alvo;
-
-  \item investigar classes intermediárias, como grafos regulares,
-        bipartidos ou quase regulares de cintura grande;
-
-  \item estudar possíveis extensões para grafos não estritamente
-        $2$-balanceados;
-
-  \item procurar e classificar eventuais obstruções determinísticas
-        de baixa densidade.
-\end{itemize}
-
-Na linha Ramsey canônica para grafos gerais, o foco inicial será nos
-ciclos. Pretende-se:
-\begin{itemize}
-  \item investigar o limiar Ramsey canônico de ciclos ímpares,
-        começando pelos casos $C_5$ e $C_7$;
-
-  \item estudar o problema para ciclos pares e a possibilidade de
-        remover fatores adicionais presentes nos resultados conhecidos;
-
-  \item compreender o papel da ordenação dos vértices;
-
-  \item comparar diferentes ordenações de um mesmo grafo;
-
-  \item investigar condições suficientes para que um grafo
-        estritamente $2$-balanceado possua limiar canônico na escala
-        $n^{-1/m_2(H)}$.
-\end{itemize}
-
-Caso os resultados obtidos nas triplas de cliques indiquem a existência
-de um parâmetro de densidade assimétrico natural, essa etapa será
-também utilizada para testar tal parâmetro em famílias menos
-homogêneas, particularmente em problemas envolvendo cliques e ciclos.
-
-\subsection{Estágio de pesquisa no exterior}
-
-Planeja-se realizar, preferencialmente durante o terceiro ano do
-doutorado, um estágio de pesquisa no exterior por meio de Bolsa Estágio
-de Pesquisa no Exterior (BEPE).
-
-A escolha do pesquisador anfitrião e da instituição será feita de acordo
-com o desenvolvimento do projeto e com a linha que se mostrar mais
-promissora ao final do segundo ano. Pretende-se buscar um grupo com
-forte atuação em Teoria de Ramsey, Combinatória Probabilística, grafos
-aleatórios ou métodos de containers.
-
-O estágio deverá permitir ao candidato trabalhar de maneira intensiva
-com pesquisadores especialistas nas técnicas utilizadas no projeto,
-além de ampliar sua inserção internacional e possibilitar o
-desenvolvimento de colaborações de longo prazo.
-
-Um plano específico para o estágio será elaborado quando estiverem mais
-claros os problemas que deverão ser atacados durante esse período.
-
-\subsection{Quarto ano: julho de 2028 a julho de 2029}
-
-No último ano, o candidato deverá concentrar seus esforços na
-consolidação dos resultados desenvolvidos ao longo do doutorado e na
-redação da tese.
-
-As atividades previstas incluem:
-\begin{itemize}
-  \item conclusão dos problemas em andamento;
-
-  \item preparação e submissão dos artigos correspondentes aos
-        resultados obtidos;
-
-  \item investigação de extensões naturais que possam ser tratadas
-        com as técnicas desenvolvidas;
-
-  \item organização dos resultados das três linhas em uma narrativa
-        coerente para a tese;
-
-  \item redação e revisão da tese de doutorado;
-
-  \item apresentação dos resultados em seminários e eventos
-        científicos;
-
-  \item preparação para a defesa da tese.
-\end{itemize}
-
-Espera-se que, nessa etapa, as diferentes linhas de investigação
-permitam identificar princípios comuns entre os problemas Ramsey
-canônico, Ramsey canônico assimétrico e anti-Ramsey. Em particular,
-pretende-se avaliar em que medida os resultados obtidos podem ser
-organizados sob um princípio geral que relacione limiares probabilísticos
-a problemas determinísticos de coloração e densidade.
-
-Além da conclusão dos trabalhos iniciados anteriormente, o último ano
-deverá permitir ao candidato explorar extensões mais ambiciosas, como
-problemas para famílias de grafos, colorações localmente limitadas ou,
-quando as técnicas desenvolvidas permitirem, versões para hipergrafos.
-
-\subsection{Síntese do cronograma}
+A redação da tese será intensificada no último ano, juntamente com a
+conclusão dos trabalhos em andamento e a preparação dos resultados
+restantes para publicação.
 
 A Tabela~\ref{tab:cronograma} apresenta uma síntese das atividades
-previstas ao longo do doutorado.
+previstas.
 
 \begin{table}[ht]
   \centering
   \small
-  \begin{tabular}{p{7.1cm}cccc}
+  \begin{tabular}{p{7.2cm}cccc}
     \hline
     \textbf{Atividade}
      & \textbf{Ano 1}
@@ -2543,36 +1024,33 @@ previstas ao longo do doutorado.
     \hline
 
     Formação e estudo da literatura
-     & $\bullet$      & $\bullet$ &           &           \\
-
-    Ramsey canônico assimétrico: casos pequenos
-     & $\bullet$      & $\bullet$ &           &           \\
-
-    Ramsey canônico assimétrico: famílias gerais
-     &                & $\bullet$ & $\bullet$ &           \\
-
-    Anti-Ramsey e grafos de cintura grande
      & $\bullet$      & $\bullet$ & $\bullet$ &           \\
 
-    Ramsey canônico para ciclos
-     &                & $\bullet$ & $\bullet$ & $\bullet$ \\
+    Ramsey canônico assimétrico
+     & $\bullet$      & $\bullet$ & $\bullet$ &           \\
+
+    Problemas anti-Ramsey
+     & $\bullet$      & $\bullet$ & $\bullet$ & $\bullet$ \\
 
     Ramsey canônico para grafos gerais
-     &                &           & $\bullet$ & $\bullet$ \\
-
-    Desenvolvimento de frameworks e extensões
      &                & $\bullet$ & $\bullet$ & $\bullet$ \\
 
-    Estágio de pesquisa no exterior
-     &                &           & $\bullet$ &           \\
+    Exame de qualificação
+     &                & $\bullet$ &           &           \\
 
     Preparação e submissão de artigos
      &                & $\bullet$ & $\bullet$ & $\bullet$ \\
 
-    Participação em eventos científicos
+    Participação em seminários e eventos
      & $\bullet$      & $\bullet$ & $\bullet$ & $\bullet$ \\
 
+    Estágio de pesquisa no exterior
+     &                &           & $\bullet$ &           \\
+
     Redação da tese
+     &                &           & $\bullet$ & $\bullet$ \\
+
+    Defesa
      &                &           &           & $\bullet$ \\
 
     \hline
@@ -2581,7 +1059,6 @@ previstas ao longo do doutorado.
   \label{tab:cronograma}
 \end{table}
 
-
 % ============================================================
 % AMBIENTE DE TRABALHO E OUTROS APOIOS
 % ============================================================
@@ -2589,168 +1066,41 @@ previstas ao longo do doutorado.
 \section{Ambiente de trabalho e outros apoios}
 \label{sec:ambiente}
 
-O presente projeto será desenvolvido no Instituto de Matemática e
-Estatística da Universidade de São Paulo, em um ambiente de pesquisa
-particularmente favorável ao desenvolvimento de problemas em Teoria de
-Ramsey, Combinatória Extremal e Probabilística e Teoria de Grafos
-Aleatórios.
-
-O candidato integra o grupo Comb$\Theta$ --- Combinatória, Otimização e
-Teoria da Computação --- do IME-USP. O grupo reúne pesquisadores,
-pós-doutorandos e estudantes que atuam em diferentes áreas da
-Combinatória e mantém uma programação regular de seminários, minicursos,
-workshops e visitas de pesquisadores nacionais e internacionais. Em
-particular, os seminários do Comb$\Theta$ contam regularmente com
-apresentações de membros do grupo e de pesquisadores visitantes,
-proporcionando aos estudantes contato contínuo com problemas e técnicas
-recentes da área.
+O projeto será desenvolvido no Instituto de Matemática e Estatística da
+Universidade de São Paulo, junto ao grupo Comb$\Theta$ --- Combinatória,
+Otimização e Teoria da Computação. O grupo reúne pesquisadores,
+pós-doutorandos e estudantes com atuação em Combinatória Extremal e
+Probabilística, Teoria de Ramsey e Teoria de Grafos, mantendo programação
+regular de seminários, workshops e visitas de pesquisadores nacionais e
+estrangeiros.
 
 O projeto será desenvolvido sob orientação de Yoshiharu Kohayakawa e
-coorientação de Guilherme Oliveira Mota. Ambos possuem ampla experiência
-nos temas diretamente relacionados à proposta. Kohayakawa desenvolve
-pesquisa em Combinatória Extremal e Probabilística, Teoria de Ramsey,
-grafos aleatórios e métodos probabilísticos, enquanto Mota atua
-principalmente em Teoria de Ramsey, colorações de grafos, decomposições
-e métodos probabilísticos. Os dois pesquisadores possuem uma longa
-história de colaboração em problemas Ramsey e anti-Ramsey, incluindo
-trabalhos sobre limiares em grafos aleatórios.
+coorientação de Guilherme Oliveira Mota, ambos com atuação diretamente
+relacionada aos temas da proposta, incluindo Teoria de Ramsey, grafos
+aleatórios, métodos probabilísticos e problemas anti-Ramsey e canônicos.
 
-Atualmente, o ambiente de pesquisa do candidato é apoiado por diferentes
-projetos que possuem forte interseção com as linhas propostas neste
-plano. Destaca-se o Projeto Temático FAPESP
+O ambiente de pesquisa é também apoiado por projetos diretamente
+relacionados à proposta. Destaca-se o Projeto Temático FAPESP
 \emph{Combinatória clássica, assintótica, quântica e geométrica}
 (Processo 2023/03167-5), coordenado por Yoshiharu Kohayakawa e vigente
-de abril de 2025 a março de 2030. A vertente de Combinatória
-Assintótica do projeto inclui problemas em Combinatória Extremal,
-grafos aleatórios e métodos probabilísticos e reúne pesquisadores de
-diversas instituições brasileiras e estrangeiras.
-
-Entre os pesquisadores associados ao Projeto Temático estão Guilherme
-Oliveira Mota, Robert Morris (IMPA), Mathias Schacht (Universität
-Hamburg), Patrick Morris (Universitat Politècnica de Catalunya), Hiep
-Han (Universidad de Santiago de Chile), Nicolás Sanhueza Matamala
-(Universidad de Concepción), Fábio Botler (IME-USP), Carlos Hoppen
-(UFRGS), Marcelo Campos (IMPA), Walner Mendonça (UFC), entre diversos
-outros pesquisadores com atuação em Combinatória Extremal,
-Probabilística e Teoria de Ramsey.
-
-O Projeto Temático prevê, entre suas atividades, a realização de
-workshops de pesquisa, visitas e colaborações entre os diferentes
-grupos participantes. Essas atividades já vêm ocorrendo de forma
-regular. Nos primeiros workshops do projeto, grupos de pesquisadores
-trabalharam diretamente em problemas de Teoria de Ramsey e grafos
-aleatórios.
-
-Em particular, no segundo Workshop de Pesquisa do Projeto Temático,
-realizado no IME-USP em janeiro de 2026, uma das linhas discutidas foi
-uma variante assimétrica da Teoria de Ramsey canônica intimamente
-relacionada ao presente projeto. O ponto de partida considerado foi o
-problema no qual se buscam três grafos distintos nas configurações
-monocromática, arco-íris e canônica, sendo o primeiro caso não trivial
-estudado
-\[
-  (H_1,H_2,H_3)
-  =
-  (K_3,K_4,K_5).
-\]
-Participaram dessas discussões, entre outros, Yoshiharu Kohayakawa,
-Guilherme Mota e Walner Mendonça. Parte dessas investigações foi
-posteriormente continuada em um pequeno workshop realizado no IMPA,
-com a participação de pesquisadores do Projeto Temático e estudantes
-de doutorado do IME-USP.
-
-Essa proximidade entre as atividades já desenvolvidas pelo grupo e uma
-das linhas centrais deste projeto representa uma vantagem importante:
-os problemas propostos não serão investigados isoladamente, mas dentro
-de uma rede ativa de pesquisadores que já trabalha em questões
-relacionadas.
-
-Além do Projeto Temático, Guilherme Mota coordena atualmente o Auxílio
-Regular FAPESP
+de 2025 a 2030. Guilherme Mota coordena ainda o Auxílio Regular FAPESP
 \emph{Teoria de Ramsey: de estruturas monocromáticas a canônicas}
-(Processo 2024/13859-4), vigente de maio de 2025 a abril de 2028.
-Esse projeto possui relação direta com duas das principais linhas desta
-proposta e reúne pesquisadores com atuação recente em diferentes
-vertentes da Teoria de Ramsey, entre eles Walner Mendonça, Tássio Naia,
-Patrick Morris, Marcelo Campos, Letícia Mattos e Luiz Moreira.
+(Processo 2024/13859-4), particularmente próximo das linhas de Ramsey
+canônico consideradas neste projeto, além do projeto Universal CNPq
+\emph{Consolidação de avanços recentes em Teoria de Ramsey}.
 
-Mota coordena também o projeto Universal CNPq
-\emph{Consolidação de avanços recentes em Teoria de Ramsey}
-(Processo 420838/2025-2), vigente de novembro de 2025 a outubro de
-2028. Por sua vez, Yoshiharu Kohayakawa possui bolsa de produtividade
-em pesquisa do CNPq vinculada ao projeto
-\emph{Combinatória assintótica de grafos, hipergrafos, estruturas
-  aditivas e configurações de pontos}, vigente até 2029.
+As atividades desses grupos e projetos proporcionam ao candidato
+oportunidades frequentes de interação com pesquisadores brasileiros e
+estrangeiros que trabalham em problemas próximos aos desta proposta.
+Esse ambiente também oferece condições favoráveis para a realização de
+um eventual estágio de pesquisa no exterior, cuja instituição e
+pesquisador anfitrião serão definidos de acordo com o desenvolvimento
+do projeto.
 
-Assim, o presente projeto está inserido em diversas iniciativas de
-pesquisa diretamente relacionadas aos seus objetivos científicos,
-garantindo não apenas infraestrutura institucional, mas também
-oportunidades frequentes de interação com pesquisadores especialistas
-nos problemas e técnicas relevantes.
-
-A rede de colaborações dos orientadores inclui alguns dos principais
-pesquisadores brasileiros em Combinatória Extremal e Probabilística.
-Entre eles destacam-se Robert Morris e Marcelo Campos, do IMPA; Walner
-Mendonça e Fabricio Benevides, da UFC; Carlos Hoppen, da UFRGS; Fábio
-Botler e Maurício Collares, além de pesquisadores de outras
-instituições brasileiras. Essa interação é fortalecida pela realização
-regular de eventos nacionais, como a Escola Brasileira de Combinatória,
-o Workshop Brasileiro de Combinatória e o WoPOCA.
-
-A Escola Brasileira de Combinatória constitui um exemplo particularmente
-relevante desse ambiente de integração. Sua segunda edição, realizada
-no IMPA em março de 2025 e organizada por Guilherme Mota, Robert Morris
-e outros pesquisadores brasileiros, reuniu aproximadamente 140
-participantes de nove países e de todas as regiões do Brasil, incluindo
-sessões de trabalho dedicadas à discussão de problemas em aberto.
-
-Há também forte interação com pesquisadores estrangeiros que atuam em
-áreas diretamente relacionadas ao projeto. O Projeto Temático inclui,
-entre outros, Mathias Schacht, Patrick Morris, Hiep Han e Nicolás
-Sanhueza Matamala. O Comb$\Theta$ recebe regularmente pesquisadores
-estrangeiros para visitas e seminários; nos últimos anos, por exemplo,
-Julia Böttcher e Peter Allen realizaram visita ao grupo.
-
-Outro exemplo particularmente próximo dos problemas deste projeto é
-Joseph Hyde, da University of Victoria, que realizou visita de pesquisa
-ao IME-USP e apresentou resultados recentes sobre limiares Ramsey
-aleatórios, incluindo a Conjectura de Kohayakawa--Kreuter e problemas
-anti-Ramsey e Ramsey restrito. Esses trabalhos possuem conexão direta
-com os frameworks probabilístico-determinísticos que serão utilizados
-nesta proposta.
-
-A rede internacional relacionada a esses problemas inclui ainda
-Natasha Morrison, atualmente na University of Victoria, pesquisadora em
-Combinatória Extremal e Probabilística, grafos aleatórios e Teoria de
-Ramsey. Morrison já realizou estágio de pós-doutorado no IMPA sob
-supervisão de Robert Morris e é coautora de trabalhos recentes sobre
-problemas Ramsey restritos e anti-Ramsey, justamente em temas próximos
-à primeira linha deste projeto.
-
-O candidato já teve oportunidade de interagir com diversos
-pesquisadores dessa comunidade em seminários, escolas, workshops e
-outros eventos científicos. Em particular, Walner Mendonça integrou a
-comissão julgadora de sua dissertação de mestrado e mantém colaboração
-científica próxima com os orientadores do presente projeto. A
-continuidade dessas interações durante o doutorado deverá contribuir
-significativamente tanto para o desenvolvimento dos problemas propostos
-quanto para a formação científica do candidato.
-
-Esse ambiente também é especialmente apropriado para a realização do
-estágio de pesquisa no exterior previsto no cronograma. A ampla rede de
-colaboradores dos orientadores oferece diversas possibilidades de
-instituições e pesquisadores anfitriões com atuação diretamente
-relacionada às linhas que vierem a apresentar maior desenvolvimento ao
-longo do doutorado.
-
-Consideramos, portanto, que o IME-USP e o grupo Comb$\Theta$ oferecem
-um ambiente científico particularmente adequado para a execução deste
-projeto. A combinação entre orientação especializada, projetos de
-pesquisa vigentes, seminários regulares, workshops, visitantes e uma
-ampla rede nacional e internacional de colaboradores deverá proporcionar
-ao candidato as condições necessárias para desenvolver pesquisa de
-fronteira nas áreas propostas.
-
+Assim, a combinação entre orientação especializada, projetos de pesquisa
+vigentes, atividades regulares do Comb$\Theta$ e uma ampla rede de
+colaborações oferece um ambiente científico adequado para o
+desenvolvimento das pesquisas propostas.
 
 % ============================================================
 % REFERÊNCIAS
