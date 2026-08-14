@@ -1,0 +1,1147 @@
+%----------------------------------------------------------%
+% !TEX outputDirectory = build
+
+\documentclass[reqno,a4paper,12pt]{amsart}
+\def\thmcolor{Sepia!5!white}
+\def\lemcolor{NavyBlue!5!white}
+\def\propcolor{PineGreen!5!white}
+\def\corcolor{Orange!5!white}
+\def\clmcolor{Cyan!5!white}
+\def\quecolor{ForestGreen!5!white}
+\def\defcolor{OliveGreen!5!white}
+\def\obscolor{Plum!5!white}
+\def\remcolor{black!5!white}
+\input{header.tex}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+% Temporary nonsense
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15,width=10cm,height=10cm}
+
+%----------------------------------------------------------%
+%% Document specific definitions
+
+%% Comments
+\newcommand{\victor}[1]{\textcolor{magenta}{\textbf{[#1]}}}
+\newcommand{\afonso}[1]{\textcolor{red}{\textbf{[#1]}}}
+\newcommand{\roberto}[1]{\textcolor{blue}{\textbf{[#1]}}}
+\newcommand{\felipe}[1]{\textcolor{orange}{\textbf{[#1]}}}
+
+%----------------------------------------------------------%
+
+\begin{document}
+
+\title{The number of strong Sidon sets}
+
+\author{Felipe Guimarães}
+\author{Roberto Parente}
+\author{Afonso Sant'Anna}
+\author{Victor Souza}
+
+%----------------------------------------------------------%
+
+
+\maketitle
+
+%----------------------------------------------------------%
+
+\section{Sketch introduction}
+
+In enumerative extremal combinatorics, there are several results that say that the number of structures without a substructures satisfy the asymptotic
+\begin{equation}
+    \label{eq:extremal-counting}
+    \card{\set{\text{structures}}} = 2^{\text{extremal number} + o(1)}.
+\end{equation}
+Example include sum-free sets, $H$-free graphs, whatever [CITE].
+There are even examples when \eqref{eq:extremal-counting} is known to hold when the order of growth of the extremal number $\text{extremal number}$ is not know, for instance for $k-AP$s [CITE].
+
+A lower bound of $2^{\text{extremal number}}$ is always available for $\card{\set{\text{structures}}}$ from monotonicity.
+The difficulty lies in proving the corresponding upper bound, which more or less correspond to showing that `most' structures are obtained in this way.
+This is not quite true as the $2^{o(1)}$ term can be really massive, \eqref{eq:extremal-counting} says that this is true in a logarithmic sense.
+
+However, even for monotone properties, \eqref{eq:extremal-counting} is not always true.
+A famous example where this is not true is in the count of Sidon sets, namely subsets $A \subseteq [N]$ with definition blabla.
+The best known results are the following
+\begin{equation}
+    \label{eq:sidon-bounds}
+    (2.1)^{\sqrt{n}} \leq \card{\set{\text{Sidon sets}}} \leq 10^{\sqrt{n}}.
+\end{equation}
+
+Two features are striking from \eqref{eq:sidon-bounds}: that we do not known the correct constant $C$ such that we have $C^{\sqrt{n} + o(1)}$ Sidon sets and that this constant is not $2$.
+Indeed, we have $C > 2$ from a construction of Saxton and Thomason,
+In fact, not a lot is know about the structure of large Sidon sets, cite some papers.
+This is a serious obstacle to obtain a corresponding lower bound.
+The upper bounds are due to BOB, improving on an earlier bound of $1000^{\sqrt{n}}$ from BEB.
+
+We consider the analogous enumeration problem for $k$-\emph{strong} Sidon sets, namely, subsets $A \subseteq [N]$ with the property that for every $a,b,c,d \in A$ with $\set{a,b} \cap \set{c,d} = \emptyset$, we have $\abs{(a + b) - (c + d)} \geq k$.
+These were considered by Yoshi et al in [CITE].
+They showed that
+
+%--------------------------------------%
+\begin{theorem}
+    \label{thm:disjointly disjointly $k$-Sidon-extremal}
+    If $A \subseteq [n]$ is a $k$-strong Sidon set, then $\card{A} \leq \sqrt{n/k}$.
+    This bound can be attained.
+\end{theorem}
+%--------------------------------------%
+
+As they only consider the case $k = n^{\alpha}$ in their work, we include a full proof.
+However, our main contribution is to prove the following analogue of \eqref{eq:sidon-bounds}.
+
+%--------------------------------------%
+\begin{theorem}
+    \label{thm:disjointly disjointly $k$-Sidon-enumeration}
+    There are explicit constants $1 < c \leq C$ such that
+    \begin{equation*}
+        2^{c \log k \sqrt{n/k}} \leq \card{\set{\text{$k$-strong Sidon sets}}} \leq 2^{C \log k \sqrt{n/k}},
+    \end{equation*}
+    uniformly for all $1 \leq k \leq n/(\log n)^8$.
+\end{theorem}
+%--------------------------------------%
+
+In view of the extremal number from \Cref{thm:disjointly disjointly $k$-Sidon-extremal}, the bounds in \Cref{thm:disjointly disjointly $k$-Sidon-enumeration} furnishes an infinite family of combinatorial structures for which the heuristics in \eqref{eq:extremal-counting} is not valid.
+More interestingly, we have been able to determine the dependency in $k$.
+
+The extra factor of $\log k$ in the enumeration can be interpreted as saying that when choosing a typical $k$-strong Sidon set, each element contributes on average with $\Theta(k)$ choices.
+Even when $k = 1$, this contributes with a nontrivial gain in entropy.
+
+As many results of it's type, the upper bound in \Cref{thm:disjointly disjointly $k$-Sidon-enumeration} uses the graph container theorem [CITE] and a novel supersaturation result (Reference).
+The lower bound is a direct generalisation of the Saxton and Thomason construction.
+
+
+
+%----------------------------------------------------------%
+
+\section{Sketch}
+
+$[N] \defined \set{1, \dotsc, N}$.
+
+\begin{definition}[$k$-strong Sidon set]
+    \label{def:k-strong-sidon}
+    A subset $A\subseteq[N]$ is called \emph{$k$-strong Sidon} if, for
+    every $x,y,z,w\in A$ satisfying
+    \[
+        x<y\leq z<w,
+    \]
+    we have
+    \[
+        \abs{(x+w)-(y+z)}\geq k.
+    \]
+\end{definition}
+
+%--------------------------------------%
+\begin{definition}[Disjointly $k$-Sidon set]
+    \label{def:disjoint-disjointly disjointly $k$-Sidon}
+    A subset $A\subseteq[N]$ is called \emph{disjointly $k$-Sidon} if,
+    for every $a,b,c,d\in A$ satisfying
+    \[
+        \set{a,b}\cap\set{c,d}=\emptyset,
+    \]
+    we have
+    \[
+        \abs{(a+b)-(c+d)}\geq k.
+    \]
+
+    Repetitions within each pair are allowed; that is, we may have
+    $a=b$ or $c=d$. The condition only requires that no element occurring
+    in the first pair occurs in the second pair.
+\end{definition}
+
+\begin{definition}
+    A subset $A \subseteq [N]$ is $\delta$-separated if for every $a,b \in A$ with $a \neq b$, we have $\abs{a - b} \geq \delta$.
+\end{definition}
+
+The definition of a \(k\)-strong Sidon set imposes a condition only on
+quadruples appearing in the order
+\[
+    x<y\leq z<w,
+\]
+and at first sight this says nothing about how close together two
+elements of \(A\) are allowed to be. As we now show, this single
+condition already forces strong restrictions on the small gaps of
+\(A\).
+
+Suppose that \(A\) contains two disjoint pairs
+\[
+    \{i,\,i+\delta\}
+    \qquad\text{and}\qquad
+    \{j,\,j+\alpha\},
+    \qquad
+    0<\delta<k,
+    \quad
+    0<\alpha<k,
+\]
+both violating \(k\)-separation. Exchanging the two pairs if
+necessary, we may assume \(i<j\). It remains only to locate
+\(i+\delta\) relative to \(j\) and \(j+\alpha\), which leaves exactly
+three possibilities:
+\[
+    i+\delta<j,
+    \qquad
+    j<i+\delta<j+\alpha,
+    \qquad
+    j+\alpha<i+\delta,
+\]
+corresponding to the two pairs being \emph{separated}, \emph{crossing},
+or \emph{nested}, respectively. We rule out each case using nothing
+beyond Definition~\ref{def:k-strong-sidon}.
+
+First, suppose that the two pairs are separated, so that the four
+elements occur in the order
+\[
+    i<i+\delta<j<j+\alpha.
+\]
+Applying the \(k\)-strong Sidon condition to this ordered quadruple
+gives
+\[
+    \abs{\bigl(i+(j+\alpha)\bigr)-\bigl((i+\delta)+j\bigr)}
+    =
+    \abs{\alpha-\delta}
+    \geq k.
+\]
+However, since \(0<\alpha,\delta<k\), we have
+\(-k<\alpha-\delta<k\), and hence \(\abs{\alpha-\delta}<k\), a
+contradiction.
+
+Suppose next that the two pairs are nested, so that
+\[
+    i<j<j+\alpha<i+\delta.
+\]
+Write \(j=i+\gamma\) and \(j+\alpha=i+\beta\), so that
+\(0<\gamma<\beta<\delta<k\). The four elements then occur in the
+order
+\[
+    i<i+\gamma<i+\beta<i+\delta,
+\]
+and the \(k\)-strong Sidon condition gives
+\[
+    \abs{\bigl(i+(i+\delta)\bigr)-\bigl((i+\gamma)+(i+\beta)\bigr)}
+    =
+    \abs{\delta-(\gamma+\beta)}
+    \geq k.
+\]
+On the other hand, \(0<\gamma+\beta<2\delta\), so
+\[
+    -\delta<\delta-(\gamma+\beta)<\delta,
+\]
+and thus
+\[
+    \abs{\delta-(\gamma+\beta)}<\delta<k,
+\]
+again a contradiction.
+
+Finally, suppose that the two pairs cross, so that
+\[
+    i<j<i+\delta<j+\alpha.
+\]
+Applying the \(k\)-strong Sidon condition to this ordered quadruple
+yields
+\[
+    \abs{\bigl(i+(j+\alpha)\bigr)-\bigl(j+(i+\delta)\bigr)}
+    =
+    \abs{\alpha-\delta}
+    \geq k,
+\]
+which contradicts \(\abs{\alpha-\delta}<k\) exactly as in the
+separated case.
+
+Thus, two disjoint pairs of elements of a \(k\)-strong Sidon set
+cannot both have distance less than \(k\). The following lemma
+records the underlying four-point phenomenon in a form that will be
+useful throughout the proof.
+
+%--------------------------------------%
+\begin{lemma}[Four-point pairing lemma]
+    \label{lem:four-point-pairing}
+    Let \(A\subseteq[N]\) be a \(k\)-strong Sidon set, and let
+    \[
+        x_1<x_2<x_3<x_4
+    \]
+    be four elements of \(A\). Then every partition of
+    \[
+        \set{x_1,x_2,x_3,x_4}
+    \]
+    into two pairs gives pair sums whose difference has absolute value
+    at least \(k\).
+\end{lemma}
+%--------------------------------------%
+
+\begin{proof}
+    Write
+    \[
+        p\defined x_2-x_1,
+        \qquad
+        q\defined x_3-x_2,
+        \qquad
+        r\defined x_4-x_3.
+    \]
+    Since
+    \[
+        x_1<x_2\leq x_3<x_4,
+    \]
+    the \(k\)-strong Sidon property gives
+    \[
+        \abs{
+            (x_1+x_4)-(x_2+x_3)
+        }
+        \geq k.
+    \]
+    Moreover,
+    \[
+        (x_1+x_4)-(x_2+x_3)
+        =
+        r-p,
+    \]
+    and hence
+    \[
+        \abs{r-p}\geq k.
+    \]
+
+    There are exactly three partitions of four elements into two
+    unordered pairs. Besides
+    \[
+        \set{x_1,x_4}
+        \mid
+        \set{x_2,x_3},
+    \]
+    the other two are
+    \[
+        \set{x_1,x_3}
+        \mid
+        \set{x_2,x_4}
+    \]
+    and
+    \[
+        \set{x_1,x_2}
+        \mid
+        \set{x_3,x_4}.
+    \]
+
+    For the second partition,
+    \[
+        \abs{
+            (x_1+x_3)-(x_2+x_4)
+        }
+        =
+        p+r.
+    \]
+    We claim that
+    \[
+        \abs{r-p}<p+r.
+    \]
+    Indeed, if \(r\geq p\), then
+    \[
+        \abs{r-p}=r-p,
+    \]
+    and
+    \[
+        (p+r)-\abs{r-p}
+        =
+        (p+r)-(r-p)
+        =
+        2p
+        >
+        0.
+    \]
+    If instead \(r<p\), then
+    \[
+        \abs{r-p}=p-r,
+    \]
+    and
+    \[
+        (p+r)-\abs{r-p}
+        =
+        (p+r)-(p-r)
+        =
+        2r
+        >
+        0.
+    \]
+    Thus, in either case,
+    \[
+        \abs{r-p}<p+r.
+    \]
+    Since
+    \[
+        \abs{r-p}\geq k,
+    \]
+    it follows that
+    \[
+        p+r\geq k.
+    \]
+
+    For the third partition,
+    \[
+        \abs{
+            (x_1+x_2)-(x_3+x_4)
+        }
+        =
+        p+2q+r.
+    \]
+    Since \(q>0\),
+    \[
+        p+r<p+2q+r.
+    \]
+    Consequently,
+    \[
+        k
+        \leq
+        \abs{r-p}
+        <
+        p+r
+        <
+        p+2q+r,
+    \]
+    and therefore this third difference is also at least \(k\).
+
+    Hence every partition of
+    \(\set{x_1,x_2,x_3,x_4}\) into two pairs gives pair sums differing
+    by at least \(k\).
+\end{proof}
+%--------------------------------------%
+
+The four-point pairing lemma implies that all failures of
+\(k\)-separation inside a \(k\)-strong Sidon set must be concentrated
+around a single element. This is the content of the next lemma.
+
+%--------------------------------------%
+\begin{lemma}[\(k\)-separated core]
+    \label{lem:k-separated-core}
+    Let \(A\subseteq[N]\) be a \(k\)-strong Sidon set. Then there exists
+    \(A'\subseteq A\) such that
+    \[
+        \card{A'}\geq\card{A}-1
+    \]
+    and \(A'\) is \(k\)-separated.
+\end{lemma}
+%--------------------------------------%
+
+\begin{proof}
+    Define a graph \(G\) with vertex set \(A\) by declaring two distinct
+    elements \(a,b\in A\) adjacent whenever
+    \[
+        \abs{a-b}<k.
+    \]
+    Thus, the edges of \(G\) record precisely the pairs that violate
+    \(k\)-separation.
+
+    We first show that \(G\) contains no two disjoint edges. Suppose,
+    for a contradiction, that
+    \[
+        \set{a,b}
+        \qquad\text{and}\qquad
+        \set{c,d}
+    \]
+    are disjoint edges. Relabelling inside each pair if necessary,
+    assume
+    \[
+        a<b
+        \qquad\text{and}\qquad
+        c<d.
+    \]
+    Since both pairs are edges,
+    \[
+        0<b-a<k
+        \qquad\text{and}\qquad
+        0<d-c<k.
+    \]
+    Therefore,
+    \[
+        \abs{(b-a)-(d-c)}<k.
+    \]
+    But
+    \[
+        (b-a)-(d-c)
+        =
+        (b+c)-(a+d).
+    \]
+    Since \(a,b,c,d\) are four distinct elements, the pairs
+    \[
+        \set{b,c}
+        \qquad\text{and}\qquad
+        \set{a,d}
+    \]
+    form a partition of these four elements. By
+    Lemma~\ref{lem:four-point-pairing},
+    \[
+        \abs{(b+c)-(a+d)}
+        \geq k,
+    \]
+    a contradiction.
+
+    We next show that \(G\) contains no triangle. Suppose that
+    \[
+        x<y<z
+    \]
+    span a triangle. In particular,
+    \[
+        xz\in E(G),
+    \]
+    so
+    \[
+        z-x<k.
+    \]
+    Since
+    \[
+        x<y\leq y<z,
+    \]
+    the \(k\)-strong Sidon property gives
+    \[
+        \abs{x+z-2y}\geq k.
+    \]
+    On the other hand,
+    \[
+        \abs{x+z-2y}
+        =
+        \abs{(y-x)-(z-y)}.
+    \]
+    Since both \(y-x\) and \(z-y\) are positive,
+    \[
+        \abs{(y-x)-(z-y)}
+        \leq
+        (y-x)+(z-y)
+        =
+        z-x
+        <
+        k,
+    \]
+    a contradiction.
+
+    We now determine the structure of \(G\).
+    If \(G\) has no edges, then \(A\) itself is \(k\)-separated and we
+    may take
+    \[
+        A'\defined A.
+    \]
+
+    Suppose that \(G\) has at least one edge. If it has exactly one
+    edge, choose either endpoint of that edge and call it \(v\).
+
+    Otherwise, choose two distinct edges of \(G\). Since \(G\) has no
+    two disjoint edges, they must intersect. Write them as
+    \[
+        uv
+        \qquad\text{and}\qquad
+        uw.
+    \]
+    We claim that every edge of \(G\) contains \(u\).
+
+    Indeed, let \(e\) be any edge. Since \(G\) has no two disjoint
+    edges, \(e\) must intersect both \(uv\) and \(uw\). If \(u\notin e\),
+    then the only way for \(e\) to meet both of these edges is
+    \[
+        e=vw.
+    \]
+    But then
+    \[
+        uv,\quad uw,\quad vw
+    \]
+    form a triangle, contradicting what we proved above.
+
+    Hence all edges of \(G\) share a common vertex \(u\). Set
+    \[
+        A'\defined A\setminus\set{u}.
+    \]
+    Then \(G[A']\) has no edges. Therefore, for every pair of distinct
+    \(a,b\in A'\),
+    \[
+        \abs{a-b}\geq k.
+    \]
+    Thus \(A'\) is \(k\)-separated, and clearly
+    \[
+        \card{A'}
+        \geq
+        \card{A}-1.
+    \]
+\end{proof}
+%--------------------------------------%
+
+
+%--------------------------------------%
+\begin{definition}
+    \label{def:auxiliary-multigraph}
+    Given \(A,U\subseteq[N]\), define the loopless multigraph
+    \[
+        \cH_k(A,U)
+    \]
+    as follows. Its vertex set is \(A\). For every pair of distinct
+    vertices \(a,a'\in A\), with \(a<a'\), and every ordered pair
+    \[
+        (u,u')\in U^2,
+        \qquad
+        u\neq u',
+    \]
+    we place one edge between \(a\) and \(a'\) whenever
+    \[
+        \abs{(a+u)-(a'+u')}<k.
+    \]
+    We say that this edge has \emph{type} \((u,u')\). Thus, parallel
+    edges correspond to distinct ordered pairs \((u,u')\) satisfying
+    the inequality above.
+\end{definition}
+%--------------------------------------%
+
+%--------------------------------------%
+\begin{proposition}
+    \label{prop:sidon-independent}
+    Let
+    \[
+        I\subseteq A\subseteq[N]\setminus U.
+    \]
+    If \(U\cup I\) is \(k\)-strong Sidon, then \(I\) is an independent
+    set of \(\cH_k(A,U)\).
+\end{proposition}
+%--------------------------------------%
+
+\begin{proof}
+    Suppose, to the contrary, that \(I\) is not independent. Then there
+    exist distinct vertices \(a,a'\in I\) and distinct elements
+    \(u,u'\in U\) such that
+    \[
+        \abs{(a+u)-(a'+u')}<k.
+    \]
+    Since
+    \[
+        A\cap U=\emptyset,
+    \]
+    the four elements
+    \[
+        a,a',u,u'
+    \]
+    are pairwise distinct.
+
+    Since \(U\cup I\) is \(k\)-strong Sidon,
+    Lemma~\ref{lem:four-point-pairing}, applied to the partition
+    \[
+        \set{a,u}
+        \mid
+        \set{a',u'},
+    \]
+    gives
+    \[
+        \abs{(a+u)-(a'+u')}\geq k,
+    \]
+    a contradiction.
+\end{proof}
+%--------------------------------------%
+
+We next control the multiplicity of the auxiliary multigraph.
+
+%--------------------------------------%
+\begin{proposition}
+    \label{prop:multiplicity}
+    Let
+    \[
+        k\geq\Delta\geq1.
+    \]
+    Suppose that \(U\subseteq[N]\) is a \(\Delta\)-separated
+    \(k\)-strong Sidon set and that
+    \[
+        A\subseteq[N]\setminus U.
+    \]
+    Then every edge of \(\cH_k(A,U)\) has multiplicity at most
+    \[
+        \left\lceil\frac{2k-1}{\Delta}\right\rceil.
+    \]
+\end{proposition}
+%--------------------------------------%
+
+\begin{proof}
+    Fix distinct vertices \(a,a'\in A\), with \(a<a'\), and suppose
+    that the edge \(aa'\) has multiplicity \(m\). Then there exist
+    \(m\) distinct ordered pairs
+    \[
+        (u_1,u'_1),\dotsc,(u_m,u'_m)\in U^2,
+        \qquad
+        u_i\neq u'_i,
+    \]
+    such that
+    \[
+        \abs{(a+u_i)-(a'+u'_i)}<k
+    \]
+    for every \(i\in[m]\).
+
+    Define
+    \[
+        d_i\defined u_i-u'_i.
+    \]
+    Since
+    \[
+        (a+u_i)-(a'+u'_i)
+        =
+        d_i-(a'-a),
+    \]
+    we have
+    \[
+        \abs{d_i-(a'-a)}<k.
+    \]
+    As all quantities are integers,
+    \[
+        a'-a-(k-1)
+        \leq
+        d_i
+        \leq
+        a'-a+(k-1).
+    \]
+    Thus all the \(d_i\)'s lie among \(2k-1\) consecutive integers,
+    and hence in an interval of diameter \(2k-2\).
+
+    We claim that the \(d_i\)'s are pairwise
+    \(\Delta\)-separated. Suppose, to the contrary, that for some
+    distinct \(i,j\in[m]\),
+    \[
+        \abs{d_i-d_j}<\Delta.
+    \]
+    Since
+    \[
+        d_i-d_j
+        =
+        (u_i-u'_i)-(u_j-u'_j)
+        =
+        (u_i+u'_j)-(u_j+u'_i),
+    \]
+    it follows that
+    \begin{equation}
+        \label{eq:multiplicity-close-sums}
+        \abs{(u_i+u'_j)-(u_j+u'_i)}
+        <
+        \Delta
+        \leq k.
+    \end{equation}
+
+    We distinguish the possible coincidences among
+    \[
+        u_i,\quad u'_i,\quad u_j,\quad u'_j.
+    \]
+
+    If these four elements are pairwise distinct, then the pairs
+    \[
+        \set{u_i,u'_j}
+        \qquad\text{and}\qquad
+        \set{u_j,u'_i}
+    \]
+    form a partition of four distinct elements of \(U\). By
+    Lemma~\ref{lem:four-point-pairing},
+    \[
+        \abs{(u_i+u'_j)-(u_j+u'_i)}
+        \geq k,
+    \]
+    contradicting \eqref{eq:multiplicity-close-sums}.
+
+    Suppose next that
+    \[
+        u_i=u_j.
+    \]
+    Since the ordered pairs
+    \((u_i,u'_i)\) and \((u_j,u'_j)\) are distinct, we must have
+    \[
+        u'_i\neq u'_j.
+    \]
+    Therefore,
+    \[
+        \abs{d_i-d_j}
+        =
+        \abs{u'_i-u'_j}
+        \geq\Delta,
+    \]
+    since \(U\) is \(\Delta\)-separated, again a contradiction.
+
+    Similarly, if
+    \[
+        u'_i=u'_j,
+    \]
+    then \(u_i\neq u_j\), and
+    \[
+        \abs{d_i-d_j}
+        =
+        \abs{u_i-u_j}
+        \geq\Delta.
+    \]
+
+    It remains to consider the two possible cross-identifications.
+    Suppose first that
+    \[
+        u_i=u'_j.
+    \]
+    Write
+    \[
+        x\defined u_i=u'_j,
+        \qquad
+        y\defined u'_i,
+        \qquad
+        z\defined u_j.
+    \]
+    Then
+    \[
+        d_i-d_j
+        =
+        2x-y-z.
+    \]
+
+    If \(y=z\), then
+    \[
+        \abs{d_i-d_j}
+        =
+        2\abs{x-y}
+        \geq
+        2\Delta
+        \geq
+        \Delta.
+    \]
+
+    Suppose now that \(x,y,z\) are pairwise distinct. If \(x\) lies
+    between \(y\) and \(z\), then, after possibly interchanging \(y\)
+    and \(z\), we may write
+    \[
+        y<x<z.
+    \]
+    Since
+    \[
+        y<x\leq x<z,
+    \]
+    the \(k\)-strong Sidon property gives
+    \[
+        \abs{y+z-2x}
+        \geq k
+        \geq\Delta.
+    \]
+    Hence
+    \[
+        \abs{d_i-d_j}
+        =
+        \abs{2x-y-z}
+        \geq\Delta.
+    \]
+
+    If \(x\) does not lie between \(y\) and \(z\), then \(x\) lies
+    strictly to one side of both. For instance, if
+    \[
+        x<y,z,
+    \]
+    then
+    \[
+        \abs{2x-y-z}
+        =
+        \abs{x-y}+\abs{x-z}
+        \geq
+        \Delta.
+    \]
+    The case \(x>y,z\) is analogous. Thus in every case
+    \[
+        \abs{d_i-d_j}\geq\Delta,
+    \]
+    a contradiction.
+
+    Finally, suppose that
+    \[
+        u'_i=u_j.
+    \]
+    This case is symmetric to the previous one and again gives
+    \[
+        \abs{d_i-d_j}\geq\Delta.
+    \]
+
+    Hence the \(d_i\)'s are pairwise \(\Delta\)-separated.
+
+    Since they lie in an interval of diameter \(2k-2\), we must have
+    \[
+        (m-1)\Delta\leq2k-2.
+    \]
+    Consequently,
+    \[
+        m
+        \leq
+        1+\floor{\frac{2k-2}{\Delta}}
+        =
+        \left\lceil\frac{2k-1}{\Delta}\right\rceil.
+    \]
+\end{proof}
+%--------------------------------------%
+
+\afonso{We can simplify the proof of Proposition~\ref{prop:multiplicity}
+    by first proving the following auxiliary lemma: if \(U\) is a
+    \(\Delta\)-separated \(k\)-strong Sidon set, with
+    \(\Delta\leq k\), then the pair-sum multiset \(U\oplus U\) is
+    \(\Delta\)-separated. Indeed, for two distinct witnesses
+    \((u_i,u_i')\) and \((u_j,u_j')\),
+    \[
+        d_i-d_j
+        =
+        (u_i+u_j')-(u_j+u_i'),
+    \]
+    and the unordered pairs
+    \[
+        \set{u_i,u_j'}
+        \qquad\text{and}\qquad
+        \set{u_j,u_i'}
+    \]
+    are distinct as multisets. The \(\Delta\)-separation of
+    \(U\oplus U\) would then imply immediately that
+    \[
+        \abs{d_i-d_j}\geq\Delta,
+    \]
+    avoiding the case analysis concerning possible coincidences among
+    \(u_i,u_i',u_j,u_j'\).}
+
+The \(k\)-separated core provided by
+Lemma~\ref{lem:k-separated-core} gives the following form of the
+multiplicity estimate that will be used below.
+
+%--------------------------------------%
+\begin{corollary}
+    \label{cor:multiplicity}
+    Suppose that \(U\subseteq[N]\) is a \(k\)-separated
+    \(k\)-strong Sidon set and
+    \[
+        A\subseteq[N]\setminus U.
+    \]
+    Then every edge of \(\cH_k(A,U)\) has multiplicity at most \(2\).
+\end{corollary}
+%--------------------------------------%
+
+\begin{proof}
+    Apply Proposition~\ref{prop:multiplicity} with
+    \[
+        \Delta=k.
+    \]
+    Then every edge has multiplicity at most
+    \[
+        \left\lceil\frac{2k-1}{k}\right\rceil
+        \leq2.
+    \]
+\end{proof}
+
+\begin{lemma}[Supersaturation]
+    \label{lem:supersaturation}
+    For any $k \geq 1$ and $N \geq k$, we have that
+    \begin{equation*}
+        e(\cH_k(A,U)) \geq \frac{k \card{A}^2 \card{U}^2}{8N}
+    \end{equation*}
+    for every subsets $A, U \subseteq [N]$ satisfying $\card{A}\card{U} \geq 60 N$.
+\end{lemma}
+%--------------------------------------%
+\begin{proof}
+    Let $M \defined \card{A}\card{U}$ and $N' \defined 2N + k - 1$.
+
+    Consider the auxiliary bipartite graph $F$ with disjoint parts $A$ and $[2N]$ where $a \in A$ is adjacent to $m \in [2N]$ if there exists $u \in U$ with $m = a + u$.
+    Thus, each vertex $a \in A$ has precisely $\card{U}$ neighbours in $[2N]$, namely, the set of neighbours of $a$ is $a + U$.
+    Therefore $e(F) = \card{A} \card{U} = M$.
+
+    Let $\cX = \set{x \in \ZZ \st -k+1 \leq x \leq 2N - 1}$ and note that $\card{\cX} = N'$.
+    For each $x \in \cX$, consider the interval
+    \begin{equation*}
+        I_x \defined \set{x + 1, \dotsc, x + k} = x + [k].
+    \end{equation*}
+    Given subsets $S \subseteq A$ and $T \subseteq [2N]$, we denote by $e_F(S,T)$ the number of edges in $F$ which are incident to both $S$ and $T$.
+    Since each edge in $F$ is incident to precisely $k$ intervals $I_x$, $x \in \cX$, we have
+    \begin{equation*}
+        \sum_{x \in \cX} e_F(A,I_x) = k e(F) = k M.
+    \end{equation*}
+    Consider the following set of pairs
+    \begin{equation*}
+        \cP \defined \set[\bigg]{(x, \set{e,e'}) \in \cX \times \binom{E(F)}{2} \st \text{$e$ and $e'$ are incident to $I_x$}}.
+    \end{equation*}
+    We double count the size of $\cP$.
+    First, we provide a lower bound on $\cP$.
+    Note that
+    \begin{equation*}
+        \card{\cP} = \sum_{x \in \cX} \binom{e_F(A,I_x)}{2} \geq N' \binom{\frac{1}{N'}\sum_{x \in \cX} e_F(A,I_x)}{2} = N' \binom{k M / N'}{2},
+    \end{equation*}
+    by Jensen's inequality and the convexity of $t \mapsto \binom{t}{2}$.
+
+    Now we give an upper bound on $\cP$ in terms of the number of edges in $\cH_k(A,U)$.
+    Consider a pair $(x,\set{e,e'}) \in \cP$ where the edges $e$ and $e'$ are of the form $e = \set{a, a + u}$ and $e' = \set{a', a' + u'}$, for uniquely determined $a, a' \in A$ and $u, u' \in U$, and we assume $a \leq a'$.
+    We split the pairs in $\cP$ into three classes $\cP_1$, $\cP_2$, and $\cP_3$.
+
+    \begin{description}
+        \item[$\cP_1$, the pairs with $a < a'$ and $u \neq u'$]
+              these corresponds precisely to edges in $\cH_k(A,U)$, where the edge between $a$ and $a'$ and of type $(u, u')$ is counted with multiplicity $k - r$.
+              Therefore, we have
+              \begin{align*}
+                  \card{\cP_1} & = \sum_{\substack{u, u' \in U, \, u \neq u' \\ a, a' \in A, \, a < a'}} \card{\set{x \in \cX \st a + u, a' + u' \in I_x}} \\
+                               & = \sum_{\substack{u, u' \in U, \, u \neq u' \\ a, a' \in A, \, a < a'}} \max\set{0,k-\abs{(a + u) - (a' + u')}}
+                  \leq k\, e(\cH_k(A,U)).
+              \end{align*}
+
+        \item[$\cP_2$, the pairs with $a < a'$ and $u = u'$]
+              We have
+              \begin{align*}
+                  \card{\cP_2} & = \sum_{\substack{u \in U                                                                   \\ a, a' \in A, \, a < a'}} \card{\set{x \in \cX \st a + u, a' + u \in I_x}} \\
+                               & = \sum_{r = 1}^\infty \sum_{u \in U} \sum_{a \in A} \ind\set{a + r \in A} \max\set{0,k - r} \\
+                               & \leq \sum_{r = 1}^k \sum_{u \in U} \sum_{a \in A} k = k^2 M.
+              \end{align*}
+
+        \item[$\cP_3$, the pairs with $a = a'$]
+              When $a = a'$ then we must have $u \neq u'$ and furthermore, we may assume that $u < u'$.
+              We have
+              \begin{align*}
+                  \card{\cP_3} & = \sum_{\substack{u, u' \in U, \, u < u'                                                    \\ a \in A}} \card{\set{x \in \cX \st a + u, a + u' \in I_x}} \\
+                               & = \sum_{r = 1}^\infty \sum_{a \in A} \sum_{u \in U} \ind\set{u + r \in U} \max\set{0,k - r} \\
+                               & \leq \sum_{r = 1}^k \sum_{a \in A} \sum_{u \in U} k = k^2 M.
+              \end{align*}
+    \end{description}
+
+    Therefore, we have
+    \begin{equation*}
+        \card{\cP} = \card{\cP_1} + \card{\cP_2} + \card{\cP_3} \leq k\, e(\cH_k(A,U)) + 2 k^2 M.
+    \end{equation*}
+
+    Combining the lower and upper bounds on $\card{\cP}$, we obtain
+    \begin{align*}
+        k\, e(\cH_k(A,U)) & \geq N' \binom{kM/N'}{2} - 2 k^2 M                               \\
+                          & = N' \cdot \frac{kM}{2N'} \p[\Big]{\frac{kM}{N'} - 1} - 2 k^2 M.
+    \end{align*}
+    Since $N \geq k$, we have $N' \leq 3N$.
+    Thus
+    \begin{align*}
+        e(\cH_k(A,U)) & \geq \frac{M}{2} \p[\Big]{\frac{kM}{N'} - 1 - 4k} \\
+                      & \geq \frac{M}{2} \p[\Big]{\frac{kM}{3N} - 1 - 4k}
+        \geq \frac{kM^2}{8N} = \frac{k \card{A}^2 \card{U}^2}{8N},
+    \end{align*}
+    where we have used that $kM/3N - 4k - 1 \geq kM/4N$, which follows from the hypothesis that $M \geq 60 N$.
+\end{proof}
+%--------------------------------------%
+
+
+
+
+%--------------------------------------%
+%--------------------------------------%
+\begin{proposition}
+    \label{prop:graph-containers}
+    Let \(G\) be a graph on \(n\) vertices, \(q,r\in\mathbb Z_{\geq0}\), \(0<\beta<1\), and \(R\in\mathbb Z_{\geq0}\) with \(R\geq e^{-\beta q}n\).
+    Suppose that every \(S\subseteq V(G)\) with \(\card{S}\geq R\) satisfies
+    \[
+        e(G[S])
+        \geq
+        \beta\binom{\card{S}}{2}.
+    \]
+    Then the number of independent sets of \(G\) of cardinality
+    \(q+r\) is at most \(\binom nq\binom Rr\).
+\end{proposition}
+%--------------------------------------%
+
+\begin{proposition}
+    \label{prop:containers-sidon}
+    Let \(k,u,N\in\mathbb Z_{\geq1}\) satisfy \(u\geq32\) and \(N\geq ku^2\).
+    Let \(q,r\in\mathbb Z_{\geq0}\) satisfy
+    \begin{equation}
+        \label{eq:cont-condition}
+        \frac{ku^2q}{16N}
+        \geq
+        \log\left(\frac{u}{64}\right).
+    \end{equation}
+    Define \(R\defined\ceil{\frac{64N}{u}}\).
+    Then
+    \[
+        S_k(N,u+q+r)
+        \leq
+        S_k(N,u)
+        \binom Nq
+        \binom Rr.
+    \]
+\end{proposition}
+%--------------------------------------%
+
+\begin{proof}
+    Fix a \(k\)-strong Sidon set \(U\subseteq[N]\) with \(\card{U}=u\),
+    and set \(A\defined[N]\setminus U\). We bound the number of \(k\)-strong Sidon sets \(T\subseteq[N]\)
+    with \(U\subseteq T\) and \(\card{T}=u+q+r\).
+    Writing \(T=U\cup I\) with \(I\subseteq A\) and \(\card{I}=q+r\),
+    Proposition~\ref{prop:sidon-independent} implies that \(I\) is
+    an independent set of \(\cH_k(A,U)\). By Lemma~\ref{lem:k-separated-core}, there exists \(U'\subseteq U\)
+    with \(\card{U'}\geq u-1\) such that \(U'\) is \(k\)-separated.
+    Since the \(k\)-strong Sidon property is hereditary, \(U'\) is
+    also \(k\)-strong Sidon. Since \(U'\subseteq U\), the multigraph \(\cH_k(A,U')\)
+    is a spanning submultigraph of \(\cH_k(A,U)\), so every
+    independent set of \(\cH_k(A,U)\) is also independent in
+    \(\cH_k(A,U')\). Let \(G\) be the underlying simple graph of
+    \(\cH_k(A,U')\). By Corollary~\ref{cor:multiplicity}, every edge
+    of \(\cH_k(A,U')\) has multiplicity at most \(2\).
+    Define
+    \[
+        \beta\defined\frac{ku^2}{16N}.
+    \]
+    Since \(N\geq ku^2\), we have \(0<\beta\leq\frac1{16}<1\).
+    By \eqref{eq:cont-condition}, \(\beta q\geq\log(u/64)\),
+    and therefore \(e^{-\beta q}\leq 64/u\).
+    Since \(G\) has \(\card{A}=N-u\) vertices,
+    \[
+        e^{-\beta q}\card{A}
+        \leq
+        e^{-\beta q}N
+        \leq
+        \frac{64N}{u}
+        \leq
+        R.
+    \]
+
+    It remains to verify the local density condition.
+    Let \(S\subseteq A\) with \(\card{S}\geq R\).
+    Since \(\card{U'}\geq u-1\),
+    we have
+    \begin{align*}
+        \card{S}\card{U'}
+         & \geq
+        R(u-1)                    \\
+         & \geq
+        \frac{64N}{u}(u-1)        \\
+         & =
+        64N\left(1-\frac1u\right) \\
+         & \geq
+        60N,
+    \end{align*}
+    where the last inequality follows from \(u\geq32\).
+
+    Hence Lemma~\ref{lem:supersaturation} applies to \(S\) and \(U'\),
+    and gives
+    \[
+        e\bigl(\cH_k(S,U')\bigr)
+        \geq
+        \frac{k\card{S}^2\card{U'}^2}{8N}
+        \geq
+        \frac{k\card{S}^2(u-1)^2}{8N}.
+    \]
+
+    Since every edge of \(\cH_k(S,U')\) has multiplicity at most \(2\),
+    \(e(G[S])\geq\frac12 e\bigl(\cH_k(S,U')\bigr)\),
+    and therefore \(e(G[S])\geq\frac{k\card{S}^2(u-1)^2}{16N}\).
+    Since \(u\geq32\), we have \(u^2\leq2(u-1)^2\).
+    Thus
+    \begin{align*}
+        e(G[S])
+         & \geq
+        \frac{k\card{S}^2(u-1)^2}{16N} \\
+         & \geq
+        \frac{ku^2\card{S}^2}{32N}     \\
+         & =
+        \frac{\beta\card{S}^2}{2}      \\
+         & \geq
+        \beta\binom{\card{S}}{2}.
+    \end{align*}
+
+    Hence all the hypotheses of
+    Proposition~\ref{prop:graph-containers} are satisfied. Therefore
+    the number of independent sets of \(G\) of cardinality \(q+r\) is
+    at most
+    \[
+        \binom{N-u}{q}\binom Rr
+        \leq
+        \binom Nq\binom Rr.
+    \]
+
+    Since every \(k\)-strong Sidon extension \(T\) of \(U\) gives such
+    an independent set, the result follows.
+\end{proof}
+%-----------------------------------
+
+
+
+
+
+
+\end{document}
