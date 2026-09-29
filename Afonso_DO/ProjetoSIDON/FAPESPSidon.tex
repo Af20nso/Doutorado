@@ -1,0 +1,658 @@
+\documentclass[11pt,a4paper]{article}
+
+% ============================================================
+% PACOTES
+% ============================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+
+\usepackage{geometry}
+\usepackage{setspace}
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% ============================================================
+% FORMATAÇÃO
+% ============================================================
+
+\geometry{
+    top=2.7cm,
+    bottom=2.7cm,
+    left=2.7cm,
+    right=2.7cm
+}
+
+\onehalfspacing
+
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    citecolor=blue!50!black,
+    urlcolor=blue!50!black
+}
+
+% ============================================================
+% AMBIENTES
+% ============================================================
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposição}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolário}
+\newtheorem{conjecture}[theorem]{Conjectura}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{question}[theorem]{Questão}
+\newtheorem{problem}[theorem]{Problema}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Observação}
+
+% ============================================================
+% COMANDOS
+% ============================================================
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+% ============================================================
+% DOCUMENTO
+% ============================================================
+
+\begin{document}
+
+% ============================================================
+% CABEÇALHO
+% ============================================================
+
+\begin{center}
+
+  {\LARGE\bfseries
+    Pré-projeto
+  }
+
+\end{center}
+
+\vspace{0.8cm}
+
+% ============================================================
+% RESUMO
+% ============================================================
+
+\noindent\textbf{Resumo.}
+
+Este projeto investiga problemas estruturais, extremais e enumerativos
+para famílias de conjuntos de inteiros nas quais se exige que
+representações aditivas distintas permaneçam \emph{quantitativamente
+  separadas}. O protótipo é a classe dos conjuntos Sidon \(k\)-fortes,
+para a qual já obtivemos, durante o doutorado, um teorema estrutural, a
+determinação assintótica do problema extremal e limites superior e
+inferior para o problema de contagem com a mesma dependência em \(n\) e
+\(k\).
+
+O resultado estrutural mostra que a condição \(k\)-forte, aparentemente
+uma restrição apenas sobre certas configurações ordenadas de quatro
+elementos, força a separação dos próprios elementos: em um conjunto
+Sidon \(k\)-forte há no máximo um par a distância menor que \(k\). Isso
+estabelece uma ponte com os \(B_{2,\Delta}\)-sets recentemente
+introduzidos por Nathanson, e sugere um programa mais amplo envolvendo
+\(B_h\)-sets, \(B_{h,\Delta}\)-sets e o método de contêineres.
+
+Os objetivos centrais são determinar as constantes corretas nos
+problemas de contagem --- inclusive no caso clássico \(k=1\), onde o
+problema de Cameron--Erdős permanece em aberto ---, entender o alcance
+do fenômeno estrutural descoberto, e desenvolver a teoria correspondente
+para \(h>2\).
+
+\vspace{0.4cm}
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Introdução}
+% ============================================================
+
+\subsection{Conjuntos de Sidon}
+
+Um conjunto \(A\) de inteiros é um \emph{conjunto de Sidon} se todas as
+somas \(a+b\) com \(a,b\in A\) e \(a\leq b\) são distintas;
+equivalentemente, se a equação \(a+b=c+d\) admite apenas as soluções
+triviais, aquelas com \(\{a,b\}=\{c,d\}\).
+
+Escrevendo \([n]:=\{1,\dots,n\}\) e
+\[
+  F(n):=\max\{|A|:A\subseteq[n]\text{ é Sidon}\},
+\]
+resultados clássicos de Erdős, Turán, Chowla e Singer, dos anos 1940,
+estabelecem \(F(n)=(1+o(1))\sqrt n\). O problema extremal está, portanto,
+resolvido em ordem principal.
+
+Uma generalização natural são os \(B_h\)-sets: \(A\) é \(B_h\) quando
+cada elemento do conjunto-soma \(hA=A+\dots+A\) admite uma única
+representação como soma de \(h\) elementos de \(A\) tomados em ordem não
+decrescente. Para \(h=2\) recuperamos os conjuntos de Sidon.
+
+\subsection{O problema enumerativo}
+
+Além de perguntar qual o maior conjunto de Sidon em \([n]\), é natural
+perguntar \emph{quantos} existem. Escrevendo
+\[
+  A(n):=\bigl|\{A\subseteq[n]:A\text{ é Sidon}\}\bigr|,
+\]
+uma cota inferior trivial é \(A(n)\geq2^{F(n)}=2^{(1+o(1))\sqrt n}\),
+pois todo subconjunto de um conjunto de Sidon é de Sidon.
+
+Para muitas famílias de estruturas livres de subestruturas proibidas
+vale a heurística
+\begin{equation}
+  \label{eq:heuristica}
+  |\{\text{estruturas}\}|
+  =
+  2^{(1+o(1))\cdot\text{número extremal}},
+\end{equation}
+isto é, a cota trivial é essencialmente correta. Cameron e Erdős
+conjecturaram, nos anos 1980, que~\eqref{eq:heuristica} valeria para
+conjuntos de Sidon. A conjectura é falsa: Saxton e Thomason exibiram uma
+construção fornecendo
+\[
+  A(n)\geq2^{(\frac12\log_25+o(1))\sqrt n}
+  =
+  2^{(1{,}1609\ldots+o(1))\sqrt n},
+\]
+e Kohayakawa, Lee, Rödl e Samotij provaram
+\(A(n)\leq2^{(6{,}442+o(1))\sqrt n}\). A determinação da constante
+correta permanece um problema em aberto, e o intervalo entre
+\(1{,}16\) e \(6{,}44\) é um dos poucos casos em que se sabe
+que~\eqref{eq:heuristica} falha sem que se saiba por quanto.
+
+\subsection{Conjuntos Sidon \texorpdfstring{\(k\)}{k}-fortes}
+
+Uma reformulação útil da propriedade de Sidon é a seguinte: \(A\) é
+Sidon se e somente se
+\[
+  |(x+w)-(y+z)|\geq1
+  \qquad\text{sempre que}\qquad
+  x<y\leq z<w,\quad x,y,z,w\in A.
+\]
+Isso sugere impor uma separação maior.
+
+\begin{definition}
+  \label{def:k-forte}
+  Um conjunto \(A\subseteq\mathbb Z\) é \emph{Sidon \(k\)-forte} se
+  \[
+    |(x+w)-(y+z)|\geq k
+    \qquad\text{para todos}\qquad
+    x<y\leq z<w\ \text{em}\ A .
+  \]
+\end{definition}
+
+Para \(k=1\) recuperamos a propriedade de Sidon usual. Enquanto a
+condição clássica proíbe colisões exatas entre certas somas, a
+propriedade \(k\)-forte exige que essas somas permaneçam a uma distância
+mínima prescrita. Essa noção foi introduzida por Kohayakawa, Lee,
+Moreira e Rödl no contexto de conjuntos de Sidon infinitos contidos em
+conjuntos aleatórios de inteiros, onde consideram o caso \(k=n^\alpha\).
+
+Uma noção aparentada, mais forte, foi introduzida recentemente por
+Nathanson.
+
+\begin{definition}
+  \label{def:bhdelta}
+  Para \(A\subseteq\mathbb Z\), denotamos por \(A\oplus A\) o
+  \emph{multiconjunto} das somas \(a+b\) com \(a\leq b\) em \(A\), no
+  qual representações distintas de um mesmo inteiro aparecem como
+  ocorrências distintas. Dizemos que um multiconjunto de inteiros é
+  \emph{\(\Delta\)-separado} se quaisquer duas ocorrências distintas
+  diferem em pelo menos \(\Delta\). Um \emph{\(B_{2,\Delta}\)-set} é um
+  conjunto \(A\) tal que \(A\oplus A\) é \(\Delta\)-separado.
+\end{definition}
+
+À primeira vista as duas definições são bastante distintas: a
+Definição~\ref{def:k-forte} restringe apenas configurações ordenadas
+específicas, enquanto a Definição~\ref{def:bhdelta} impõe separação a
+\emph{todas} as somas. Um dos resultados já obtidos mostra que elas
+estão, de fato, a um único elemento de distância.
+
+% ============================================================
+\section{Resultados obtidos}
+% ============================================================
+
+Os resultados abaixo, desenvolvidos durante o doutorado, constituem o
+ponto de partida do projeto. Escrevemos
+\[
+  F_k(n):=\max\{|A|:A\subseteq[n]\text{ é Sidon \(k\)-forte}\},
+  \qquad
+  N_k(n):=\bigl|\{A\subseteq[n]:A\text{ é Sidon \(k\)-forte}\}\bigr| .
+\]
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{llc}
+    \hline
+    \textbf{Resultado}              & \textbf{Enunciado}                                & \textbf{Seção}     \\
+    \hline
+    Estrutural                      & núcleo \(k\)-separado após remover \(1\) elemento
+                                    & \ref{sec:estrutural}                                                   \\
+    Caracterização                  & \(k\)-forte \(+\) \(k\)-separado
+    \(\Leftrightarrow\) \(B_{2,k}\) & \ref{sec:b2k}                                                          \\
+    Extremal                        & \(F_k(n)=(1+o(1))\sqrt{n/k}\)                     & \ref{sec:extremal} \\
+    Contagem (inferior)             & \(N_k(n)\geq2^{c\log_2(k+1)\sqrt{n/k}}\)
+                                    & \ref{sec:lower}                                                        \\
+    Contagem (superior)             & \(N_k(n)\leq2^{C\log_2(k+1)\sqrt{n/k}}\)
+                                    & \ref{sec:upper}                                                        \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{Um teorema estrutural de separação}
+\label{sec:estrutural}
+
+O ponto de partida é a seguinte observação, que chamamos de
+\emph{propriedade de quatro pontos}: se \(x_1<x_2<x_3<x_4\) pertencem a
+um conjunto Sidon \(k\)-forte, então \emph{qualquer} partição desses
+quatro elementos em dois pares produz somas cuja diferença tem módulo ao
+menos \(k\) --- e não apenas a partição \(\{x_1,x_4\}\mid\{x_2,x_3\}\),
+que é a única diretamente contemplada pela Definição~\ref{def:k-forte}.
+
+A razão é simples: escrevendo \(p=x_2-x_1\), \(q=x_3-x_2\) e
+\(r=x_4-x_3\), as três diferenças de somas de pares são
+\[
+  |r-p|,\qquad p+r,\qquad p+2q+r,
+\]
+e a primeira, que é a coberta pela definição, é a menor das três.
+
+Essa observação tem uma consequência estrutural forte.
+
+\begin{theorem}[Núcleo separado]
+  \label{thm:separated-core}
+  Seja \(A\subseteq\mathbb Z\) um conjunto Sidon \(k\)-forte. Então
+  existe no máximo um par de elementos distintos \(a,b\in A\) com
+  \(|a-b|<k\). Consequentemente, existe \(A'\subseteq A\) com
+  \(|A'|\geq|A|-1\) tal que \(|a-b|\geq k\) para todos os elementos
+  distintos de \(A'\).
+\end{theorem}
+
+A prova considera o grafo cujas arestas registram os pares a distância
+menor que \(k\). Dois pares curtos disjuntos produziriam quatro
+elementos violando a propriedade de quatro pontos; dois pares curtos
+compartilhando um elemento produziriam \(x<y<z\) com \(|x+z-2y|<k\),
+contradizendo diretamente a Definição~\ref{def:k-forte} aplicada a
+\(x<y\leq y<z\). Segue que o grafo é uma estrela, e basta remover seu
+centro.
+
+O enunciado é mais forte do que a mera existência de um subconjunto
+separado grande: toda a falha de separação está concentrada em um único
+par.
+
+\subsection{Separação de somas e \texorpdfstring{\(B_{2,k}\)}{B2k}-sets}
+\label{sec:b2k}
+
+\begin{proposition}
+  \label{prop:b2k}
+  Para \(A\subseteq\mathbb Z\), o multiconjunto \(A\oplus A\) é
+  \(k\)-separado se, e somente se, \(A\) é Sidon \(k\)-forte e
+  \(k\)-separado.
+\end{proposition}
+
+A implicação direta é imediata: a separação de \(A\oplus A\) fornece a
+condição \(k\)-forte comparando \(x+w\) com \(y+z\), e a separação de
+\(A\) comparando \(a+a\) com \(a+b\). Na recíproca, a propriedade de
+quatro pontos controla os pares com quatro elementos distintos,
+enquanto a \(k\)-separação de \(A\) controla os casos em que as duas
+somas compartilham algum elemento.
+
+Combinando com o Teorema~\ref{thm:separated-core}, obtemos:
+
+\begin{corollary}
+  Todo conjunto Sidon \(k\)-forte contém, após a remoção de no máximo um
+  elemento, um \(B_{2,k}\)-set.
+\end{corollary}
+
+Essa é a ponte concreta entre a classe estudada no doutorado e os
+objetos introduzidos por Nathanson, e é ela que motiva boa parte dos
+objetivos deste projeto.
+
+\subsection{O problema extremal}
+\label{sec:extremal}
+
+A cota inferior vem de uma dilatação: se \(A\) é Sidon, então
+\(kA:=\{ka:a\in A\}\) é Sidon \(k\)-forte, pois todas as diferenças de
+somas ficam multiplicadas por \(k\). Aplicando isso a um conjunto de
+Sidon máximo em \([\lfloor n/k\rfloor]\), obtemos
+\(F_k(n)\geq(1-o(1))\sqrt{n/k}\).
+
+Na direção oposta, o Teorema~\ref{thm:separated-core} permite reduzir o
+problema a um conjunto \(k\)-separado, ao custo de um elemento. Um
+argumento de dupla contagem com intervalos deslizantes, no espírito de
+Erdős--Turán, fornece então
+\[
+  F_k(n)
+  \leq
+  \sqrt{\frac nk}
+  +
+  O\!\left(\left(\frac nk\right)^{1/3}\right),
+\]
+e portanto \(F_k(n)=(1+o(1))\sqrt{n/k}\) sempre que \(k=o(n)\).
+
+Além de resolver o problema extremal em ordem principal, essa estimativa
+é ingrediente essencial do problema enumerativo: ela restringe a faixa
+de cardinalidades sobre a qual é preciso somar na contagem.
+
+\subsection{Contagem: o limite inferior}
+\label{sec:lower}
+
+A construção generaliza a de Saxton e Thomason em duas camadas.
+Partimos de um conjunto de Sidon \(A_0\) num grupo cíclico
+\(\mathbb Z_m\) e, para cada elemento, escolhemos independentemente uma
+entre \(1+\ell(\beta+1)\) alternativas: omiti-lo, ou colocá-lo em um
+dentre \(\ell\) blocos consecutivos e atribuir-lhe uma dentre
+\(\beta+1\) perturbações. Em seguida dilatamos por um fator \(\alpha\).
+
+A primeira camada preserva a propriedade de Sidon; a segunda a converte
+na propriedade \(k\)-forte, desde que \(\alpha-2\beta\geq k\) --- a
+dilatação separa as somas por \(\alpha\), e as perturbações reduzem essa
+separação em no máximo \(2\beta\). Como a construção é injetiva, cada
+escolha produz um conjunto distinto, e o custo espacial é governado por
+\(\alpha\ell\). O resultado é
+\[
+  \log_2 N_k(n)
+  \geq
+  (1-o(1))\,
+  \frac{\log_2\bigl(1+\ell(\beta+1)\bigr)}{\sqrt{\alpha\ell}}\,\sqrt n .
+\]
+
+Escolhas simples já fornecem uma constante absoluta. Tomando
+\((\alpha,\beta,\ell)=(3k,k,1)\), obtemos:
+
+\begin{theorem}
+  \label{thm:lower-count}
+  Para cada inteiro \(k\geq1\) fixo e todo \(n\) suficientemente grande
+  (com \(n_0\) dependendo de \(k\)),
+  \[
+    N_k(n)\geq2^{\,\frac1{\sqrt3}\log_2(k+1)\sqrt{n/k}} .
+  \]
+\end{theorem}
+
+Essa escolha não é ótima. Para \(k=1\), a escolha
+\((\alpha,\beta,\ell)=(1,0,4)\) recupera exatamente a construção de
+Saxton--Thomason, com constante \(\tfrac12\log_25=1{,}1609\ldots\); para
+\(k=2\), a escolha \((4,1,2)\) mantém as mesmas cinco alternativas por
+elemento --- dois blocos, duas perturbações em cada, mais a omissão ---
+fornecendo constante \(\log_25/\sqrt8=0{,}8209\ldots\). Otimizando os
+três parâmetros quando \(k\to\infty\), a escala natural é
+\(\beta\asymp k/\log k\), e a constante normalizada tende a \(1\).
+
+\subsection{Contagem: o limite superior}
+\label{sec:upper}
+
+O limite superior usa o método de \emph{contêineres de grafos}. A ideia
+geral do método é a seguinte: em um grafo suficientemente denso, todo
+conjunto independente fica contido na união de um pequeno
+\emph{certificado} com um \emph{contêiner} pequeno; como há poucos
+certificados e poucos contêineres, e cada par determina o conjunto, o
+número de independentes fica controlado.
+
+Para aplicá-lo aqui, fixa-se um conjunto parcial \(U\) e constrói-se um
+multigrafo auxiliar cujos vértices são os candidatos a novos elementos e
+cujas arestas registram quase-colisões com elementos de \(U\). O
+Teorema~\ref{thm:separated-core} permite substituir \(U\), com perda de
+um elemento, por um subconjunto \(k\)-separado --- e essa separação tem
+uma consequência decisiva: a multiplicidade das arestas do multigrafo
+passa a ser no máximo \(2\), o que permite passar para o grafo simples
+subjacente perdendo apenas um fator constante.
+
+Um resultado de \emph{supersaturação} --- uma cota inferior para o
+número de arestas induzidas por qualquer subconjunto grande de vértices
+--- garante então a densidade necessária, e a iteração do lema de
+contêineres fornece uma estimativa para conjuntos de cardinalidade
+prescrita. Somando sobre as cardinalidades possíveis, e usando a
+estimativa extremal da Seção~\ref{sec:extremal} para limitar essa soma,
+obtemos:
+
+\begin{theorem}
+  \label{thm:upper-count}
+  Existe uma constante absoluta \(C>0\) tal que, para \(n\)
+  suficientemente grande e \emph{uniformemente} em
+  \(1\leq k\leq n/(\log n)^2\),
+  \[
+    N_k(n)\leq2^{\,C\log_2(k+1)\sqrt{n/k}} .
+  \]
+\end{theorem}
+
+Combinando os Teoremas~\ref{thm:lower-count} e~\ref{thm:upper-count},
+para cada \(k\) fixo,
+\[
+  \log_2 N_k(n)\asymp\log(k+1)\sqrt{\frac nk} .
+\]
+Convém registrar a diferença de uniformidade entre os dois enunciados: o
+limite superior é uniforme na faixa indicada, enquanto no limite
+inferior o valor de \(n_0\) depende de \(k\). Tornar o limite inferior
+uniforme, e determinar a constante correta, são objetivos do projeto.
+
+Observamos ainda que, em vista do resultado extremal
+\(F_k(n)=(1+o(1))\sqrt{n/k}\), a presença do fator \(\log(k+1)\) mostra
+que a heurística~\eqref{eq:heuristica} falha para \emph{toda} a família,
+e não apenas no caso clássico \(k=1\).
+
+% ============================================================
+\section{Objetivos e questões de pesquisa}
+% ============================================================
+
+O objetivo geral é desenvolver uma teoria estrutural e enumerativa para
+famílias aditivas nas quais representações distintas devem permanecer
+quantitativamente separadas. Os objetivos abaixo estão ordenados por
+grau de maturidade: os dois primeiros consolidam e refinam resultados já
+obtidos; os demais são progressivamente mais exploratórios.
+
+\subsection{Objetivo I --- Constantes na contagem de conjuntos de Sidon}
+
+Como discutido na Introdução, a constante correta em
+\(A(n)=2^{\Theta(\sqrt n)}\) é desconhecida, com
+\(1{,}16\leq c\leq6{,}44\). A pergunta é se os argumentos de
+supersaturação e contêineres desenvolvidos para o caso \(k\)-forte
+podem, especializados a \(k=1\), reduzir esse intervalo.
+
+Duas observações motivam a tentativa. Primeiro, o argumento
+multifásico usual perde constantes em vários pontos independentes
+(escolha dos conjuntos-teste, tamanho do contêiner final, estimativas
+binomiais); um objetivo concreto é \emph{quantificar} onde está a perda
+dominante. Segundo, no caso \(k\)-forte com \(k\to\infty\) as constantes
+das estimativas intermediárias entram aditivamente dentro de um
+logaritmo e são absorvidas pelo fator \(\log k\) --- entender por que
+isso não ocorre em \(k=1\) pode indicar onde está o obstáculo real.
+
+\subsection{Objetivo II --- A constante no problema \texorpdfstring{\(k\)}{k}-forte}
+
+Os resultados obtidos determinam a escala \(\log(k+1)\sqrt{n/k}\).
+Pretende-se determinar a constante, isto é, estudar
+\[
+  c_k
+  :=
+  \lim_{n\to\infty}
+  \frac{\log_2 N_k(n)}{\log_2(k+1)\sqrt{n/k}}
+\]
+--- começando por estabelecer que esse limite existe --- e o seu
+comportamento quando \(k\to\infty\).
+
+Há indícios de que a resposta seja \(c_k\to1\). Do lado inferior, a
+otimização dos parâmetros fornece constante \((1+o(1))\log_2k/\sqrt k\).
+Do lado superior, o termo dominante da estimativa é da forma
+\((Ck)^{F_k(n)}\) para uma constante absoluta \(C\), e
+\(\log_2(Ck)/\log_2k\to1\). Se ambas as pontas puderem ser tornadas
+precisas, obteríamos
+\[
+  N_k(n)=2^{(1+o(1))\log_2k\sqrt{n/k}},
+\]
+um resultado sem análogo conhecido no caso \(k=1\).
+
+Questões associadas:
+\begin{itemize}
+  \item tornar o limite inferior uniforme em \(k\);
+  \item ampliar a faixa \(k\leq n/(\log n)^2\) do limite superior;
+  \item obter estimativas para conjuntos de cardinalidade prescrita.
+\end{itemize}
+
+\subsection{Objetivo III --- Estrutura de conjuntos \texorpdfstring{\(k\)}{k}-fortes}
+
+O Teorema~\ref{thm:separated-core} sugere uma rigidez estrutural ainda
+não explorada. Que outras propriedades de um \(B_{2,k}\)-set
+sobrevivem, à custa de poucos elementos, em conjuntos Sidon
+\(k\)-fortes? E o fenômeno ``remover poucos elementos produz separação
+completa'' tem análogos para outras equações aditivas, como as que
+definem conjuntos livres de somas ou livres de progressões?
+
+\subsection{Objetivo IV --- \texorpdfstring{\(B_h\)}{Bh}-sets e contêineres de hipergrafos}
+
+Para a contagem de \(B_h\)-sets de cardinalidade prescrita, Dellamonica,
+Kohayakawa, Lee, Rödl e Samotij obtiveram estimativas precisas por
+métodos ad hoc, combinando supersaturação, grafos de colisão e
+conjuntos-semente.
+
+Pretende-se revisitar o problema com a linguagem de contêineres de
+hipergrafos. O hipergrafo natural tem vértices \([n]\) e hiperarestas
+associadas às soluções não triviais de
+\(a_1+\dots+a_h=b_1+\dots+b_h\); os \(B_h\)-sets são seus conjuntos
+independentes. Uma aplicação direta dos teoremas de contêineres fornece
+informação enumerativa, mas não recupera as melhores estimativas
+conhecidas. A questão metodológica é identificar exatamente qual
+informação adicional --- sobre supersaturação, graus ou codegrees --- é
+necessária para fechar essa diferença.
+
+\subsection{Objetivo V --- \texorpdfstring{\(B_{h,\Delta}\)}{Bh,Delta}-sets}
+
+Nathanson introduziu os \(B_{h,\Delta}\)-sets exigindo que somas
+distintas de \(h\) elementos permaneçam a distância pelo menos
+\(\Delta\), e propôs explicitamente o problema de estender aos
+\(B_{h,\Delta}\) os resultados conhecidos para \(B_h\). Para \(h=2\), o
+Corolário da Seção~\ref{sec:b2k} fornece uma ponte imediata com os
+resultados já obtidos.
+
+No problema enumerativo, a abordagem natural é substituir as colisões
+exatas pelas quase-colisões
+\[
+  \bigl|(a_1+\dots+a_h)-(b_1+\dots+b_h)\bigr|<\Delta .
+\]
+Para \(\Delta\) fixo isso corresponde a uma família finita de equações
+aditivas próximas, o que torna plausível a aplicação das mesmas
+ferramentas. O primeiro passo é entender como a substituição afeta a
+supersaturação e as estimativas de graus.
+
+\subsection{Objetivo VI --- Uma noção \texorpdfstring{\(k\)}{k}-forte para \texorpdfstring{\(h>2\)}{h>2}}
+
+Falta uma definição adequada de propriedade \(k\)-forte para
+\(B_h\)-sets com \(h>2\). A definição desejada deve ser estritamente
+mais fraca que a separação completa de \(hA\) --- para admitir uma
+classe rica --- mas forçar essa separação após a remoção de poucos
+elementos, como ocorre em \(h=2\).
+
+\begin{question}
+  Para cada \(h\geq2\), existe uma constante \(r(h)\) tal que todo
+  conjunto satisfazendo uma noção adequada de \(k\)-forte para
+  \(B_h\) contém \(A'\subseteq A\) com \(|A'|\geq|A|-r(h)\) e \(hA'\)
+  \(k\)-separado?
+\end{question}
+
+O Teorema~\ref{thm:separated-core} mostra que \(r(2)=1\).
+
+% ============================================================
+\section{Metodologia}
+% ============================================================
+
+O projeto é de natureza teórica e utilizará ferramentas de Combinatória
+Extremal, Aditiva e Probabilística: contêineres de grafos e hipergrafos;
+resultados de supersaturação; análise de graus e codegrees; grafos e
+multigrafos de colisão; funções de representação de somas e diferenças;
+argumentos estruturais de separação; construções em grupos cíclicos;
+dilatações, blocos e perturbações; métodos probabilísticos e argumentos
+de deleção.
+
+O mecanismo já desenvolvido para o caso \(k\)-forte --- extração de um
+núcleo separado, controle de multiplicidades, supersaturação e
+contêineres iterados --- fornece um roteiro. A questão metodológica
+central do projeto é determinar quais de suas partes se transportam para
+\(B_h\)-sets e \(B_{h,\Delta}\)-sets.
+
+Para o Objetivo IV, o primeiro passo é quantificar a diferença entre a
+aplicação direta de contêineres ao hipergrafo natural e as estimativas
+finas conhecidas. Para o Objetivo V, é entender como a passagem de
+colisões exatas a quase-colisões afeta supersaturação e codegrees.
+
+% ============================================================
+\section{Cronograma e organização}
+% ============================================================
+
+O projeto combina problemas em estágios distintos de maturidade, o que
+permite que seu desenvolvimento não dependa da resolução de uma única
+questão em aberto.
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{clc}
+    \hline
+    \textbf{Período}    & \textbf{Atividade}                             & \textbf{Objetivos} \\
+    \hline
+    Meses 1--6          & Consolidação dos resultados \(k\)-fortes;
+    redação e submissão & I, II                                                               \\
+    Meses 7--12         & Uniformidade e constantes na contagem          & II                 \\
+    Meses 13--18        & Estrutura; transferência para \(B_{2,\Delta}\)
+                        & III, V                                                              \\
+    Meses 19--24        & \(B_h\)-sets via contêineres de hipergrafos    & IV                 \\
+    Meses 25--30        & \(B_{h,\Delta}\)-sets e noção \(k\)-forte para
+    \(h>2\)             & V, VI                                                               \\
+    Meses 31--36        & Redação final e integração dos resultados      & ---                \\
+    \hline
+  \end{tabular}
+\end{center}
+
+% ============================================================
+\section{Perspectiva geral}
+% ============================================================
+
+As diferentes linhas do projeto organizam-se em torno de uma única
+questão:
+
+\begin{quote}
+  \emph{Como condições quantitativas de separação entre representações
+    aditivas alteram a estrutura, o tamanho máximo e a quantidade de
+    conjuntos de Sidon e \(B_h\)-sets?}
+\end{quote}
+
+No problema clássico proíbem-se colisões exatas entre somas. Nos
+conjuntos Sidon \(k\)-fortes exige-se separação quantitativa apenas para
+certas configurações ordenadas. Nos \(B_{h,\Delta}\)-sets a separação é
+imposta a todas as representações.
+
+O Teorema~\ref{thm:separated-core} mostra que, para \(h=2\), as duas
+últimas perspectivas estão a um único elemento de distância. Do ponto de
+vista extremal isso leva à escala \(\sqrt{n/k}\); do ponto de vista
+enumerativo, à escala maior \(\log(k+1)\sqrt{n/k}\).
+
+Esse fator adicional é o ponto conceitual do trabalho: a separação não
+altera apenas o tamanho máximo dos conjuntos, mas a entropia da família.
+Em termos informais, ao escolher um conjunto Sidon \(k\)-forte típico,
+cada elemento contribui com \(\Theta(k/\log k)\) alternativas em vez de
+\(\Theta(1)\) --- e é isso que produz o \(\log(k+1)\) no expoente.
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
