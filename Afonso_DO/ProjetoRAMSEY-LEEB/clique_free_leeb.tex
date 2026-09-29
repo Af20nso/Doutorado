@@ -1,0 +1,504 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Sym}{\mathfrak{S}}
+\newcommand{\K}{K}
+\newcommand{\ord}{\mathrm{ord}}
+\newcommand{\can}{\mathrm{can}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Forb}{\mathrm{Forb}}
+\newcommand{\restr}[2]{\left.#1\right|_{#2}}
+
+\title[A clique-free canonisation theorem]{A clique-free canonisation theorem for edge-orderings of uniform hypergraphs}
+\author{Afonso Lima dos Santos Sant'Anna}
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+For integers $k\ge 2$ and $n\ge 2k+1$, we prove the existence of a finite linearly ordered $k$-uniform hypergraph $G$ which is $K_{n+1}^{(k)}$-free and has the following property: every linear ordering of $E(G)$ contains an ordered copy of $K_n^{(k)}$ whose induced edge-ordering is canonical in the sense of Leeb. Thus the usual canonisation theorem for edge-orderings of complete uniform hypergraphs admits a clique-free, Folkman-type form. The proof combines a finite-colour Ramsey theorem obtained from the Ne\v{s}et\v{r}il--R\"odl partite construction with a local-to-global lemma: if all $2k$-subsets of an ordered vertex set induce the same relative ordering on their $k$-subsets, then the entire edge-ordering is canonical.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $[N]=\{1,\dots,N\}$ with its natural order and write $[N]^{(k)}$ for the family of all $k$-subsets of $[N]$. A linear ordering $\prec$ of $[N]^{(k)}$ is called \emph{canonical} if every two vertex subsets of the same size induce isomorphic edge-orderings through the unique order-preserving bijection between them. An unpublished theorem of Klaus Leeb, stated and studied quantitatively by Reiher, R\"odl, Sales, Sames and Schacht~\cite{RRSSS2022}, asserts that for every $k,n\in\N$ there exists $N$ such that every ordering of $[N]^{(k)}$ contains an $n$-element subset whose $k$-subsets are ordered canonically.
+
+For $N\ge 2k+1$, the canonical orderings admit an explicit classification. They are parametrised by a sign vector $\eps\in\{-1,+1\}^k$ and a permutation $\sigma\in\Sym_k$, and consequently there are exactly $k!2^k$ canonical edge-orderings on $[N]^{(k)}$; see~\cite{RRSSS2022}. Canonisation phenomena for orderings have a longer history, including the Hales--Jewett setting~\cite{NPRV1985}, and local encodings of order types play an important role in the work of Ne\v{s}et\v{r}il and R\"odl~\cite{NR2017}.
+
+The purpose of this note is to record a clique-free analogue of Leeb's theorem. Instead of ordering the edges of a sufficiently large complete $k$-graph, we construct a host which already avoids the next clique.
+
+\begin{theorem}\label{thm:main}
+Let $k\ge 2$ and $n\ge 2k+1$. There exists a finite linearly ordered $k$-uniform hypergraph $G$ which is $K_{n+1}^{(k)}$-free and such that, for every linear ordering $\prec$ of $E(G)$, there is an ordered copy $H\cong K_n^{(k)}$ in $G$ for which the restriction $\prec|_{E(H)}$ is canonical with respect to the vertex ordering inherited from $G$.
+\end{theorem}
+
+By the classification of canonical edge-orderings from~\cite{RRSSS2022}, the ordering obtained in \cref{thm:main} is one of the $k!2^k$ orderings determined by a pair $(\eps,\sigma)\in\{-1,+1\}^k\times\Sym_k$.
+
+The proof has two independent ingredients. The first is a finite-colour Ramsey theorem for ordered uniform hypergraphs with a forbidden clique, obtained from the Ne\v{s}et\v{r}il--R\"odl partite construction~\cite{NR1989}. The second is a local-to-global observation specific to edge-orderings. Given two $k$-edges $A$ and $B$, their comparison under an edge-ordering is supported on at most $2k$ vertices, since $|A\cup B|\le 2k$. This makes $2k$ the natural locality scale. We show that if every $2k$-set induces the same edge-order type, then this local homogeneity propagates to every $\ell$-set for $k\le \ell\le 2k$, and this in turn forces the whole ordering to be canonical.
+
+\section{Preliminaries}
+
+\subsection{Ordered uniform hypergraphs}
+
+For a finite set $X$ and an integer $k\ge 1$, let
+\[
+X^{(k)}=\{A\subseteq X:|A|=k\}.
+\]
+When $X=[N]$, we also write $[N]^{(k)}$.
+
+\begin{definition}
+A \emph{$k$-uniform hypergraph}, or simply a \emph{$k$-graph}, is a pair $G=(V(G),E(G))$ with $E(G)\subseteq V(G)^{(k)}$. A \emph{linearly ordered $k$-graph} is a triple
+\[
+G=(V(G),E(G),<_{G}),
+\]
+where $<_{G}$ is a linear ordering of $V(G)$.
+\end{definition}
+
+For a finite linearly ordered set $(X,<)$, let $K_X^{(k)}$ denote the complete ordered $k$-graph with vertex set $X$, edge set $X^{(k)}$, and vertex order $<$. We abbreviate
+\[
+K_m^{(k)}:=K_{[m]}^{(k)}.
+\]
+
+\begin{definition}
+Let $F$ and $G$ be linearly ordered $k$-graphs. An \emph{ordered embedding} $\varphi:F\hookrightarrow G$ is an injective order-preserving map $\varphi:V(F)\to V(G)$ such that
+\[
+e\in E(F)\quad\Longrightarrow\quad \varphi(e)\in E(G).
+\]
+An \emph{ordered copy} of $F$ in $G$ is the image of such an embedding.
+\end{definition}
+
+Since all hypergraphs appearing as targets below are complete, no ambiguity will arise between copies and induced copies of those targets.
+
+\subsection{A finite-colour Ramsey theorem with a forbidden clique}
+
+We use the following consequence of the Ne\v{s}et\v{r}il--R\"odl partite construction; compare~\cite{NR1989}.
+
+\begin{theorem}[Ne\v{s}et\v{r}il--R\"odl]\label{thm:NR}
+Let $k,\ell,n,t\in\N$ satisfy
+\[
+k\le \ell\le n
+\qquad\text{and}\qquad
+t\ge 1.
+\]
+Then there exists a finite linearly ordered $k$-graph $G$, free of $K_{n+1}^{(k)}$, with the following property. For every colouring
+\[
+\chi:\binom{G}{K_{\ell}^{(k)}}\longrightarrow[t]
+\]
+of the ordered copies of $K_{\ell}^{(k)}$ in $G$, there exists an ordered copy $H\cong K_n^{(k)}$ such that every ordered copy of $K_{\ell}^{(k)}$ contained in $H$ receives the same colour.
+\end{theorem}
+
+Here $\binom{G}{F}$ denotes the family of ordered copies of $F$ in $G$. The $K_{n+1}^{(k)}$-free conclusion is the feature of \cref{thm:NR} that will allow us to obtain a Folkman-type version of edge-order canonisation.
+
+\subsection{Canonical edge-orderings}
+
+Throughout the paper, vertex orderings will be denoted by $<$, while orderings of hyperedges will be denoted by $\prec$.
+
+\begin{definition}[Edge-ordering]
+Let $X$ be a finite set and let $k\ge 1$. An \emph{edge-ordering} of $K_X^{(k)}$ is a linear ordering $\prec$ of $X^{(k)}$.
+\end{definition}
+
+Let $(X,<)$ be linearly ordered, let $A,B\subseteq X$ satisfy $|A|=|B|$, and denote by
+\[
+\iota_{A,B}:A\longrightarrow B
+\]
+the unique order-preserving bijection. It induces a bijection
+\[
+\iota_{A,B}^{(k)}:A^{(k)}\longrightarrow B^{(k)},
+\qquad
+C\longmapsto \iota_{A,B}(C).
+\]
+
+\begin{definition}[Canonical edge-ordering]\label{def:canonical}
+Let $(X,<)$ be a finite linearly ordered set and let $\prec$ be an edge-ordering of $X^{(k)}$. We call $\prec$ \emph{canonical} if, for every $A,B\subseteq X$ with $|A|=|B|$, the map $\iota_{A,B}^{(k)}$ is an order isomorphism between the restrictions of $\prec$ to $A^{(k)}$ and $B^{(k)}$.
+
+Equivalently, whenever $C,D\in A^{(k)}$,
+\[
+C\prec D
+\quad\Longleftrightarrow\quad
+\iota_{A,B}(C)\prec \iota_{A,B}(D).
+\]
+\end{definition}
+
+The condition is vacuous when $|A|<k$.
+
+For completeness, we recall the explicit family of canonical edge-orderings.
+
+\begin{definition}[The $(\eps,\sigma)$-ordering]\label{def:epssigma}
+Let $N,k\ge1$, let
+\[
+\eps=(\eps_1,\dots,\eps_k)\in\{-1,+1\}^k,
+\qquad
+\sigma\in\Sym_k,
+\]
+and let
+\[
+A=\{a_1<\cdots<a_k\},
+\qquad
+B=\{b_1<\cdots<b_k\}
+\]
+be members of $[N]^{(k)}$. Define $A\prec_{\eps,\sigma}B$ if and only if
+\[
+\bigl(\eps_{\sigma(1)}a_{\sigma(1)},\dots,
+      \eps_{\sigma(k)}a_{\sigma(k)}\bigr)
+<_{\mathrm{lex}}
+\bigl(\eps_{\sigma(1)}b_{\sigma(1)},\dots,
+      \eps_{\sigma(k)}b_{\sigma(k)}\bigr),
+\]
+where $<_{\mathrm{lex}}$ is the lexicographic order on $\Z^k$.
+\end{definition}
+
+We shall use the following classification theorem.
+
+\begin{theorem}[Reiher--R\"odl--Sales--Sames--Schacht]\label{thm:classification}
+Let $k\ge 2$ and $N\ge 2k+1$. An edge-ordering of $[N]^{(k)}$ is canonical in the sense of \cref{def:canonical} if and only if it is an $(\eps,\sigma)$-ordering for some
+\[
+(\eps,\sigma)\in\{-1,+1\}^k\times\Sym_k.
+\]
+In particular, there are exactly $k!2^k$ canonical edge-orderings of $[N]^{(k)}$.
+\end{theorem}
+
+The existence theorem of Leeb states that every sufficiently large complete $k$-graph, under an arbitrary edge-ordering, contains a prescribed-size complete subhypergraph whose edge-ordering is canonical; see~\cite{RRSSS2022} for a statement and quantitative bounds.
+
+\section{Local order types}
+
+We now isolate the local notion used in the proof of \cref{thm:main}.
+
+Let $n\ge k$, and fix an edge-ordering $\prec$ of $[n]^{(k)}$.
+
+\begin{definition}[Same induced order type]\label{def:equiv}
+Let $\ell\ge k$ and let $A,B\in[n]^{(\ell)}$. We write
+\[
+A\equiv_{\prec} B
+\]
+if the unique increasing bijection $\iota_{A,B}:A\to B$ induces an order isomorphism
+\[
+(A^{(k)},\prec)\cong(B^{(k)},\prec).
+\]
+Equivalently, for every $C,D\in A^{(k)}$,
+\[
+C\prec D
+\quad\Longleftrightarrow\quad
+\iota_{A,B}(C)\prec \iota_{A,B}(D).
+\]
+\end{definition}
+
+For fixed $\ell$, the relation $\equiv_{\prec}$ is an equivalence relation on $[n]^{(\ell)}$: reflexivity and symmetry are immediate, while transitivity follows from the fact that increasing bijections between finite chains compose.
+
+\begin{definition}[$r$-local homogeneity]\label{def:localhom}
+Let $k\le r\le n$. We say that $\prec$ is \emph{$r$-locally homogeneous} if
+\[
+A\equiv_{\prec} B
+\qquad
+\text{for all }A,B\in[n]^{(r)}.
+\]
+\end{definition}
+
+Thus an edge-ordering is canonical precisely when the same condition holds simultaneously for every subset size. Our main local-to-global statement says that the single scale $2k$ suffices.
+
+\section{From $2k$-local homogeneity to canonisation}
+
+\begin{lemma}[One-step normalisation]\label{lem:onestep}
+Let $k\ge2$, $n\ge2k+1$, and let $\prec$ be a $2k$-locally homogeneous edge-ordering of $[n]^{(k)}$. Fix $\ell$ with $k\le\ell\le2k$ and let
+\[
+A=\{a_1<\cdots<a_\ell\}\in[n]^{(\ell)}.
+\]
+Suppose $A\ne[\ell]$, and let $i$ be the least index for which $a_i>i$. Set
+\[
+A^-=(A\setminus\{a_i\})\cup\{a_i-1\}.
+\]
+Then
+\[
+A\equiv_{\prec}A^-.
+\]
+\end{lemma}
+
+\begin{proof}
+By the minimality of $i$, we have $a_j=j$ for every $j<i$. Since $a_i>i$, it follows that $a_i-1\ge i$ and hence $a_i-1\notin\{a_1,\dots,a_{i-1}\}$. Moreover, every $a_j$ with $j>i$ is larger than $a_i$, so $a_i-1\notin A$. Thus $A^-$ is indeed an $\ell$-subset of $[n]$.
+
+We have
+\[
+|A\cup A^-|=\ell+1.
+\]
+Since $n\ge2k+1$,
+\[
+\bigl|[n]\setminus(A\cup A^-)\bigr|
+=n-(\ell+1)
+\ge 2k-\ell.
+\]
+Choose a set
+\[
+Z\subseteq[n]\setminus(A\cup A^-)
+\qquad\text{with}\qquad
+|Z|=2k-\ell.
+\]
+Put
+\[
+S=A\cup A^-\cup Z.
+\]
+Then $|S|=2k+1$. Define
+\[
+X=S\setminus\{a_i-1\},
+\qquad
+Y=S\setminus\{a_i\}.
+\]
+Both $X$ and $Y$ have size $2k$, with $A\subseteq X$ and $A^-\subseteq Y$.
+
+Because $\prec$ is $2k$-locally homogeneous, the increasing bijection
+\[
+\iota_{X,Y}:X\longrightarrow Y
+\]
+induces an order isomorphism between $(X^{(k)},\prec)$ and $(Y^{(k)},\prec)$. The two sets $X$ and $Y$ differ only in that $X$ contains $a_i$ whereas $Y$ contains the consecutive integer $a_i-1$. Consequently,
+\[
+\iota_{X,Y}(a_i)=a_i-1
+\]
+and $\iota_{X,Y}$ fixes every element of $X\cap Y$. In particular,
+\[
+\iota_{X,Y}(A)=A^-.
+\]
+Restricting the induced order isomorphism from $X^{(k)}$ to $A^{(k)}$ therefore shows that the increasing bijection $A\to A^-$ preserves the edge-ordering. Hence
+\[
+A\equiv_{\prec}A^-.
+\]
+\end{proof}
+
+\begin{lemma}[Normalisation]\label{lem:normalization}
+Let $k\ge2$ and $n\ge2k+1$, and let $\prec$ be a $2k$-locally homogeneous edge-ordering of $[n]^{(k)}$. Then, for every integer $\ell$ with
+\[
+k\le\ell\le2k,
+\]
+all members of $[n]^{(\ell)}$ have the same induced order type. That is,
+\[
+A\equiv_{\prec}B
+\qquad
+\text{for all }A,B\in[n]^{(\ell)}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $\ell\in\{k,\dots,2k\}$. We first show that every $A\in[n]^{(\ell)}$ satisfies
+\[
+A\equiv_{\prec}[\ell].
+\]
+Write
+\[
+A=\{a_1<\cdots<a_\ell\}.
+\]
+If $A=[\ell]$, there is nothing to prove. Otherwise, apply \cref{lem:onestep} to obtain an $\ell$-set $A^-$ with
+\[
+A\equiv_{\prec}A^-
+\qquad\text{and}\qquad
+\sum_{x\in A^-}x=\sum_{x\in A}x-1.
+\]
+Repeating this operation strictly decreases the positive integer $\sum_{x\in A}x$. The process can stop only at the unique $\ell$-subset of $[n]$ of minimum possible sum, namely $[\ell]$. Hence, by transitivity of $\equiv_{\prec}$,
+\[
+A\equiv_{\prec}[\ell].
+\]
+It follows that any two $A,B\in[n]^{(\ell)}$ satisfy
+\[
+A\equiv_{\prec}[\ell]\equiv_{\prec}B,
+\]
+which proves the lemma.
+\end{proof}
+
+\begin{proposition}[Local-to-global canonisation]\label{prop:localglobal}
+Let $k\ge2$ and $n\ge2k+1$. If an edge-ordering $\prec$ of $[n]^{(k)}$ is $2k$-locally homogeneous, then $\prec$ is canonical.
+\end{proposition}
+
+\begin{proof}
+Let $A,B\subseteq[n]$ satisfy $|A|=|B|$, and let
+\[
+\varphi=\iota_{A,B}:A\longrightarrow B
+\]
+be the increasing bijection. If $|A|<k$, there is nothing to prove. We shall show that $\varphi$ induces an order isomorphism between $(A^{(k)},\prec)$ and $(B^{(k)},\prec)$.
+
+Take distinct $C,D\in A^{(k)}$ and put
+\[
+U=C\cup D,
+\qquad
+U'=\varphi(U)=\varphi(C)\cup\varphi(D).
+\]
+Set $\ell=|U|$. Since $C$ and $D$ are $k$-sets,
+\[
+k\le\ell\le2k.
+\]
+The restriction $\varphi|_U:U\to U'$ is the unique increasing bijection between $U$ and $U'$. By \cref{lem:normalization},
+\[
+U\equiv_{\prec}U'.
+\]
+Therefore
+\[
+C\prec D
+\quad\Longleftrightarrow\quad
+\varphi(C)\prec\varphi(D).
+\]
+Since this holds for every pair of distinct members $C,D\in A^{(k)}$, the induced map
+\[
+\varphi^{(k)}:A^{(k)}\longrightarrow B^{(k)}
+\]
+is an order isomorphism. By \cref{def:canonical}, the edge-ordering $\prec$ is canonical.
+\end{proof}
+
+\begin{corollary}\label{cor:classificationlocal}
+Under the assumptions of \cref{prop:localglobal}, the ordering $\prec$ is an $(\eps,\sigma)$-ordering for a unique pair
+\[
+(\eps,\sigma)\in\{-1,+1\}^k\times\Sym_k.
+\]
+\end{corollary}
+
+\begin{proof}
+By \cref{prop:localglobal}, the ordering is canonical. Since $n\ge2k+1$, the conclusion follows from \cref{thm:classification}.
+\end{proof}
+
+\section{Proof of the clique-free canonisation theorem}
+
+We now prove \cref{thm:main}.
+
+\begin{proof}[Proof of \cref{thm:main}]
+Fix integers $k\ge2$ and $n\ge2k+1$, and set
+\[
+m=\binom{2k}{k}
+\qquad\text{and}\qquad
+t=m!=\binom{2k}{k}!.
+\]
+Apply \cref{thm:NR} with $\ell=2k$ and this value of $t$. We obtain a finite linearly ordered $k$-graph $G$, free of $K_{n+1}^{(k)}$, such that every $t$-colouring of the ordered copies of $K_{2k}^{(k)}$ in $G$ admits an ordered copy of $K_n^{(k)}$ on which all copies of $K_{2k}^{(k)}$ have the same colour.
+
+Now fix an arbitrary linear ordering $\prec$ of $E(G)$. Let
+\[
+\mathcal{L}_{k,2k}
+\]
+denote the set of all linear orderings of $[2k]^{(k)}$. Since $|[2k]^{(k)}|=m$,
+\[
+|\mathcal{L}_{k,2k}|=m!=t.
+\]
+
+We define a colouring
+\[
+\chi_{\prec}:\binom{G}{K_{2k}^{(k)}}\longrightarrow\mathcal{L}_{k,2k}
+\]
+as follows. Let $Q$ be an ordered copy of $K_{2k}^{(k)}$ in $G$, and let
+\[
+\iota_Q:[2k]\longrightarrow V(Q)
+\]
+be the unique increasing bijection. Pull the restriction of $\prec$ to $E(Q)$ back along $\iota_Q$: for $A,B\in[2k]^{(k)}$, declare
+\[
+A\;\chi_{\prec}(Q)\;B
+\quad\Longleftrightarrow\quad
+\iota_Q(A)\prec\iota_Q(B).
+\]
+Thus $\chi_{\prec}(Q)$ records precisely the relative edge-order type induced by $\prec$ on $Q$. This is a colouring with at most $t$ colours.
+
+By the choice of $G$, there exists an ordered copy
+\[
+H\cong K_n^{(k)}
+\]
+such that $\chi_{\prec}$ is constant on all ordered copies of $K_{2k}^{(k)}$ contained in $H$.
+
+Identify the ordered vertex set of $H$ with $[n]$ through the unique increasing bijection, and transport the restriction $\prec|_{E(H)}$ to an edge-ordering, still denoted by $\prec$, of $[n]^{(k)}$. The constancy of $\chi_{\prec}$ says exactly that for any two sets
+\[
+X,Y\in[n]^{(2k)},
+\]
+the unique increasing bijection $X\to Y$ induces an order isomorphism between $(X^{(k)},\prec)$ and $(Y^{(k)},\prec)$. In the terminology of \cref{def:localhom}, the ordering $\prec$ is $2k$-locally homogeneous.
+
+By \cref{prop:localglobal}, $\prec$ is canonical. Therefore $H$ is the desired ordered copy of $K_n^{(k)}$. Since the host $G$ was chosen to be $K_{n+1}^{(k)}$-free, the proof is complete.
+\end{proof}
+
+Combining the proof with the classification theorem gives the following explicit form.
+
+\begin{corollary}\label{cor:explicit}
+Let $k\ge2$ and $n\ge2k+1$. There exists a finite linearly ordered $K_{n+1}^{(k)}$-free $k$-graph $G$ such that every edge-ordering $\prec$ of $E(G)$ contains an ordered copy $H\cong K_n^{(k)}$ and a pair
+\[
+(\eps,\sigma)\in\{-1,+1\}^k\times\Sym_k
+\]
+for which, after identifying $V(H)$ increasingly with $[n]$, one has
+\[
+\prec|_{E(H)}=\prec_{\eps,\sigma}.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply \cref{thm:main} and then \cref{thm:classification}.
+\end{proof}
+
+\section{Remarks and further directions}
+
+\begin{remark}[Why the scale $2k$ appears]
+The proof uses no structural information about a pair of $k$-edges beyond their union. Since
+\[
+|A\cup B|\le2k
+\]
+for all $A,B\in[n]^{(k)}$, homogeneity at the level of $2k$ vertices controls every pairwise comparison in the edge-ordering. The normalisation argument is needed only to transport this information between unions of the same size that occupy different positions in the ambient vertex order.
+\end{remark}
+
+\begin{remark}[The role of the bound $n\ge2k+1$]
+The inequality $n\ge2k+1$ enters twice. First, it provides the extra vertices required in the proof of \cref{lem:onestep}: for an $\ell$-set with $k\le\ell\le2k$, the union of two consecutive normalisation states has size $\ell+1$ and must be extended to two overlapping $2k$-sets inside a common $(2k+1)$-set. Second, the same bound is the natural range in which the classification of canonical edge-orderings into the $k!2^k$ types $\prec_{\eps,\sigma}$ holds~\cite{RRSSS2022}.
+\end{remark}
+
+\begin{remark}[No quantitative optimisation]
+The argument is qualitative. It uses \cref{thm:NR} as a black box with
+\[
+t=\binom{2k}{k}!
+\]
+local order types. No attempt is made here to optimise the size of the host $G$. In particular, the quantitative machinery developed for Leeb's theorem in~\cite{RRSSS2022} addresses a different question: it estimates the least complete host size forcing a canonical $n$-set.
+\end{remark}
+
+\begin{remark}[A possible strengthening]
+The conclusion of \cref{thm:main} only controls the clique number of the host. A natural next problem is to ask whether the host can be chosen together with a distinguished family of copies of $K_n^{(k)}$ satisfying additional intersection restrictions, while still forcing one of those copies to be canonically edge-ordered under every ordering of $E(G)$. Such a statement would require more than the finite-colour consequence of the partite construction used here.
+\end{remark}
+
+\begin{question}
+Can the local scale $2k$ in \cref{prop:localglobal} be replaced by a smaller value $r=r(k)$ while retaining a direct local-to-global implication without first passing to a smaller vertex subset?
+\end{question}
+
+\begin{thebibliography}{99}
+
+\bibitem{GLR1972}
+R.~L. Graham, K.~Leeb, and B.~L. Rothschild,
+\emph{Ramsey's theorem for a class of categories},
+Adv. Math. \textbf{8} (1972), 417--433.
+
+\bibitem{NPRV1985}
+J.~Ne\v{s}et\v{r}il, H.~J. Pr\"omel, V.~R\"odl, and B.~Voigt,
+\emph{Canonizing ordering theorems for Hales--Jewett structures},
+J. Combin. Theory Ser. A \textbf{40} (1985), no.~2, 394--408.
+
+\bibitem{NR1989}
+J.~Ne\v{s}et\v{r}il and V.~R\"odl,
+\emph{The partite construction and Ramsey set systems},
+Discrete Math. \textbf{75} (1989), no.~1--3, 327--334.
+
+\bibitem{NR2017}
+J.~Ne\v{s}et\v{r}il and V.~R\"odl,
+\emph{Statistics of orderings},
+Abh. Math. Semin. Univ. Hambg. \textbf{87} (2017), no.~2, 421--433.
+
+\bibitem{RRSSS2022}
+C.~Reiher, V.~R\"odl, M.~Sales, K.~Sames, and M.~Schacht,
+\emph{On quantitative aspects of a canonisation theorem for edge-orderings},
+J. Lond. Math. Soc. (2) \textbf{106} (2022), no.~3, 2773--2803.
+
+\end{thebibliography}
+
+\end{document}
